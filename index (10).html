@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Komvox</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta name="color-scheme" content="light dark"/>
+<style>
+  :root{
+    --bg:#0c0f1a;--panel:#101528;--text:#ecf0ff;--muted:#b7c0e0;
+    --brand:#7b5cff;--brand-2:#00e0b8;--stroke:#1b213a;
+    --shadow:0 10px 30px rgba(0,0,0,.35);--radius:16px;--container:1200px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);
+    background: linear-gradient(180deg, #0a0d18 0%, #0c0f1a 60%); line-height:1.55;}
+  a{color:inherit;text-decoration:none}
+  .container{max-width:var(--container);margin-inline:auto;padding-inline:20px}
+  header{position:sticky;top:0;z-index:40;backdrop-filter:saturate(140%) blur(8px);
+    background:linear-gradient(180deg, rgba(12,15,26,.85), rgba(12,15,26,.65));border-bottom:1px solid var(--stroke);}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+  .brand img{height:44px;width:auto}
+  .brand-title{margin-left:4px;font-size:18px;font-weight:700;letter-spacing:.1px;
+    background:linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap;display:inline}
+  .nav-toggle{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;
+    border-radius:10px;background:#0d1022;border:1px solid rgba(255,255,255,.12);color:#cfe8ff;
+    font-size:16px;line-height:1;cursor:pointer;margin-left:16px; position: relative;}
+  .nav-toggle::before{content:""; width:18px; height:2px; background: currentColor; display:block; margin:0 auto; border-radius:2px; box-shadow:0 6px 0 currentColor, 0 -6px 0 currentColor;}
+  .nav-drawer{display:none;position:fixed;top:72px;left:8px;right:8px;z-index:9999;background:rgba(13,16,34,.96);
+    backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:8px}
+  .nav-drawer a{display:block;padding:12px 14px;border-radius:10px;color:#cfe8ff;text-decoration:none}
+  .nav-drawer a:hover{background:rgba(255,255,255,.08)}
+  .nav-drawer.open{display:block}
+  html, body { overflow-x: hidden; }
+  main { touch-action: pan-y; }
+  .btn{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.18);
+    padding:12px 18px;border-radius:999px;font-weight:700;background:linear-gradient(135deg, var(--brand), var(--brand-2));cursor:pointer;color:#0a0d18; text-decoration:none}
+  .btn:hover{filter:brightness(1.05); transform: translateY(-1px);}
+  footer{padding:40px 0 64px;border-top:1px solid var(--stroke);color:var(--muted)}
+  .foot-grid{display:grid;grid-template-columns:1fr;place-items:center;gap:10px}
+  .card{background:linear-gradient(180deg, rgba(16,21,40,.92), rgba(16,21,40,.72)); border:1px solid var(--stroke); border-radius:var(--radius); padding:20px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media (max-width:960px){.grid-3{grid-template-columns:1fr} .brand-title{font-size:16px}}
+  /* page sections */
+  .view{display:none}
+  .view.active{display:block}
+  .hidden{display:none}
+  /* tabs (small links on home) */
+  .tabs{margin:40px auto 0;max-width:var(--container);}
+  .tab-bar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+  .tab-btn{padding:8px 12px;border-radius:12px;border:1px solid var(--stroke);background:#0f1428;color:#dfe6ff;cursor:pointer;font-weight:600}
+  .tab-btn[aria-selected="true"]{background:linear-gradient(135deg, rgba(123,92,255,.18), rgba(0,224,184,.18)); border-color: rgba(255,255,255,.28)}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="?view=home" target="_self">
+      <img class="logo-img" alt="Komvox Logo" src="komvox-logo.png" onerror="this.style.display='none'"/>
+      <span class="brand-title">Komvox</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-drawer" title="Menü" aria-label="Menü"></button>
+  </div>
+</header>
+
+<div id="nav-drawer" class="nav-drawer" role="menu">
+  <a href="?view=home" role="menuitem" target="_self">Home</a>
+  <a href="?view=so" role="menuitem" target="_self">So funktioniert’s</a>
+  <a href="?view=termin" role="menuitem" target="_self">Termin buchen</a>
+  <a href="?view=ueber-uns" role="menuitem" target="_self">Über uns</a>
+  <a href="?view=impressum" role="menuitem" target="_self">Impressum</a>
+  <a href="?view=datenschutz" role="menuitem" target="_self">Datenschutz</a>
+</div>
+
+<!-- HOME -->
+<main id="home" class="view">
+  <section class="hero-wrap" style="min-height:60vh;display:grid;place-items:center;position:relative;overflow:hidden">
+    <div class="container" style="text-align:center">
+      <span class="card" style="display:inline-flex;padding:6px 10px;border-radius:999px;border:1px solid var(--stroke);color:#b7c0e0">NEU – Der KI-Rezeptionist für KMU</span>
+      <h1 style="font-size:clamp(34px,7vw,64px);line-height:1.05;margin:12px 0">Immer erreichbar. Immer professionell.</h1>
+      <p class="lead" style="max-width:820px;margin:0 auto 18px;color:#cbd5ff;font-size:clamp(16px,2.2vw,20px)">
+        Komvox beantwortet Anrufe in Sekunden, vergibt Termine nach Regeln und übergibt strukturierte Informationen an Ihr Team.
+      </p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px">
+        <a class="btn" href="?view=so" target="_self">So funktioniert’s</a>
+        <a class="btn" href="?view=termin" target="_self">Termin buchen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Small links / Tabs -->
+  <section class="tabs container" id="home-tabs">
+    <div class="tab-bar" role="tablist" aria-label="Inhalte">
+      <button class="tab-btn" role="tab" aria-controls="tab-warum" aria-selected="true" id="tabbtn-warum">Warum Komvox</button>
+      <button class="tab-btn" role="tab" aria-controls="tab-ablauf" aria-selected="false" id="tabbtn-ablauf">Ablauf</button>
+      <button class="tab-btn" role="tab" aria-controls="tab-preise" aria-selected="false" id="tabbtn-preise">Preise</button>
+      <button class="tab-btn" role="tab" aria-controls="tab-faq" aria-selected="false" id="tabbtn-faq">FAQ</button>
+      <button class="tab-btn" role="tab" aria-controls="tab-kontakt" aria-selected="false" id="tabbtn-kontakt">Kontakt</button>
+    </div>
+
+    <div id="tab-warum" class="tab-panel active" role="tabpanel" aria-labelledby="tabbtn-warum">
+      <div class="grid-3">
+        <div class="card"><h3>24/7 Erreichbarkeit</h3><p>Begrüßung, Qualifizierung, Terminvergabe – rund um die Uhr.</p></div>
+        <div class="card"><h3>Natürliche Sprache</h3><p>Dialoge in menschlicher Qualität mit Kontext.</p></div>
+        <div class="card"><h3>DSGVO-konform</h3><p>Datenverarbeitung in der EU, Export &amp; Löschung.</p></div>
+      </div>
+    </div>
+
+    <div id="tab-ablauf" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-ablauf">
+      <div class="grid-3">
+        <div class="card"><strong>1</strong><h3>Erstgespräch &amp; Demo</h3><p>Gemeinsamer Austausch zu Zielen, Regeln &amp; Workflows. Live-Demo.</p></div>
+        <div class="card"><strong>2</strong><h3>Verbindung &amp; KI-Feinschliff</h3><p>Telefonanlage koppeln, Kalender/Inbox anschließen &amp; die KI auf euer Business zuschneiden.</p></div>
+        <div class="card"><strong>3</strong><h3>Go-Live (2-Wochen-Testphase)</h3><p>Start mit echten Anrufen – Feintuning jederzeit.</p></div>
+      </div>
+    </div>
+
+    <div id="tab-preise" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-preise">
+      <div class="card" style="max-width:660px;margin:0 auto;text-align:center">
+        <div style="font-size:34px;font-weight:800">€ 199 <span style="font-size:16px;color:#b7c0e0">/ Monat</span></div>
+        <ul style="color:#b7c0e0; text-align:left; display:inline-block; margin-top:8px">
+          <li>24/7 Anrufannahme</li><li>Intelligente Terminvergabe</li><li>Kalender-Sync</li><li>Team-Inbox Übergabe</li><li>Einrichtung kostenlos</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="tab-faq" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-faq">
+      <div class="card" style="max-width:860px;margin:0 auto">
+        <details><summary>Wie schnell ist Komvox einsatzbereit?</summary><p>Meist innerhalb weniger Tage nach dem Erstgespräch und dem Einrichten der Regeln.</p></details>
+        <details><summary>Wie läuft die Terminvergabe ab?</summary><p>Der Assistent qualifiziert das Anliegen, schlägt freie Slots gemäß euren Regeln vor und bestätigt den Termin – inklusive Übergabe an Kalender &amp; Team-Inbox.</p></details>
+        <details><summary>Was kostet es?</summary><p><strong>2 Wochen gratis testen</strong>, danach <strong>199 €/Monat</strong>. Monatlich kündbar. Die <strong>Einrichtung ist kostenlos</strong>.</p></details>
+        <details><summary>Wo werden Daten verarbeitet?</summary><p>In der EU. Export-, Lösch- und Rollen-/Rechte-Konzepte sind vorgesehen.</p></details>
+        <details><summary>Kann ich jederzeit kündigen?</summary><p>Ja, monatlich kündbar – ohne Mindestlaufzeit.</p></details>
+      </div>
+    </div>
+
+    <div id="tab-kontakt" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-kontakt">
+      <div class="card" style="display:grid;gap:10px;font-size:18px">
+        <div><strong>E-Mail:</strong> <a href="mailto:info@komvox.de">info@komvox.de</a></div>
+        <div><strong>Telefon:</strong> <a href="tel:+491778626170">+49 177 8626170</a> · <a href="tel:+4915114933670">+49 151 14933670</a></div>
+        <div style="margin-top:8px; text-align:right;">
+          <a class="btn" href="?view=termin" target="_self">Termin buchen</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- SO FUNKTIONIERT'S -->
+<main id="view-so" class="view">
+  <section class="container" style="padding:20px 0">
+    <article class="card" style="max-width:980px;margin:20px auto;">
+      <h1>So funktioniert’s – im Detail</h1>
+      <div class="card" style="margin-top:12px">
+        <h3>1) Kostenloses Erstgespräch & Demo</h3>
+        <ul>
+          <li>Ziele, Regeln, Workflows klären (Öffnungszeiten, Begrüßung, Terminregeln)</li>
+          <li>Live-Demo & Beispiel-Dialoge</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <h3>2) Verbindung & KI-Feinschliff</h3>
+        <ul>
+          <li>Telefonanlage koppeln, Kalender/Inbox anschließen</li>
+          <li>Tonalität, FAQs, Eskalation definieren</li>
+        </ul>
+      </div>
+      <div class="card" style="margin-top:12px">
+        <h3>3) Go-Live (2-Wochen-Testphase)</h3>
+        <ul>
+          <li>Start mit echten Anrufen – Monitoring & Feinschliff</li>
+        </ul>
+      </div>
+      <div style="margin-top:14px">
+        <a class="btn" href="?view=home" target="_self">Zur Startseite</a>
+      </div>
+    </article>
+  </section>
+</main>
+
+<!-- TERMIN -->
+<main id="view-termin" class="view">
+  <section class="container" style="padding:20px 0">
+    <article class="card" style="max-width:860px;margin:20px auto;">
+      <h1>Termin buchen</h1>
+      <style>
+        .vw-form { display:grid; grid-template-columns:minmax(180px,220px) 1fr; gap:12px 16px; align-items:center; max-width:720px; margin:0 auto; }
+        .vw-form label { font-weight:600; }
+        .vw-form input, .vw-form textarea { width:100%; box-sizing:border-box; height:48px; padding:12px 14px; border-radius:10px; border:1px solid rgba(27,33,58,.25); background:rgba(16,21,40,.08); color:var(--text)}
+        .vw-form textarea { height:auto; min-height:110px; resize:vertical; }
+        .vw-actions { grid-column:1/-1; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+        @media (max-width:720px){ .vw-form{ grid-template-columns:1fr; } }
+      </style>
+      <form id="form-termin" class="vw-form">
+        <label for="t-vorname">Vorname*</label>
+        <input id="t-vorname" type="text" placeholder="Max" required/>
+        <label for="t-nachname">Nachname*</label>
+        <input id="t-nachname" type="text" placeholder="Mustermann" required/>
+        <label for="t-email">E-Mail*</label>
+        <input id="t-email" type="email" placeholder="name@beispiel.de" required/>
+        <label for="t-phone">Telefon (optional)</label>
+        <input id="t-phone" type="tel" placeholder="+49 151 12345678"/>
+        <label for="t-note">Anliegen / Details</label>
+        <textarea id="t-note" rows="4" placeholder="Worum geht es? Ziele, gewünschte Zeiten …"></textarea>
+        <label></label>
+        <label style="display:flex; align-items:center; gap:10px;">
+          <input id="t-consent" type="checkbox" style="width:18px;height:18px"/>
+          Ich willige in die Verarbeitung meiner Daten zum Zweck der Terminvereinbarung ein.
+        </label>
+        <div class="vw-actions">
+          <button id="t-submit" type="button" class="btn">Weiter zur Terminbuchung</button>
+          <a class="btn" href="?view=home" target="_self">Zur Startseite</a>
+        </div>
+      </form>
+    </article>
+  </section>
+</main>
+
+<!-- ÜBER UNS -->
+<main id="view-about" class="view">
+  <section class="container" style="padding:20px 0">
+    <article class="card" style="max-width:980px;margin:20px auto;">
+      <h1>Über uns</h1>
+      <p><strong>Komvox</strong> ist ein junges Start-up aus <strong>Düsseldorf</strong>.</p>
+      <div class="grid-3" style="margin-top:16px">
+        <div class="card"><h3>Mission</h3><p>Keine verpassten Anrufe mehr – Fokus aufs Wesentliche.</p></div>
+        <div class="card"><h3>Was wir bauen</h3><p>Terminlogik, natürliche Dialoge, Übergabe an Kalender & Team-Inbox.</p></div>
+        <div class="card"><h3>Unser Standard</h3><p>DSGVO-konform, Verarbeitung in der EU, transparenter Betrieb.</p></div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+        <a class="btn" href="?view=home" target="_self">Zur Startseite</a>
+      </div>
+    </article>
+  </section>
+</main>
+
+<!-- IMPRESSUM -->
+<main id="view-impressum" class="view">
+  <section class="container" style="padding:20px 0">
+    <article class="card" style="max-width:980px;margin:20px auto;">
+      <h1>Impressum</h1>
+      <p><strong>Diensteanbieter (§ 5 DDG):</strong> Maximilian Riedel &amp; Finn Hess (geschäftliche Bezeichnung: „Komvox“)</p>
+      <p><strong>Kontakt:</strong> info@komvox.de · +49 177 8626170 · +49 151 14933670</p>
+      <p style="color:#b7c0e0"><em>Hinweis:</em> Angebot richtet sich an Unternehmer (§ 14 BGB).</p>
+      <div style="margin-top:14px">
+        <a class="btn" href="?view=home" target="_self">Zur Startseite</a>
+      </div>
+    </article>
+  </section>
+</main>
+
+<!-- DATENSCHUTZ -->
+<main id="view-datenschutz" class="view">
+  <section class="container" style="padding:20px 0">
+    <article class="card" style="max-width:980px;margin:20px auto;">
+      <h1>Datenschutzerklärung</h1>
+      <p><strong>Verantwortlicher:</strong> Komvox, E-Mail: info@komvox.de.</p>
+      <p><strong>Zwecke &amp; Rechtsgrundlagen:</strong> Anfragen/Termin (Art. 6 Abs. 1 lit. b), Betrieb/Sicherheit (Art. 6 Abs. 1 lit. f DSGVO).</p>
+      <p><strong>Terminbuchung (Calendly):</strong> Externer Link, eigene Verantwortlichkeit. Wir erhalten Terminangaben.</p>
+      <p><strong>Rechte:</strong> Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit, Widerspruch.</p>
+      <div style="margin-top:14px">
+        <a class="btn" href="?view=home" target="_self">Zur Startseite</a>
+      </div>
+    </article>
+  </section>
+</main>
+
+<footer>
+  <div class="container foot-grid">
+    <div class="brand" style="gap:8px">
+      <img class="logo-img" alt="Komvox Logo" src="komvox-logo.png" onerror="this.style.display='none'"/>
+      <span>© 2025 Komvox – komvox.de</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Burger: nur Menü öffnen/schließen. KEIN Abfangen von Link-Klicks.
+(function(){
+  const toggle = document.querySelector('.nav-toggle');
+  const drawer = document.getElementById('nav-drawer');
+  function closeMenu(){ drawer.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
+  if(toggle && drawer){
+    toggle.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const open=!drawer.classList.contains('open');
+      drawer.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open?'true':'false');
+    });
+    document.addEventListener('click', (e)=>{
+      if(drawer.classList.contains('open') && !drawer.contains(e.target) && e.target!==toggle) closeMenu();
+    });
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
+  }
+})();
+</script>
+
+<script>
+// Page router (HARTER RELOAD via ?view=...): wir reagieren NUR auf initialen Seitenaufruf.
+(function(){
+  const titleMap = {
+    "home": "Komvox – Start",
+    "view-so": "Komvox – So funktioniert’s",
+    "view-termin": "Komvox – Termin buchen",
+    "view-about": "Komvox – Über uns",
+    "view-impressum": "Komvox – Impressum",
+    "view-datenschutz": "Komvox – Datenschutzerklärung"
+  };
+  function getViewFromParam(){
+    const v = new URLSearchParams(location.search).get('view');
+    const map = {home:'home', so:'view-so', termin:'view-termin', 'ueber-uns':'view-about', impressum:'view-impressum', datenschutz:'view-datenschutz'};
+    return map[v] || 'home';
+  }
+  function showOnly(viewId){
+    document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+    const el = document.getElementById(viewId);
+    if(el){ el.classList.add('active'); }
+    document.title = titleMap[viewId] || "Komvox";
+    window.scrollTo({top:0, behavior:'auto'});
+  }
+  document.addEventListener('DOMContentLoaded', function(){ showOnly(getViewFromParam()); });
+})();
+</script>
+
+<script>
+// Tabs auf der Startseite (kleine Links): Nur lokale Umschaltung, keine Seiten-Navigation.
+(function(){
+  document.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.tab-btn');
+    if(!btn) return;
+    const home = btn.closest('#home');
+    if(!home) return;
+    const target = btn.getAttribute('aria-controls');
+    home.querySelectorAll('.tab-btn').forEach(b=>b.setAttribute('aria-selected','false'));
+    btn.setAttribute('aria-selected','true');
+    home.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    const panel = home.querySelector('#'+target);
+    if(panel) panel.classList.add('active');
+  });
+})();
+</script>
+
+<script>
+// Fix: "Weiter zur Terminbuchung" Button öffnet Calendly in neuem Tab mit Parametern.
+(function(){
+  function attachBookingHandler(){
+    const btn = document.getElementById('t-submit');
+    if(!btn) return;
+    // Verhindere doppelte Listener
+    btn.replaceWith(btn.cloneNode(true));
+    const freshBtn = document.getElementById('t-submit');
+    freshBtn.addEventListener('click', function() {
+      const vor = (document.getElementById('t-vorname')||{}).value?.trim()||'';
+      const nach= (document.getElementById('t-nachname')||{}).value?.trim()||'';
+      const email=(document.getElementById('t-email')||{}).value?.trim()||'';
+      const phone=(document.getElementById('t-phone')||{}).value?.trim()||'';
+      const note =(document.getElementById('t-note')||{}).value?.trim()||'';
+      const ok   =(document.getElementById('t-consent')||{}).checked||false;
+      if(!vor||!nach||!email){ alert('Bitte Vorname, Nachname und E-Mail ausfüllen.'); return; }
+      if(!ok){ alert('Bitte Einwilligung zur Datenverarbeitung bestätigen.'); return; }
+      const name = encodeURIComponent(vor + ' ' + nach);
+      const mail = encodeURIComponent(email);
+      const phoneEnc = encodeURIComponent(phone);
+      const noteEnc  = encodeURIComponent(note);
+      let url = 'https://calendly.com/yourvoiceworks/30min';
+      url += (url.includes('?') ? '&' : '?') + 'name=' + name + '&email=' + mail + '&a1=' + phoneEnc + '&a2=' + noteEnc;
+      window.open(url, '_blank', 'noopener');
+    });
+  }
+  // Beim Initial-Load und bei jedem (potenziellen) View-Wechsel sicherstellen
+  document.addEventListener('DOMContentLoaded', attachBookingHandler);
+  window.addEventListener('pageshow', attachBookingHandler);
+})();
+</script>
+
+</body>
+</html>
