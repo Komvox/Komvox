@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Komvox</title>
+<title>Komvox – KI-Telefonassistent für Unternehmen & Praxen</title> <meta name="description" content="Komvox ist Ihr KI-Telefonassistent: 24/7 Anrufannahme, intelligente Terminvergabe und professionelle Gesprächsführung für Unternehmen und Praxen."> <link rel="canonical" href="https://komvox.de/"> <meta name="robots" content="index, follow">
 <link rel="icon" href="favicon (2).png" type="image/png">
 <meta name="color-scheme" content="light dark"/>
 <style>
@@ -71,7 +71,7 @@
 <div id="nav-drawer" class="nav-drawer" role="menu">
   <a href="?view=home" role="menuitem" target="_self">Home</a>
   <a href="?view=so" role="menuitem" target="_self">So funktioniert’s</a>
-  <a href="?view=termin" role="menuitem" target="_self">Termin buchen</a>
+  <a href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener" role="menuitem" target="_self">Termin buchen</a>
   <a href="?view=ueber-uns" role="menuitem" target="_self">Über uns</a>
   <a href="?view=impressum" role="menuitem" target="_self">Impressum</a>
   <a href="?view=datenschutz" role="menuitem" target="_self">Datenschutz</a>
@@ -88,7 +88,7 @@
       </p>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px">
         <a class="btn" href="?view=so" target="_self">So funktioniert’s</a>
-        <a class="btn" href="?view=termin" target="_self">Termin buchen</a>
+        <a class="btn" href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener" target="_self">Termin buchen</a>
       </div>
     </div>
   </section>
@@ -143,7 +143,7 @@
         <div><strong>E-Mail:</strong> <a href="mailto:info@komvox.de">info@komvox.de</a></div>
         <div><strong>Telefon:</strong> <a href="tel:+491778626170">+49 177 8626170</a> · <a href="tel:+4915114933670">+49 151 14933670</a></div>
         <div style="margin-top:8px; text-align:right;">
-          <a class="btn" href="?view=termin" target="_self">Termin buchen</a>
+          <a class="btn" href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener" target="_self">Termin buchen</a>
         </div>
       </div>
     </div>
@@ -366,7 +366,7 @@
       const mail = encodeURIComponent(email);
       const phoneEnc = encodeURIComponent(phone);
       const noteEnc  = encodeURIComponent(note);
-      let url = 'https://calendly.com/yourvoiceworks/30min';
+      let url = 'https://calendly.com/komvox/vorstellung';
       url += (url.includes('?') ? '&' : '?') + 'name=' + name + '&email=' + mail + '&a1=' + phoneEnc + '&a2=' + noteEnc;
       window.open(url, '_blank', 'noopener');
     });
