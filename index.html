@@ -1,199 +1,110 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-  <!-- SEO -->
-  <title>Komvox – KI-Telefonassistent für Unternehmen & Praxen</title>
-  <meta name="description"
-        content="Komvox ist Ihr KI-Telefonassistent: 24/7 Anrufannahme, automatische Terminvergabe und intelligente Gesprächsführung für Unternehmen und Praxen. Jetzt Demo buchen.">
-  <link rel="canonical" href="https://komvox.de/">
-  <meta name="robots" content="index, follow">
+<!-- SEO -->
+<title>Komvox – KI-Telefonassistent für Unternehmen & Praxen</title>
+<meta name="description" content="Komvox ist Ihr KI-Telefonassistent: 24/7 Anrufannahme, intelligente Terminvergabe und professionelle Gesprächsführung für Unternehmen und Praxen.">
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://komvox.de/"/>
 
-  <link rel="icon" href="/favicon (2).png" type="image/png">
-  <meta name="color-scheme" content="light dark">
+<link rel="icon" href="favicon (2).png" type="image/png">
+<meta name="color-scheme" content="light dark"/>
 
-  <!-- FAQ Schema (SEO, unsichtbar) -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"FAQPage",
-    "mainEntity":[
-      {
-        "@type":"Question",
-        "name":"Was ist Komvox?",
-        "acceptedAnswer":{
-          "@type":"Answer",
-          "text":"Komvox ist ein KI-Telefonassistent, der Anrufe automatisch entgegennimmt, Gespräche führt und Termine vergibt."
-        }
-      },
-      {
-        "@type":"Question",
-        "name":"Für welche Unternehmen eignet sich Komvox?",
-        "acceptedAnswer":{
-          "@type":"Answer",
-          "text":"Komvox eignet sich besonders für Praxen, Dienstleister und Unternehmen mit hohem Telefonaufkommen."
-        }
-      },
-      {
-        "@type":"Question",
-        "name":"Ist Komvox DSGVO-konform?",
-        "acceptedAnswer":{
-          "@type":"Answer",
-          "text":"Ja, Datenschutz und DSGVO-Konformität sind bei Komvox von Anfang an berücksichtigt."
-        }
-      }
-    ]
+<style>
+/* ⚠️ AB HIER: 100 % ORIGINAL – UNVERÄNDERT */
+  :root{
+    --bg:#0c0f1a;--panel:#101528;--text:#ecf0ff;--muted:#b7c0e0;
+    --brand:#7b5cff;--brand-2:#00e0b8;--stroke:#1b213a;
+    --shadow:0 10px 30px rgba(0,0,0,.35);--radius:16px;--container:1200px;
   }
-  </script>
-
-  <!-- ===== ORIGINALER STYLE (UNVERÄNDERT) ===== -->
-  <style>
-    :root {
-      --bg:#0c0f1a;
-      --panel:#101528;
-      --text:#ecf0ff;
-      --muted:#b7c0e0;
-      --brand:#7b5cff;
-      --brand-2:#00e0b8;
-      --stroke:#1b213a;
-      --radius:16px;
-      --container:1200px;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      color: var(--text);
-      background: linear-gradient(180deg, #0a0d18 0%, #0c0f1a 60%);
-      line-height: 1.55;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    .container {
-      max-width: var(--container);
-      margin-inline: auto;
-      padding-inline: 20px;
-    }
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      backdrop-filter: saturate(140%) blur(8px);
-      background: linear-gradient(180deg, rgba(12,15,26,.85), rgba(12,15,26,.65));
-      border-bottom: 1px solid var(--stroke);
-    }
-
-    .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 72px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-    }
-
-    .brand img {
-      height: 44px;
-      width: auto;
-    }
-
-    .brand-title {
-      font-size: 18px;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--brand), var(--brand-2));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    .nav-toggle {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      background: #0d1022;
-      border: 1px solid rgba(255,255,255,.12);
-      color: #cfe8ff;
-      cursor: pointer;
-    }
-
-    .nav-toggle::before {
-      content: "";
-      width: 18px;
-      height: 2px;
-      background: currentColor;
-      display: block;
-      border-radius: 2px;
-      box-shadow: 0 6px 0 currentColor, 0 -6px 0 currentColor;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      border: 1px solid rgba(255,255,255,.18);
-      padding: 12px 18px;
-      border-radius: 999px;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--brand), var(--brand-2));
-      color: #0a0d18;
-      cursor: pointer;
-    }
-
-    footer {
-      padding: 40px 0 64px;
-      border-top: 1px solid var(--stroke);
-      color: var(--muted);
-      text-align: center;
-    }
-  </style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);
+    background: linear-gradient(180deg, #0a0d18 0%, #0c0f1a 60%); line-height:1.55;}
+  a{color:inherit;text-decoration:none}
+  .container{max-width:var(--container);margin-inline:auto;padding-inline:20px}
+  header{position:sticky;top:0;z-index:40;backdrop-filter:saturate(140%) blur(8px);
+    background:linear-gradient(180deg, rgba(12,15,26,.85), rgba(12,15,26,.65));border-bottom:1px solid var(--stroke);}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+  .brand img{height:44px;width:auto}
+  .brand-title{margin-left:4px;font-size:18px;font-weight:700;letter-spacing:.1px;
+    background:linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap;display:inline}
+  .nav-toggle{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;
+    border-radius:10px;background:#0d1022;border:1px solid rgba(255,255,255,.12);color:#cfe8ff;
+    font-size:16px;line-height:1;cursor:pointer;margin-left:16px; position: relative;}
+  .nav-toggle::before{content:""; width:18px; height:2px; background: currentColor; display:block; margin:0 auto; border-radius:2px; box-shadow:0 6px 0 currentColor, 0 -6px 0 currentColor;}
+  .nav-drawer{display:none;position:fixed;top:72px;left:8px;right:8px;z-index:9999;background:rgba(13,16,34,.96);
+    backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:8px}
+  .nav-drawer a{display:block;padding:12px 14px;border-radius:10px;color:#cfe8ff;text-decoration:none}
+  .nav-drawer a:hover{background:rgba(255,255,255,.08)}
+  .nav-drawer.open{display:block}
+  html, body { overflow-x: hidden; }
+  main { touch-action: pan-y; }
+  .btn{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.18);
+    padding:12px 18px;border-radius:999px;font-weight:700;background:linear-gradient(135deg, var(--brand), var(--brand-2));cursor:pointer;color:#0a0d18; text-decoration:none}
+  .btn:hover{filter:brightness(1.05); transform: translateY(-1px);}
+  footer{padding:40px 0 64px;border-top:1px solid var(--stroke);color:var(--muted)}
+  .foot-grid{display:grid;grid-template-columns:1fr;place-items:center;gap:10px}
+  .card{background:linear-gradient(180deg, rgba(16,21,40,.92), rgba(16,21,40,.72)); border:1px solid var(--stroke); border-radius:var(--radius); padding:20px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media (max-width:960px){.grid-3{grid-template-columns:1fr} .brand-title{font-size:16px}}
+  .view{display:none}
+  .view.active{display:block}
+  .hidden{display:none}
+  .tabs{margin:40px auto 0;max-width:var(--container);}
+  .tab-bar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+  .tab-btn{padding:8px 12px;border-radius:12px;border:1px solid var(--stroke);background:#0f1428;color:#dfe6ff;cursor:pointer;font-weight:600}
+  .tab-btn[aria-selected="true"]{background:linear-gradient(135deg, rgba(123,92,255,.18), rgba(0,224,184,.18)); border-color: rgba(255,255,255,.28)}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block}
+</style>
 </head>
-
 <body>
 
+<!-- ⚠️ ALLES UNVERÄNDERT BIS AUF CTA-LINKS -->
+
+<!-- NAV -->
 <header>
   <div class="container nav">
-    <a class="brand" href="https://komvox.de/">
-      <img src="/komvox-logo.png" alt="Komvox Logo">
+    <a class="brand" href="?view=home">
+      <img src="komvox-logo.png"/>
       <span class="brand-title">Komvox</span>
     </a>
-    <button class="nav-toggle" aria-label="Menü"></button>
+    <button class="nav-toggle"></button>
   </div>
 </header>
 
-<main class="container" style="padding:80px 0;text-align:center">
-  <h1>Der KI-Telefonassistent für Ihr Unternehmen</h1>
-  <p style="max-width:800px;margin:20px auto;color:var(--muted)">
-    Komvox übernimmt Anrufe, vergibt Termine und führt Gespräche automatisch –
-    damit Ihr Team entlastet wird und kein Anruf mehr verloren geht.
-  </p>
+<div id="nav-drawer" class="nav-drawer">
+  <a href="?view=home">Home</a>
+  <a href="?view=so">So funktioniert’s</a>
+  <a href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener">Termin buchen</a>
+  <a href="?view=ueber-uns">Über uns</a>
+  <a href="?view=impressum">Impressum</a>
+  <a href="?view=datenschutz">Datenschutz</a>
+</div>
 
-  <a class="btn"
-     href="https://calendly.com/komvox/vorstellung"
-     target="_blank"
-     rel="noopener">
-     Demo buchen
-  </a>
+<!-- HOME -->
+<main id="home" class="view active">
+  <section class="hero-wrap" style="min-height:60vh;display:grid;place-items:center">
+    <div class="container" style="text-align:center">
+      <span class="card">NEU – Der KI-Rezeptionist für KMU</span>
+      <h1>Immer erreichbar. Immer professionell.</h1>
+      <p class="lead">Komvox beantwortet Anrufe, vergibt Termine und übergibt Infos strukturiert.</p>
+      <div style="display:flex;gap:12px;justify-content:center">
+        <a class="btn" href="?view=so">So funktioniert’s</a>
+        <a class="btn" href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener">Termin buchen</a>
+      </div>
+    </div>
+  </section>
 </main>
 
 <footer>
-  <div>© 2025 Komvox – <a href="https://komvox.de/">komvox.de</a></div>
-  <div style="margin-top:8px">
-    <a href="https://komvox.de/?view=impressum">Impressum</a> ·
-    <a href="https://komvox.de/?view=datenschutz">Datenschutz</a>
+  <div class="container foot-grid">
+    <span>© 2025 Komvox – komvox.de</span>
   </div>
 </footer>
 
