@@ -1,303 +1,224 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>KI Telefonassistent für Unternehmen | Komvox – Ihr KI-Telefonassistent</title>
-  <meta name="description" content="Komvox ist Ihr deutscher KI-Telefonassistent, der Anrufe 24/7 entgegennimmt, qualifiziert und bei Bedarf automatisch Termine bucht. Entlasten Sie Ihr Team und verpassen Sie keinen Anruf mehr.">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="index, follow">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>KI-Telefonassistent für Unternehmen | Komvox</title>
+
+  <meta name="description"
+        content="Komvox ist Ihr KI-Telefonassistent für Unternehmen und Praxen: 24/7 Anrufannahme, intelligente Terminvergabe und strukturierte Übergabe an Ihr Team. Jetzt Demo buchen.">
+
   <link rel="canonical" href="https://komvox.de/ki-telefonassistent/">
+  <link rel="icon" href="/favicon (2).png" type="image/png">
+  <meta name="robots" content="index, follow">
+  <meta name="color-scheme" content="light dark"/>
+
+  <!-- ====== DESIGN: identisch zur Hauptseite ====== -->
   <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: #0f172a;
-      background-color: #f9fafb;
-      line-height: 1.6;
+    :root{
+      --bg:#0c0f1a;--panel:#101528;--text:#ecf0ff;--muted:#b7c0e0;
+      --brand:#7b5cff;--brand-2:#00e0b8;--stroke:#1b213a;
+      --shadow:0 10px 30px rgba(0,0,0,.35);--radius:16px;--container:1200px;
     }
-    header {
-      background: #0f172a;
-      color: #f9fafb;
-      padding: 1.25rem 1.5rem;
+    *{box-sizing:border-box}
+    body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      color:var(--text);
+      background: linear-gradient(180deg, #0a0d18 0%, #0c0f1a 60%);
+      line-height:1.55;}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--container);margin-inline:auto;padding-inline:20px}
+
+    header{position:sticky;top:0;z-index:40;backdrop-filter:saturate(140%) blur(8px);
+      background:linear-gradient(180deg, rgba(12,15,26,.85), rgba(12,15,26,.65));
+      border-bottom:1px solid var(--stroke);}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800}
+    .brand img{height:44px;width:auto}
+    .brand-title{
+      font-size:18px;font-weight:700;
+      background:linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
     }
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 1.5rem;
+
+    .nav-toggle{
+      display:inline-flex;align-items:center;justify-content:center;
+      width:36px;height:36px;border-radius:10px;
+      background:#0d1022;border:1px solid rgba(255,255,255,.12);
+      color:#cfe8ff;cursor:pointer;
     }
-    .logo {
-      font-weight: 700;
-      font-size: 1.25rem;
+    .nav-toggle::before{
+      content:"";width:18px;height:2px;background:currentColor;
+      display:block;border-radius:2px;
+      box-shadow:0 6px 0 currentColor,0 -6px 0 currentColor;
     }
-    .tagline {
-      font-size: 0.9rem;
-      opacity: 0.8;
+
+    .nav-drawer{
+      display:none;position:fixed;top:72px;left:8px;right:8px;
+      background:rgba(13,16,34,.96);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:14px;padding:8px;z-index:9999;
     }
-    main {
-      padding: 1.5rem 0 3rem;
+    .nav-drawer a{display:block;padding:12px 14px;border-radius:10px;color:#cfe8ff}
+    .nav-drawer a:hover{background:rgba(255,255,255,.08)}
+    .nav-drawer.open{display:block}
+
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;
+      border:1px solid rgba(255,255,255,.18);
+      padding:12px 18px;border-radius:999px;font-weight:700;
+      background:linear-gradient(135deg, var(--brand), var(--brand-2));
+      color:#0a0d18;cursor:pointer;
     }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 0.75rem;
+
+    .card{
+      background:linear-gradient(180deg, rgba(16,21,40,.92), rgba(16,21,40,.72));
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      padding:20px;
     }
-    h2 {
-      font-size: 1.35rem;
-      margin-top: 2rem;
-      margin-bottom: 0.5rem;
-    }
-    h3 {
-      font-size: 1.05rem;
-      margin-top: 1.25rem;
-      margin-bottom: 0.25rem;
-    }
-    p {
-      margin: 0.25rem 0 0.5rem;
-    }
-    .hero {
-      background: #e5f0ff;
-      border-radius: 0.75rem;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-    }
-    .hero-highlight {
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 600;
-      color: #1d4ed8;
-      margin-bottom: 0.5rem;
-    }
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 2fr 1.2fr;
-      gap: 1.5rem;
-      align-items: start;
-    }
-    .hero-box {
-      background: rgba(255,255,255,0.8);
-      border-radius: 0.75rem;
-      padding: 1rem 1.25rem;
-      font-size: 0.95rem;
-    }
-    .hero-list {
-      list-style: none;
-      padding-left: 0;
-      margin: 0.25rem 0 0;
-    }
-    .hero-list li::before {
-      content: "✔";
-      margin-right: 0.35rem;
-      color: #16a34a;
-    }
-    .btn-primary {
-      display: inline-block;
-      margin-top: 0.75rem;
-      padding: 0.75rem 1.4rem;
-      border-radius: 999px;
-      border: none;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      background: #1d4ed8;
-      color: #f9fafb;
-      cursor: pointer;
-    }
-    .btn-primary:hover {
-      background: #1e40af;
-    }
-    .badge {
-      display: inline-block;
-      font-size: 0.8rem;
-      background: #dbeafe;
-      color: #1d4ed8;
-      padding: 0.25rem 0.55rem;
-      border-radius: 999px;
-      margin-right: 0.25rem;
-      margin-bottom: 0.25rem;
-    }
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
-      margin-top: 0.75rem;
-    }
-    .card {
-      background: #ffffff;
-      border-radius: 0.75rem;
-      padding: 1.25rem 1.35rem;
-      box-shadow: 0 10px 25px rgba(15,23,42,0.07);
-      font-size: 0.95rem;
-    }
-    .muted {
-      font-size: 0.85rem;
-      color: #6b7280;
-    }
-    ul {
-      padding-left: 1.15rem;
-      margin-top: 0.35rem;
-      margin-bottom: 0.5rem;
-    }
-    footer {
-      border-top: 1px solid #e5e7eb;
-      padding: 1.5rem;
-      font-size: 0.85rem;
-      color: #6b7280;
-      background: #f3f4f6;
-    }
-    @media (max-width: 720px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-      }
-      h1 {
-        font-size: 1.6rem;
-      }
-      .container {
-        padding: 1.25rem;
-      }
-    }
+
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    @media (max-width:960px){.grid-3{grid-template-columns:1fr}}
+
+    footer{padding:40px 0 64px;border-top:1px solid var(--stroke);color:var(--muted)}
+    .foot-grid{display:grid;gap:12px;place-items:center;text-align:center}
   </style>
 
-  <!-- FAQ Structured Data -->
+  <!-- ====== SEO: FAQ Schema ====== -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
       {
-        "@type": "Question",
-        "name": "Was ist ein KI-Telefonassistent von Komvox?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Der KI-Telefonassistent von Komvox beantwortet eingehende Anrufe automatisiert, stellt Rückfragen, qualifiziert Anliegen und kann direkt Termine in Ihrem Kalender eintragen – rund um die Uhr und in professioneller Sprache."
+        "@type":"Question",
+        "name":"Was ist ein KI-Telefonassistent?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"Ein KI-Telefonassistent nimmt Anrufe automatisch entgegen, führt natürliche Dialoge, vergibt Termine nach Regeln und übergibt strukturierte Informationen an Ihr Team."
         }
       },
       {
-        "@type": "Question",
-        "name": "Für welche Unternehmen eignet sich ein KI-Telefonassistent?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Komvox eignet sich besonders für Praxen, Dienstleister und kleine bis mittelständische Unternehmen mit vielen wiederkehrenden telefonischen Anfragen – etwa Terminwünsche, Öffnungszeiten, Rückrufbitten oder einfache Auskünfte."
+        "@type":"Question",
+        "name":"Für welche Unternehmen eignet sich Komvox?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"Komvox eignet sich besonders für Praxen, Dienstleister und KMU mit vielen wiederkehrenden Anrufen wie Terminwünschen, Rückfragen oder Erstkontakten."
         }
       },
       {
-        "@type": "Question",
-        "name": "Ersetzt Komvox menschliche Mitarbeitende?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Komvox soll Ihr Team entlasten, nicht ersetzen. Standardanfragen und Terminbuchungen übernimmt der Assistent, während sich Ihr Personal auf die persönliche Betreuung vor Ort konzentrieren kann."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Wie schnell kann der KI-Telefonassistent eingerichtet werden?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "In vielen Fällen lässt sich Komvox innerhalb weniger Tage anbinden. Wir besprechen Ihre Abläufe, hinterlegen Regeln und verbinden den Assistenten mit Ihrer bestehenden Telefonanlage bzw. Rufnummer."
+        "@type":"Question",
+        "name":"Ersetzt der KI-Telefonassistent Mitarbeitende?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"Nein. Komvox entlastet Ihr Team, indem Standardanfragen automatisiert werden. Persönliche Betreuung bleibt weiterhin bei Ihren Mitarbeitenden."
         }
       }
     ]
   }
   </script>
 </head>
+
 <body>
-  <header>
-    <div class="container">
-      <div class="logo">Komvox</div>
-      <div class="tagline">Ihr KI-Telefonassistent für moderne Kundenkommunikation</div>
-    </div>
-  </header>
 
-  <main class="container">
-    <section class="hero">
-      <div class="hero-highlight">KI-Telefonassistent für Unternehmen</div>
-      <h1>Nie wieder Anrufe verpassen – mit dem KI-Telefonassistenten von Komvox</h1>
-      <p>Komvox beantwortet Ihre Anrufe automatisch, rund um die Uhr. Der Assistent begrüßt Anrufende professionell, versteht Anliegen, stellt Rückfragen und kann direkt Termine in Ihrem Kalender buchen – ganz ohne Wartezeiten.</p>
+<header>
+  <div class="container nav">
+    <a class="brand" href="https://komvox.de/">
+      <img src="/komvox-logo.png" alt="Komvox Logo" onerror="this.style.display='none'">
+      <span class="brand-title">Komvox</span>
+    </a>
+    <button class="nav-toggle" aria-label="Menü"></button>
+  </div>
+</header>
 
-      <div class="hero-grid">
-        <div>
-          <h3>Was Komvox für Sie übernimmt</h3>
-          <ul class="hero-list">
-            <li>24/7 Entgegennahme von Anrufen – auch außerhalb der Öffnungszeiten</li>
-            <li>Strukturierte Erfassung von Name, Anliegen und Rückrufnummer</li>
-            <li>Automatische Terminbuchung nach klaren Regeln</li>
-            <li>Filterung von Standardanfragen, damit Ihr Team entlastet wird</li>
-          </ul>
-          <a class="btn-primary" href="https://komvox.de/#kontakt">Kostenlose Demo anfragen</a>
-          <p class="muted">Unverbindliches Erstgespräch – wir zeigen Ihnen live, wie der KI-Telefonassistent in Ihrem Unternehmen funktioniert.</p>
-        </div>
-        <div class="hero-box">
-          <strong>Typische Anwendungsfälle</strong>
-          <ul class="hero-list">
-            <li>Praxen (z.&nbsp;B. Zahnärzte, Hausärzte, Physio)</li>
-            <li>Friseure &amp; Beauty-Studios</li>
-            <li>Agenturen &amp; Dienstleister</li>
-            <li>Handwerksbetriebe und lokale Unternehmen</li>
-          </ul>
-          <p class="muted">Komvox passt sich Ihren Abläufen, Öffnungszeiten und Wünschen an – Sie behalten jederzeit die Kontrolle.</p>
-        </div>
-      </div>
-    </section>
+<div id="nav-drawer" class="nav-drawer">
+  <a href="https://komvox.de/">Home</a>
+  <a href="https://komvox.de/?view=so">So funktioniert’s</a>
+  <a href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener">Termin buchen</a>
+  <a href="https://komvox.de/?view=ueber-uns">Über uns</a>
+  <a href="https://komvox.de/?view=impressum">Impressum</a>
+  <a href="https://komvox.de/?view=datenschutz">Datenschutz</a>
+</div>
 
-    <section>
-      <h2>Warum ein KI-Telefonassistent Ihrem Unternehmen hilft</h2>
-      <div class="grid-2">
-        <div class="card">
-          <h3>Kein verlorener Anruf mehr</h3>
-          <p>Ob in Stoßzeiten, in der Mittagspause oder nach Feierabend – Komvox geht immer ans Telefon. Anrufende erhalten sofort eine freundliche, strukturierte Antwort, statt lange in der Warteschleife zu hängen oder aufzugeben.</p>
-        </div>
-        <div class="card">
-          <h3>Mehr Zeit für das Wesentliche</h3>
-          <p>Ihr Team muss nicht mehr denselben Fragen dutzendfach am Tag beantworten. Standardanfragen übernimmt der KI-Assistent, sodass Mitarbeitende sich auf die persönliche Betreuung vor Ort und komplexere Fälle konzentrieren können.</p>
-        </div>
-        <div class="card">
-          <h3>Klare Prozesse statt Notizzettel-Chaos</h3>
-          <p>Jeder Anruf kann automatisch dokumentiert werden – zum Beispiel in Ihrem Kalender oder CRM. Rückrufbitten, Terminwünsche oder abgesagte Termine gehen nicht mehr verloren.</p>
-        </div>
-        <div class="card">
-          <h3>Planbare Erreichbarkeit</h3>
-          <p>Komvox spricht immer in gleichbleibender Qualität – freundlich, professionell und verlässlich. Das stärkt das Vertrauen Ihrer Kundinnen und Kunden in Ihre Organisation.</p>
-        </div>
-      </div>
-    </section>
+<main>
+  <section class="container" style="padding:60px 0 30px;text-align:center">
+    <span class="card" style="display:inline-block;padding:6px 12px;color:#b7c0e0">
+      KI-Telefonassistent für Unternehmen
+    </span>
+    <h1 style="font-size:clamp(34px,7vw,56px);line-height:1.05;margin:16px 0">
+      Nie wieder Anrufe verpassen
+    </h1>
+    <p style="max-width:820px;margin:0 auto 22px;color:#cbd5ff;font-size:18px">
+      Komvox ist Ihr KI-Telefonassistent: Er nimmt Anrufe rund um die Uhr entgegen,
+      vergibt Termine nach festen Regeln und übergibt alle Informationen strukturiert an Ihr Team.
+    </p>
+    <a class="btn"
+       href="https://calendly.com/komvox/vorstellung"
+       target="_blank"
+       rel="noopener">
+      Demo buchen
+    </a>
+  </section>
 
-    <section>
-      <h2>Wie der KI-Telefonassistent von Komvox funktioniert</h2>
-      <ol>
-        <li><strong>Analyse Ihrer Abläufe:</strong> Wir verstehen, wie bei Ihnen heute Anrufe angenommen und weiterverarbeitet werden.</li>
-        <li><strong>Definition von Regeln:</strong> Wir legen gemeinsam fest, welche Anfragen wie beantwortet werden sollen und wann ein Termin gebucht wird.</li>
-        <li><strong>Anbindung an Ihre Rufnummer:</strong> Komvox wird entweder direkt oder über Rufweiterleitung mit Ihrer bestehenden Nummer verbunden.</li>
-        <li><strong>Laufender Feinschliff:</strong> Auf Basis echter Gespräche optimieren wir Antworten und Entscheidungslogik kontinuierlich.</li>
-      </ol>
-      <p>Sie behalten jederzeit die Kontrolle und können Anpassungen, Sperrzeiten und individuelle Antworten jederzeit mit uns abstimmen.</p>
-    </section>
-
-    <section>
-      <h2>Typische Fragen zum KI-Telefonassistenten</h2>
+  <section class="container" style="padding:40px 0">
+    <div class="grid-3">
       <div class="card">
-        <h3>Ist Komvox DSGVO-konform?</h3>
-        <p>Ja. Wir achten darauf, dass alle Datenverarbeitungsprozesse im Rahmen der geltenden Datenschutzanforderungen gestaltet werden. Details stimmen wir individuell mit Ihnen ab.</p>
-
-        <h3>Wie klingt der KI-Assistent?</h3>
-        <p>Komvox arbeitet mit modernen, natürlich klingenden Stimmen. Die Ansprache kann an Ihre Zielgruppe angepasst werden – vom sachlich-ruhigen Ton bis hin zu etwas lockerer im passenden Rahmen.</p>
-
-        <h3>Was passiert mit komplexen Anfragen?</h3>
-        <p>Der Assistent kann Anrufende bei Bedarf freundlich darum bitten, eine Rückrufmöglichkeit zu hinterlassen oder das Gespräch an Ihr Team weiterleiten. So bleiben Sie handlungsfähig, ohne ständig am Telefon zu hängen.</p>
+        <h3>24/7 erreichbar</h3>
+        <p>Auch bei hohem Anrufaufkommen, in Pausen oder nach Feierabend bleibt Ihr Unternehmen erreichbar.</p>
       </div>
-    </section>
-
-    <section>
-      <h2>Jetzt unverbindlich starten</h2>
-      <p>Sie möchten testen, wie ein KI-Telefonassistent in Ihrem Unternehmen funktioniert? Wir zeigen Ihnen Komvox gerne live in einer Demo und besprechen, wie der Assistent konkret in Ihrem Alltag arbeitet.</p>
-      <a class="btn-primary" href="https://komvox.de/#kontakt">Jetzt Demo mit Komvox anfragen</a>
-      <p class="muted">Kurzes Gespräch, klare Einschätzung – ohne Verpflichtung.</p>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      Komvox – Ihr KI-Telefonassistent für moderne Unternehmen.  
-      Diese Seite ist eine spezialisierte Landingpage zum Thema „KI-Telefonassistent“.
+      <div class="card">
+        <h3>Intelligente Terminvergabe</h3>
+        <p>Der Assistent vergibt Termine nur nach Ihren Regeln – automatisch und fehlerfrei.</p>
+      </div>
+      <div class="card">
+        <h3>DSGVO-konform</h3>
+        <p>Datenschutz und Transparenz sind von Anfang an mitgedacht.</p>
+      </div>
     </div>
-  </footer>
+  </section>
+
+  <section class="container" style="padding:20px 0 60px;text-align:center">
+    <h2>So starten Sie mit Komvox</h2>
+    <p style="max-width:720px;margin:0 auto 20px;color:#b7c0e0">
+      In einer kurzen Vorstellung zeigen wir Ihnen live, wie der KI-Telefonassistent
+      in Ihrem Unternehmen eingesetzt werden kann.
+    </p>
+    <a class="btn"
+       href="https://calendly.com/komvox/vorstellung"
+       target="_blank"
+       rel="noopener">
+      Termin zur Vorstellung buchen
+    </a>
+  </section>
+</main>
+
+<footer>
+  <div class="container foot-grid">
+    <div>
+      © 2025 Komvox – <a href="https://komvox.de/">komvox.de</a>
+    </div>
+    <div>
+      <a href="https://komvox.de/?view=impressum">Impressum</a> ·
+      <a href="https://komvox.de/?view=datenschutz">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const toggle = document.querySelector('.nav-toggle');
+  const drawer = document.getElementById('nav-drawer');
+  if(!toggle || !drawer) return;
+  toggle.addEventListener('click', ()=>{
+    drawer.classList.toggle('open');
+  });
+  document.addEventListener('click', (e)=>{
+    if(!drawer.contains(e.target) && !toggle.contains(e.target)){
+      drawer.classList.remove('open');
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
