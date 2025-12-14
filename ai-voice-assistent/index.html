@@ -1,183 +1,209 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <title>AI Voice Assistent für Telefonanrufe | Komvox – Ihr KI-Telefonassistent</title>
-  <meta name="description" content="Der AI Voice Assistent von Komvox nimmt Telefonanrufe automatisiert entgegen, versteht Anliegen und kann direkt Termine buchen. Ideal für moderne Unternehmen, Praxen und Dienstleister.">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="index, follow">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AI Voice Assistent für Unternehmen | Komvox</title>
+
+  <meta name="description"
+        content="Der AI Voice Assistent von Komvox automatisiert Telefonanrufe mit natürlicher Sprache, intelligenter Terminvergabe und strukturierter Übergabe an Ihr Team. Jetzt Demo buchen.">
+
   <link rel="canonical" href="https://komvox.de/ai-voice-assistent/">
+  <link rel="icon" href="/favicon (2).png" type="image/png">
+  <meta name="robots" content="index, follow">
+  <meta name="color-scheme" content="light dark"/>
+
   <style>
-    body { margin: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #0f172a; background-color: #f9fafb; line-height: 1.6; }
-    header { background: #0f172a; color: #f9fafb; padding: 1.25rem 1.5rem; }
-    .container { max-width: 960px; margin: 0 auto; padding: 1.5rem; }
-    .logo { font-weight: 700; font-size: 1.25rem; }
-    .tagline { font-size: 0.9rem; opacity: 0.8; }
-    main { padding: 1.5rem 0 3rem; }
-    h1 { font-size: 2rem; margin-bottom: 0.75rem; }
-    h2 { font-size: 1.35rem; margin-top: 2rem; margin-bottom: 0.5rem; }
-    h3 { font-size: 1.05rem; margin-top: 1.25rem; margin-bottom: 0.25rem; }
-    p { margin: 0.25rem 0 0.5rem; }
-    .hero { background: #eef2ff; border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 2rem; }
-    .hero-highlight { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; color: #4f46e5; margin-bottom: 0.5rem; }
-    .hero-grid { display: grid; grid-template-columns: 2fr 1.2fr; gap: 1.5rem; align-items: start; }
-    .hero-box { background: rgba(255,255,255,0.9); border-radius: 0.75rem; padding: 1rem 1.25rem; font-size: 0.95rem; }
-    .hero-list { list-style: none; padding-left: 0; margin: 0.25rem 0 0; }
-    .hero-list li::before { content: "✔"; margin-right: 0.35rem; color: #16a34a; }
-    .btn-primary { display: inline-block; margin-top: 0.75rem; padding: 0.75rem 1.4rem; border-radius: 999px; border: none; text-decoration: none; font-weight: 600; font-size: 0.95rem; background: #4f46e5; color: #f9fafb; cursor: pointer; }
-    .btn-primary:hover { background: #4338ca; }
-    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 0.75rem; }
-    .card { background: #ffffff; border-radius: 0.75rem; padding: 1.25rem 1.35rem; box-shadow: 0 10px 25px rgba(15,23,42,0.07); font-size: 0.95rem; }
-    .muted { font-size: 0.85rem; color: #6b7280; }
-    ul { padding-left: 1.15rem; margin-top: 0.35rem; margin-bottom: 0.5rem; }
-    footer { border-top: 1px solid #e5e7eb; padding: 1.5rem; font-size: 0.85rem; color: #6b7280; background: #f3f4f6; }
-    @media (max-width: 720px) {
-      .hero-grid { grid-template-columns: 1fr; }
-      h1 { font-size: 1.6rem; }
-      .container { padding: 1.25rem; }
+    :root{
+      --bg:#0c0f1a;--panel:#101528;--text:#ecf0ff;--muted:#b7c0e0;
+      --brand:#7b5cff;--brand-2:#00e0b8;--stroke:#1b213a;
+      --shadow:0 10px 30px rgba(0,0,0,.35);--radius:16px;--container:1200px;
     }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      color:var(--text);
+      background: linear-gradient(180deg, #0a0d18 0%, #0c0f1a 60%);
+      line-height:1.55;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--container);margin-inline:auto;padding-inline:20px}
+
+    header{
+      position:sticky;top:0;z-index:40;
+      backdrop-filter:saturate(140%) blur(8px);
+      background:linear-gradient(180deg, rgba(12,15,26,.85), rgba(12,15,26,.65));
+      border-bottom:1px solid var(--stroke);
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800}
+    .brand img{height:44px;width:auto}
+    .brand-title{
+      font-size:18px;font-weight:700;
+      background:linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+
+    .nav-toggle{
+      display:inline-flex;align-items:center;justify-content:center;
+      width:36px;height:36px;border-radius:10px;
+      background:#0d1022;border:1px solid rgba(255,255,255,.12);
+      color:#cfe8ff;cursor:pointer;
+    }
+    .nav-toggle::before{
+      content:"";width:18px;height:2px;background:currentColor;
+      display:block;border-radius:2px;
+      box-shadow:0 6px 0 currentColor,0 -6px 0 currentColor;
+    }
+
+    .nav-drawer{
+      display:none;position:fixed;top:72px;left:8px;right:8px;
+      background:rgba(13,16,34,.96);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:14px;padding:8px;z-index:9999;
+    }
+    .nav-drawer a{display:block;padding:12px 14px;border-radius:10px;color:#cfe8ff}
+    .nav-drawer a:hover{background:rgba(255,255,255,.08)}
+    .nav-drawer.open{display:block}
+
+    .btn{
+      display:inline-flex;align-items:center;gap:10px;
+      border:1px solid rgba(255,255,255,.18);
+      padding:12px 18px;border-radius:999px;font-weight:700;
+      background:linear-gradient(135deg, var(--brand), var(--brand-2));
+      color:#0a0d18;cursor:pointer;
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(16,21,40,.92), rgba(16,21,40,.72));
+      border:1px solid var(--stroke);
+      border-radius:var(--radius);
+      padding:20px;
+    }
+
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    @media (max-width:960px){.grid-3{grid-template-columns:1fr}}
+
+    footer{padding:40px 0 64px;border-top:1px solid var(--stroke);color:var(--muted)}
+    .foot-grid{display:grid;gap:12px;place-items:center;text-align:center}
   </style>
 
-  <!-- FAQ Structured Data -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
       {
-        "@type": "Question",
-        "name": "Was macht der AI Voice Assistent von Komvox?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Der AI Voice Assistent von Komvox nimmt eingehende Telefonanrufe automatisiert entgegen, versteht die Anliegen der Anrufenden, stellt Rückfragen und kann bei Bedarf direkt Termine buchen oder Informationen hinterlegen."
+        "@type":"Question",
+        "name":"Was ist ein AI Voice Assistent?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"Ein AI Voice Assistent führt natürliche Telefongespräche, versteht Anliegen und automatisiert Aufgaben wie Terminbuchungen oder Vorqualifizierung."
         }
       },
       {
-        "@type": "Question",
-        "name": "Worin unterscheidet sich ein AI Voice Assistent von einer klassischen Bandansage?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Im Gegensatz zu starren Bandansagen kann der AI Voice Assistent aktiv mit Anrufenden sprechen, flexibel reagieren und natürliche Dialoge führen. Er versteht freie Sprache statt nur Tastenwahl und kann individuelle Antworten geben."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Ist der AI Voice Assistent für internationale Kundschaft geeignet?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Je nach Konfiguration kann der AI Voice Assistent mehrsprachig eingesetzt werden. Sprechen Sie uns einfach an, wenn Sie Anrufe in mehreren Sprachen abbilden möchten."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "Kann der AI Voice Assistent mit bestehenden Systemen verbunden werden?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Ja, Komvox lässt sich in vielen Fällen mit Kalender-, Buchungs- oder Ticket-Systemen verbinden. So können etwa Termine automatisch angelegt oder Anfragen strukturiert weitergegeben werden."
+        "@type":"Question",
+        "name":"Wie unterscheidet sich Komvox von einer Bandansage?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"Komvox versteht freie Sprache, reagiert flexibel auf Rückfragen und führt echte Dialoge – statt starrer Menüs."
         }
       }
     ]
   }
   </script>
 </head>
+
 <body>
-  <header>
-    <div class="container">
-      <div class="logo">Komvox</div>
-      <div class="tagline">Ihr KI-Telefonassistent &amp; AI Voice Assistent für moderne Unternehmen</div>
-    </div>
-  </header>
 
-  <main class="container">
-    <section class="hero">
-      <div class="hero-highlight">AI Voice Assistent für Telefonanrufe</div>
-      <h1>AI Voice Assistent von Komvox – intelligente Telefonautomatisierung für Ihr Unternehmen</h1>
-      <p>Mit dem AI Voice Assistent von Komvox holen Sie sich einen digitalen Mitarbeitenden ans Telefon: Er nimmt Anrufe entgegen, führt natürliche Gespräche, versteht Anliegen und kann direkt Maßnahmen auslösen – etwa eine Terminbuchung oder eine strukturierte Weitergabe an Ihr Team.</p>
+<header>
+  <div class="container nav">
+    <a class="brand" href="https://komvox.de/">
+      <img src="/komvox-logo.png" alt="Komvox Logo" onerror="this.style.display='none'">
+      <span class="brand-title">Komvox</span>
+    </a>
+    <button class="nav-toggle" aria-label="Menü"></button>
+  </div>
+</header>
 
-      <div class="hero-grid">
-        <div>
-          <h3>Warum ein AI Voice Assistent?</h3>
-          <ul class="hero-list">
-            <li>Natürliche, dialogorientierte Gespräche statt starre Bandansagen</li>
-            <li>Automatisierte Erfassung von relevanten Informationen</li>
-            <li>Flexible Reaktionen auf Rückfragen und individuelle Anliegen</li>
-            <li>24/7-Verfügbarkeit ohne zusätzliche Personalkosten</li>
-          </ul>
-          <a class="btn-primary" href="https://komvox.de/#kontakt">Demo zum AI Voice Assistenten anfragen</a>
-          <p class="muted">Wir zeigen Ihnen live, wie der AI Voice Assistent mit echten Anruf-Szenarien umgeht.</p>
-        </div>
-        <div class="hero-box">
-          <strong>Typische Einsatzbereiche</strong>
-          <ul class="hero-list">
-            <li>Inbound-Support für Dienstleister und Agenturen</li>
-            <li>Praxen und Kanzleien mit hoher Telefonlast</li>
-            <li>Unternehmen mit internationaler Kundschaft</li>
-            <li>Erstkontakt &amp; Vorqualifizierung von Leads</li>
-          </ul>
-          <p class="muted">Der Assistent passt sich an Ihr Wording, Ihre Prozesse und Ihre Zielgruppe an.</p>
-        </div>
-      </div>
-    </section>
+<div id="nav-drawer" class="nav-drawer">
+  <a href="https://komvox.de/">Home</a>
+  <a href="https://komvox.de/?view=so">So funktioniert’s</a>
+  <a href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener">Termin buchen</a>
+  <a href="https://komvox.de/?view=ueber-uns">Über uns</a>
+  <a href="https://komvox.de/?view=impressum">Impressum</a>
+  <a href="https://komvox.de/?view=datenschutz">Datenschutz</a>
+</div>
 
-    <section>
-      <h2>Vorteile eines AI Voice Assistenten von Komvox</h2>
-      <div class="grid-2">
-        <div class="card">
-          <h3>Natürlich klingende Stimme</h3>
-          <p>Der AI Voice Assistent nutzt moderne Sprachsynthese und klingt deutlich natürlicher als klassische Computerstimmen. Dadurch fühlen sich Anrufende ernst genommen und gut abgeholt.</p>
-        </div>
-        <div class="card">
-          <h3>Versteht freie Sprache</h3>
-          <p>Anrufende müssen keine Menüs per Tastendruck durchklicken. Sie können einfach in eigenen Worten erklären, worum es geht. Der Assistent erkennt das Anliegen und reagiert passend.</p>
-        </div>
-        <div class="card">
-          <h3>Konfigurierbar für Ihr Business</h3>
-          <p>Sie bestimmen, welche Informationen abgefragt werden, welche Fragen gestellt werden sollen und wo Grenzen sind – zum Beispiel, ab wann ein Mensch übernehmen soll.</p>
-        </div>
-        <div class="card">
-          <h3>Skalierbare Erreichbarkeit</h3>
-          <p>Ob zehn oder hundert Anrufe am Tag: Der AI Voice Assistent von Komvox arbeitet zuverlässig weiter, ohne dass Sie zusätzliche Mitarbeitende einplanen müssen.</p>
-        </div>
-      </div>
-    </section>
+<main>
+  <section class="container" style="padding:60px 0 30px;text-align:center">
+    <span class="card" style="display:inline-block;padding:6px 12px;color:#b7c0e0">
+      AI Voice Assistent
+    </span>
+    <h1 style="font-size:clamp(34px,7vw,56px);line-height:1.05;margin:16px 0">
+      Der AI Voice Assistent für moderne Unternehmen
+    </h1>
+    <p style="max-width:820px;margin:0 auto 22px;color:#cbd5ff;font-size:18px">
+      Komvox nutzt moderne Sprach-KI, um Telefonanrufe natürlich zu führen,
+      Anliegen zu verstehen und direkt Aktionen wie Terminbuchungen auszulösen.
+    </p>
+    <a class="btn" href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener">
+      Demo buchen
+    </a>
+  </section>
 
-    <section>
-      <h2>So integrieren Sie den AI Voice Assistenten in Ihr Unternehmen</h2>
-      <ol>
-        <li><strong>Kurzcheck &amp; Ziele:</strong> Wir klären in einem kurzen Gespräch, welche Aufgaben der Assistent übernehmen soll.</li>
-        <li><strong>Dialog-Design:</strong> Wir definieren typische Gesprächsverläufe, Fragen und Antworten – zugeschnitten auf Ihre Branche.</li>
-        <li><strong>Technische Anbindung:</strong> Der Voice Assistent wird mit Ihrer bestehenden Rufnummer und ggf. weiteren Systemen verbunden.</li>
-        <li><strong>Feintuning im Live-Betrieb:</strong> Auf Basis echter Gespräche optimieren wir Formulierungen und Entscheidungslogik kontinuierlich.</li>
-      </ol>
-    </section>
-
-    <section>
-      <h2>FAQ zum AI Voice Assistenten</h2>
+  <section class="container" style="padding:40px 0">
+    <div class="grid-3">
       <div class="card">
-        <h3>Wie schnell ist der AI Voice Assistent einsatzbereit?</h3>
-        <p>Je nach Komplexität der Anforderungen kann ein erster funktionsfähiger Stand oft innerhalb weniger Tage bereitgestellt werden. Der Feinschliff erfolgt dann im Live-Einsatz.</p>
-
-        <h3>Kann der AI Voice Assistent auch nur zu bestimmten Zeiten aktiv sein?</h3>
-        <p>Ja. Sie können definieren, wann der Assistent Anrufe übernehmen soll – zum Beispiel nur außerhalb der Öffnungszeiten oder wenn alle Leitungen belegt sind.</p>
-
-        <h3>Wie sicher sind die Gespräche?</h3>
-        <p>Wir achten auf eine datenschutzkonforme Gestaltung und vermeiden unnötige Datenspeicherung. Konkrete Anforderungen stimmen wir im Onboarding mit Ihnen ab.</p>
+        <h3>Natürliche Dialoge</h3>
+        <p>Der Assistent versteht freie Sprache – keine Menüs, keine Tasten.</p>
       </div>
-    </section>
-
-    <section>
-      <h2>Nächster Schritt: AI Voice Assistent live erleben</h2>
-      <p>Sie möchten hören, wie sich ein AI Voice Assistent in der Praxis anhört und wie er auf typische Anfragen reagiert? Gerne zeigen wir Ihnen Komvox in einer individuellen Demo.</p>
-      <a class="btn-primary" href="https://komvox.de/#kontakt">Jetzt unverbindliche Demo anfragen</a>
-      <p class="muted">Wir besprechen gemeinsam, welche Aufgaben der AI Voice Assistent in Ihrem Unternehmen übernehmen kann.</p>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      Komvox – Ihr KI-Telefonassistent &amp; AI Voice Assistent für moderne Unternehmen.  
-      Diese Seite ist eine spezialisierte Landingpage zum Thema „AI Voice Assistent“.
+      <div class="card">
+        <h3>Automatisierte Prozesse</h3>
+        <p>Terminvergabe, Vorqualifizierung und Übergabe laufen automatisch.</p>
+      </div>
+      <div class="card">
+        <h3>Skalierbar</h3>
+        <p>Ob wenige oder viele Anrufe – Komvox bleibt zuverlässig erreichbar.</p>
+      </div>
     </div>
-  </footer>
+  </section>
+
+  <section class="container" style="padding:20px 0 60px;text-align:center">
+    <h2>AI Voice Assistent live erleben</h2>
+    <p style="max-width:720px;margin:0 auto 20px;color:#b7c0e0">
+      In einer kurzen Vorstellung zeigen wir Ihnen, wie Sprach-KI Ihre Telefonprozesse automatisiert.
+    </p>
+    <a class="btn" href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener">
+      Termin buchen
+    </a>
+  </section>
+</main>
+
+<footer>
+  <div class="container foot-grid">
+    <div>© 2025 Komvox – <a href="https://komvox.de/">komvox.de</a></div>
+    <div>
+      <a href="https://komvox.de/?view=impressum">Impressum</a> ·
+      <a href="https://komvox.de/?view=datenschutz">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const toggle = document.querySelector('.nav-toggle');
+  const drawer = document.getElementById('nav-drawer');
+  if(!toggle || !drawer) return;
+  toggle.addEventListener('click', ()=>drawer.classList.toggle('open'));
+  document.addEventListener('click', e=>{
+    if(!drawer.contains(e.target) && !toggle.contains(e.target)){
+      drawer.classList.remove('open');
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
