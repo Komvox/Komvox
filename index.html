@@ -119,20 +119,84 @@
       </div>
     </div>
 
-    <div id="tab-preise" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-preise">
-      <div class="card" style="max-width:660px;margin:0 auto;text-align:center">
-        <div style="font-size:34px;font-weight:800">€ 199 <span style="font-size:16px;color:#b7c0e0">/ Monat</span></div>
-        <ul style="color:#b7c0e0; text-align:left; display:inline-block; margin-top:8px">
-          <li>24/7 Anrufannahme</li><li>Intelligente Terminvergabe</li><li>Kalender-Sync</li><li>Team-Inbox Übergabe</li><li>Einrichtung kostenlos</li>
-        </ul>
+        <div id="tab-preise" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-preise">
+      <style>
+        #tab-preise .kvx-pricing{max-width:980px;margin:0 auto}
+        #tab-preise .kvx-pricing-top{display:flex;flex-direction:column;gap:10px;text-align:left}
+        #tab-preise .kvx-pricing-title{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+        #tab-preise .kvx-pricing-title h3{margin:0;font-size:22px}
+        #tab-preise .kvx-pillrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+        #tab-preise .kvx-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:999px;background:#0d1022;border:1px solid rgba(255,255,255,.10);color:#b7c0e0;font-size:13px;line-height:1}
+        #tab-preise .kvx-formula{margin-top:8px;padding:12px 14px;border-radius:14px;background:#0d1022;border:1px solid rgba(255,255,255,.10);font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;color:#b7c0e0}
+        #tab-preise .kvx-pricing-grid{margin-top:18px}
+        #tab-preise .kvx-pricing-card{position:relative;overflow:hidden}
+        #tab-preise .kvx-pricing-card h3{margin:0 0 6px 0}
+        #tab-preise .kvx-pricing-card .kvx-sub{color:#b7c0e0;margin:0 0 10px 0}
+        #tab-preise .kvx-pricing-card ul{color:#b7c0e0;margin:10px 0 0 0;padding-left:18px}
+        #tab-preise .kvx-pricing-card li{margin:6px 0}
+        #tab-preise .kvx-badge{position:absolute;top:14px;right:14px;font-size:12px;color:#b7c0e0;border:1px solid rgba(255,255,255,.10);background:rgba(13,16,34,.75);padding:6px 10px;border-radius:999px}
+        #tab-preise .kvx-hover{transition:transform .22s ease, box-shadow .22s ease}
+        #tab-preise .kvx-hover:hover{transform:translateY(-3px)}
+        #tab-preise.active .kvx-anim{animation:kvxFadeUp .55s ease-out both}
+        @keyframes kvxFadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+      </style>
+
+      <div class="kvx-pricing">
+        <div class="card kvx-pricing-top kvx-anim kvx-hover" style="animation-delay:.03s">
+          <div class="kvx-pricing-title">
+            <h3>Pay-per-Use – du zahlst nur, wenn der KI-Telefonassistent wirklich arbeitet</h3>
+          </div>
+          <div class="kvx-pillrow">
+            <span class="kvx-pill"><strong>14 Tage Testphase</strong></span>
+            <span class="kvx-pill"><strong>Keine Setup-/Einrichtungskosten</strong></span>
+            <span class="kvx-pill"><strong>0,12 €</strong> pro Anrufminute</span>
+          </div>
+          <div class="kvx-formula"><strong>Abrechnung am Monatsende:</strong> Anrufminuten × 0,12 €</div>
+        </div>
+
+        <div class="grid-3 kvx-pricing-grid">
+          <div class="card kvx-pricing-card kvx-anim kvx-hover" style="animation-delay:.08s">
+            <div class="kvx-badge">After Hour</div>
+            <h3>After Hour Paket</h3>
+            <p class="kvx-sub">Komvox nimmt Anrufe nur <strong>außerhalb</strong> der Öffnungszeiten entgegen.</p>
+            <ul>
+              <li>Während der Öffnungszeiten gehen Anrufe ganz normal im Unternehmen ein</li>
+              <li>Außerhalb der Öffnungszeiten übernimmt der KI-Assistent</li>
+              <li>Abrechnung nur für tatsächlich angenommene Anrufminuten</li>
+            </ul>
+          </div>
+
+          <div class="card kvx-pricing-card kvx-anim kvx-hover" style="animation-delay:.13s">
+            <div class="kvx-badge">Working Hours</div>
+            <h3>Working Hours Paket</h3>
+            <p class="kvx-sub">Komvox nimmt Anrufe nur <strong>während</strong> der festgelegten Öffnungszeiten entgegen.</p>
+            <ul>
+              <li>Anrufe außerhalb der Öffnungszeiten werden nicht entgegengenommen</li>
+              <li>Ideal, wenn das Team zu Peak-Zeiten entlastet werden soll</li>
+              <li>Abrechnung nur für tatsächlich angenommene Anrufminuten</li>
+            </ul>
+          </div>
+
+          <div class="card kvx-pricing-card kvx-anim kvx-hover" style="animation-delay:.18s">
+            <div class="kvx-badge">24/7</div>
+            <h3>24/7 Paket</h3>
+            <p class="kvx-sub">Komvox nimmt Anrufe <strong>rund um die Uhr</strong> an – an jedem Tag der Woche.</p>
+            <ul>
+              <li>Maximale Erreichbarkeit für Kunden &amp; Patienten</li>
+              <li>Kein Risiko für Fixkosten: bezahlt wird nur bei echten Anrufminuten</li>
+              <li>Abrechnung am Monatsende: Anrufminuten × 0,12 €</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
+
 
     <div id="tab-faq" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-faq">
       <div class="card" style="max-width:860px;margin:0 auto">
         <details><summary>Wie schnell ist Komvox einsatzbereit?</summary><p>Meist innerhalb weniger Tage nach dem Erstgespräch und dem Einrichten der Regeln.</p></details>
         <details><summary>Wie läuft die Terminvergabe ab?</summary><p>Der Assistent qualifiziert das Anliegen, schlägt freie Slots gemäß euren Regeln vor und bestätigt den Termin – inklusive Übergabe an Kalender &amp; Team-Inbox.</p></details>
-        <details><summary>Was kostet es?</summary><p><strong>2 Wochen gratis testen</strong>, danach <strong>199 €/Monat</strong>. Monatlich kündbar. Die <strong>Einrichtung ist kostenlos</strong>.</p></details>
+        <details><summary>Was kostet es?</summary><p><strong>14 Tage gratis testen</strong> – ohne Setup-/Einrichtungskosten. Danach zahlst du <strong>0,12 € pro Anrufminute</strong>. Abrechnung am Monatsende: <strong>Anrufminuten × 0,12 €</strong>. Du zahlst also nur, wenn der KI-Assistent wirklich Anrufe entgegennimmt. Je nach Bedarf wählst du <strong>After Hour</strong>, <strong>Working Hours</strong> oder <strong>24/7</strong>.</p></details>
         <details><summary>Wo werden Daten verarbeitet?</summary><p>In der EU. Export-, Lösch- und Rollen-/Rechte-Konzepte sind vorgesehen.</p></details>
         <details><summary>Kann ich jederzeit kündigen?</summary><p>Ja, monatlich kündbar – ohne Mindestlaufzeit.</p></details>
       </div>
