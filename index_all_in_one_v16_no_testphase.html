@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="/favicon-48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicon.png" sizes="96x96">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Komvox – KI-Telefonassistent für Unternehmen & Praxen</title> <meta name="description" content="Komvox ist Ihr KI-Telefonassistent: 24/7 Anrufannahme, intelligente Terminvergabe und professionelle Gesprächsführung für Unternehmen und Praxen."> <link rel="canonical" href="https://komvox.de/"> <meta name="robots" content="index, follow">
+<meta name="color-scheme" content="light dark"/>
+<style>
+  :root{
+    --bg:#0c0f1a;--panel:#101528;--text:#ecf0ff;--muted:#b7c0e0;
+    --brand:#7b5cff;--brand-2:#00e0b8;--stroke:#1b213a;
+    --shadow:0 10px 30px rgba(0,0,0,.35);--radius:16px;--container:1200px;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);
+    background: linear-gradient(180deg, #0a0d18 0%, #0c0f1a 60%); line-height:1.55;}
+  a{color:inherit;text-decoration:none}
+  .container{max-width:var(--container);margin-inline:auto;padding-inline:20px}
+  header{position:sticky;top:0;z-index:40;backdrop-filter:saturate(140%) blur(8px);
+    background:linear-gradient(180deg, rgba(12,15,26,.85), rgba(12,15,26,.65));border-bottom:1px solid var(--stroke);}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+  .brand img{height:44px;width:auto}
+  .brand-title{margin-left:4px;font-size:18px;font-weight:700;letter-spacing:.1px;
+    background:linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap;display:inline}
+  .nav-toggle{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;
+    border-radius:10px;background:#0d1022;border:1px solid rgba(255,255,255,.12);color:#cfe8ff;
+    font-size:16px;line-height:1;cursor:pointer;margin-left:16px; position: relative;}
+  .nav-toggle::before{content:""; width:18px; height:2px; background: currentColor; display:block; margin:0 auto; border-radius:2px; box-shadow:0 6px 0 currentColor, 0 -6px 0 currentColor;}
+  .nav-drawer{display:none;position:fixed;top:72px;left:8px;right:8px;z-index:9999;background:rgba(13,16,34,.96);
+    backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:8px}
+  .nav-drawer a{display:block;padding:12px 14px;border-radius:10px;color:#cfe8ff;text-decoration:none}
+  .nav-drawer a:hover{background:rgba(255,255,255,.08)}
+  .nav-drawer.open{display:block}
+  html, body { overflow-x: hidden; }
+  main { touch-action: pan-y; }
+  .btn{display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.18);
+    padding:12px 18px;border-radius:999px;font-weight:700;background:linear-gradient(135deg, var(--brand), var(--brand-2));cursor:pointer;color:#0a0d18; text-decoration:none}
+  .btn:hover{filter:brightness(1.05); transform: translateY(-1px);}
+  footer{padding:40px 0 64px;border-top:1px solid var(--stroke);color:var(--muted)}
+  .foot-grid{display:grid;grid-template-columns:1fr;place-items:center;gap:10px}
+  .card{background:linear-gradient(180deg, rgba(16,21,40,.92), rgba(16,21,40,.72)); border:1px solid var(--stroke); border-radius:var(--radius); padding:20px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+  .grid-5{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+  .grid-6{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media (max-width:960px){.grid-3,.grid-4,.grid-5,.grid-6{grid-template-columns:1fr} .brand-title{font-size:16px}} .brand-title{font-size:16px}}
+  /* page sections */
+  .view{display:none}
+  .view.active{display:block}
+  .hidden{display:none}
+  /* tabs (small links on home) */
+  .tabs{margin:40px auto 0;max-width:var(--container);}
+  .tab-bar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+  .tab-btn{padding:8px 12px;border-radius:12px;border:1px solid var(--stroke);background:#0f1428;color:#dfe6ff;cursor:pointer;font-weight:600}
+  .tab-btn[aria-selected="true"]{background:linear-gradient(135deg, rgba(123,92,255,.18), rgba(0,224,184,.18)); border-color: rgba(255,255,255,.28)}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="brand" href="#home" target="_self">
+      <img class="logo-img" alt="Komvox Logo" src="komvox-icon.png"/>
+      </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-drawer" title="Menü" aria-label="Menü"></button>
+  </div>
+</header>
+
+<div id="nav-drawer" class="nav-drawer" role="menu">
+  <a href="#home" role="menuitem">Home</a>
+  <a href="#angebote" role="menuitem">Angebote</a>
+  <a href="#details" role="menuitem">Details</a>
+  <a href="#kontakt" role="menuitem" onclick="window.KVX && KVX.go(\'inbound\',\'kontakt\');">Kontakt</a>
+  <div style="height:1px;background:rgba(255,255,255,.10);margin:6px 0;border-radius:999px"></div>
+<a href="https://calendly.com/komvox/vorstellung?month=2026-01" target="_blank" rel="noopener" role="menuitem">Termin buchen</a>
+  <a href="#ueber-uns" role="menuitem">Über uns</a>
+  <a href="#impressum" role="menuitem">Impressum</a>
+  <a href="#datenschutz" role="menuitem">Datenschutz</a>
+</div>
+  
+
+<!-- HOME -->
+<main id="home" class="view active">
+  <section class="hero-wrap" style="min-height:60vh;display:grid;place-items:center;position:relative;overflow:hidden">
+    <div class="container" style="text-align:center">
+      <span class="card" style="display:inline-flex;padding:6px 10px;border-radius:999px;border:1px solid var(--stroke);color:#b7c0e0">Der KI-Rezeptionist für Unternehmen</span>
+      <h1 style="font-size:clamp(34px,7vw,64px);line-height:1.05;margin:12px 0">Immer erreichbar. Immer professionell.</h1>
+      <p class="lead" style="max-width:820px;margin:0 auto 18px;color:#cbd5ff;font-size:clamp(16px,2.2vw,20px)">
+        Komvox beantwortet Anrufe in Sekunden, vergibt Termine nach Regeln und übergibt strukturierte Informationen an Ihr Team.
+      </p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px">
+        
+        <a class="btn" href="#angebote">Angebote ansehen</a>
+        <a class="btn" href="https://calendly.com/komvox/vorstellung?month=2026-01" target="_blank" rel="noopener">Termin buchen</a>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ANGEBOTE / LÖSUNGEN (NEU) -->
+  <section class="container" id="angebote" style="margin:60px auto 10px">
+    <h2 style="text-align:center;font-size:32px;margin-bottom:12px">Unsere KI-Lösungen</h2>
+    <p style="text-align:center;max-width:820px;margin:0 auto 28px;color:#b7c0e0">
+      Drei Bausteine – einzeln oder kombiniert. Details klären wir im Erstgespräch.
+    </p>
+
+    <div class="grid-3" style="grid-template-columns:repeat(3,1fr)">
+      <div class="card">
+        <span class="card" style="display:inline-flex;padding:6px 10px;border-radius:999px;border:1px solid var(--stroke);color:#b7c0e0;background:rgba(13,16,34,.55)">Inbound</span>
+        <h3 style="margin-top:12px">KI-Rezeptionist</h3>
+        <p style="color:#cbd5ff;margin:0 0 10px 0">Komvox beantwortet Anrufe in Sekunden, qualifiziert Anliegen und vergibt Termine nach Regeln.</p>
+        <ul style="color:#b7c0e0;margin:0;padding-left:18px">
+          <li>24/7 Erreichbarkeit (oder nach Zeitfenster)</li>
+          <li>Terminvergabe nach Regeln</li>
+          <li>Übergabe an Kalender &amp; Team-Inbox</li>
+        </ul>
+        <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+</div>
+      </div>
+
+      <div class="card">
+        <span class="card" style="display:inline-flex;padding:6px 10px;border-radius:999px;border:1px solid var(--stroke);color:#b7c0e0;background:rgba(13,16,34,.55)">Outbound</span>
+        <h3 style="margin-top:12px">KI-Kaltakquise (Calls)</h3>
+        <p style="color:#cbd5ff;margin:0 0 10px 0">Komvox führt Outbound-Calls, qualifiziert Leads und vereinbart Gesprächstermine – nach euren Vorgaben.</p>
+        <ul style="color:#b7c0e0;margin:0;padding-left:18px">
+          <li>Individuelles Skript & Einwandbehandlung</li>
+          <li>Lead-Listen & Calling-Fenster</li>
+          <li>Übergabe & Terminbuchung</li>
+        </ul>
+        <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+</div>
+      </div>
+
+      <div class="card">
+        <span class="card" style="display:inline-flex;padding:6px 10px;border-radius:999px;border:1px solid var(--stroke);color:#b7c0e0;background:rgba(13,16,34,.55)">E‑Mail‑Marketing</span>
+        <h3 style="margin-top:12px">Newsletter & Follow-ups</h3>
+        <p style="color:#cbd5ff;margin:0 0 10px 0">Automatisierte Newsletter & Follow-ups an Bestandskunden – abgestimmt auf eure Inhalte und Frequenz.</p>
+        <ul style="color:#b7c0e0;margin:0;padding-left:18px">
+          <li>Vorlagen (CI) & Inhalte</li>
+          <li>Empfängerliste / Verteiler</li>
+          <li>Auswertung (Öffnungen/Klicks)</li>
+        </ul>
+        <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+</div>
+      </div>
+    </div>
+  </section>
+
+
+  
+  <!-- Small links / Tabs -->
+  <div id="details"></div>
+  <section class="tabs container" id="home-tabs">
+    <!-- Module selector -->
+    <div class="card" style="max-width:980px;margin:0 auto 14px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">
+        <div>
+          <h3 style="margin:0 0 6px 0">Details auswählen</h3>
+          <p id="kvx-module-sub" style="margin:0;color:#b7c0e0">Wähle ein Angebot – dann siehst du Ablauf, Preise, FAQ und Kontakt.</p>
+        </div>
+        <div class="tab-bar" role="tablist" aria-label="Angebote" style="justify-content:flex-end;margin:0">
+          <button class="tab-btn kvx-module-btn" type="button" data-module="inbound" aria-selected="true">Inbound</button>
+          <button class="tab-btn kvx-module-btn" type="button" data-module="outbound" aria-selected="false">Outbound</button>
+          <button class="tab-btn kvx-module-btn" type="button" data-module="newsletter" aria-selected="false">E‑Mail‑Marketing</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detail tabs -->
+    <div class="tab-bar" role="tablist" aria-label="Inhalte">
+      <button class="tab-btn" role="tab" aria-controls="tab-ablauf" aria-selected="true" id="tabbtn-ablauf">Ablauf</button>
+      <button class="tab-btn" role="tab" aria-controls="tab-preise" aria-selected="false" id="tabbtn-preise">Preise</button>
+      <button class="tab-btn" role="tab" aria-controls="tab-faq" aria-selected="false" id="tabbtn-faq">FAQ</button>
+      <button class="tab-btn" role="tab" aria-controls="tab-kontakt" aria-selected="false" id="tabbtn-kontakt">Kontakt</button>
+    </div>
+
+    <div id="tab-ablauf" class="tab-panel active" role="tabpanel" aria-labelledby="tabbtn-ablauf">
+      <div class="card" style="max-width:980px;margin:0 auto">
+        <div id="kvx-panel-ablauf"><!-- dynamic --></div>
+      </div>
+    </div>
+
+    <div id="tab-preise" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-preise">
+      <div class="card" style="max-width:980px;margin:0 auto">
+        <div id="kvx-panel-preise"><!-- dynamic --></div>
+      </div>
+    </div>
+
+    <div id="tab-faq" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-faq">
+      <div class="card" style="max-width:980px;margin:0 auto">
+        <div id="kvx-panel-faq"><!-- dynamic --></div>
+      </div>
+    </div>
+
+    <div id="tab-kontakt" class="tab-panel" role="tabpanel" aria-labelledby="tabbtn-kontakt">
+      <div class="card" style="max-width:980px;margin:0 auto">
+        <div id="kvx-panel-kontakt"><!-- dynamic --></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+
+
+
+
+
+
+<!-- SO FUNKTIONIERT'S (NUR ÜBER MENU) -->
+<main id="view-so" class="view" style="display:none">
+  <section class="container" style="padding:20px 0">
+    <article class="card" style="max-width:980px;margin:20px auto;">
+  <h1>So funktioniert’s – im Detail</h1>
+
+  <div class="card" style="margin-top:12px">
+    <h3>0) Erstgespräch</h3>
+    <ul>
+      <li>Ziele, Use Cases und Regeln klären</li>
+      <li>Beispiel-Dialoge & Eskalation</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <h3>1) Kickoff & Ziele</h3>
+    <ul>
+      <li>Timeline, Verantwortlichkeiten, Zugänge</li>
+      <li>Feinspezifikation der Abläufe</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <h3>2) Agent bauen</h3>
+    <ul>
+      <li>Dialoge, Wissen/FAQs, Tonalität</li>
+      <li>Edge Cases vorbereiten</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <h3>3) Anbindung</h3>
+    <ul>
+      <li>Rufnummer/Weiterleitung</li>
+      <li>Kalender/Inbox Integration</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <h3>4) Go-Live</h3>
+    <ul>
+      <li>Testcalls, Feintuning, Reporting</li>
+      <li>Optional  Pilot</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <h3>5) Aktivphase</h3>
+    <ul>
+      <li>Live-Betrieb</li>
+      <li>Laufende Verbesserungen</li>
+    </ul>
+  </div>
+
+  <div style="margin-top:14px">
+    <a class="btn" href="#home">Zur Startseite</a>
+  </div>
+</article>
+    <div style="margin-top:14px;text-align:center">
+      <a class="btn" href="#home">Zur Startseite</a>
+    </div>
+  </section>
+</main>
+
+<!-- TERMIN (NUR ÜBER MENU) -->
+<!-- TERMIN -->
+<main id="view-termin" class="view" style="display:none">
+  <section class="container" style="padding:20px 0">
+    <article class="card" style="max-width:860px;margin:20px auto;">
+      <h1>Termin buchen</h1>
+      <style>
+        .vw-form { display:grid; grid-template-columns:minmax(180px,220px) 1fr; gap:12px 16px; align-items:center; max-width:720px; margin:0 auto; }
+        .vw-form label { font-weight:600; }
+        .vw-form input, .vw-form textarea { width:100%; box-sizing:border-box; height:48px; padding:12px 14px; border-radius:10px; border:1px solid rgba(27,33,58,.25); background:rgba(16,21,40,.08); color:var(--text)}
+        .vw-form textarea { height:auto; min-height:110px; resize:vertical; }
+        .vw-actions { grid-column:1/-1; display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+        @media (max-width:720px){ .vw-form{ grid-template-columns:1fr; } }
+      </style>
+      <form id="form-termin" class="vw-form">
+        <label for="t-vorname">Vorname*</label>
+        <input id="t-vorname" type="text" placeholder="Max" required/>
+        <label for="t-nachname">Nachname*</label>
+        <input id="t-nachname" type="text" placeholder="Mustermann" required/>
+        <label for="t-email">E-Mail*</label>
+        <input id="t-email" type="email" placeholder="name@beispiel.de" required/>
+        <label for="t-phone">Telefon (optional)</label>
+        <input id="t-phone" type="tel" placeholder="+49 151 12345678"/>
+        <label for="t-note">Anliegen / Details</label>
+        <textarea id="t-note" rows="4" placeholder="Worum geht es? Ziele, gewünschte Zeiten …"></textarea>
+        <label></label>
+        <label style="display:flex; align-items:center; gap:10px;">
+          <input id="t-consent" type="checkbox" style="width:18px;height:18px"/>
+          Ich willige in die Verarbeitung meiner Daten zum Zweck der Terminvereinbarung ein.
+        </label>
+        <div class="vw-actions">
+          <button id="t-submit" type="button" class="btn">Weiter zur Terminbuchung</button>
+          <a class="btn" href="?view=home" target="_self">Zur Startseite</a>
+        </div>
+      </form>
+    </article>
+  </section>
+</main>
+
+
+
+<!-- ÜBER UNS (NUR ÜBER MENU) -->
+<main id="view-ueber-uns" class="view" style="display:none">
+  <section class="container" style="padding:20px 0">
+    
+<article class="card" style="max-width:980px;margin:20px auto;">
+  <h1>Über uns</h1>
+  <p>
+    <strong>Komvox</strong> entwickelt modulare KI-Lösungen für die Unternehmenskommunikation –
+    damit Teams entlastet werden und kein Kontakt verloren geht.
+  </p>
+
+  <div class="grid-3" style="margin-top:16px">
+    <div class="card">
+      <h3>Was wir liefern</h3>
+      <p>
+        <strong>Inbound</strong> (KI-Rezeptionist), <strong>Outbound</strong> (KI-Kaltakquise) und <strong>E‑Mail‑Marketing</strong>
+        (Newsletter &amp; Follow-ups) – einzeln oder kombiniert.
+      </p>
+    </div>
+    <div class="card">
+      <h3>Wofür es gemacht ist</h3>
+      <p>
+        Für Unternehmen, die <strong>mehr Erreichbarkeit</strong>, <strong>saubere Prozesse</strong> und <strong>skalierbare Kommunikation</strong>
+        brauchen – ohne zusätzliche Belastung fürs Team.
+      </p>
+    </div>
+    <div class="card">
+      <h3>Wie wir arbeiten</h3>
+      <p>
+        Erstgespräch → Umsetzung &amp; Anbindung → Go-Live mit <strong>aktiver Optimierung</strong> und <strong>Reporting</strong>.
+        Danach laufende Verbesserungen im Betrieb.
+      </p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h3 style="margin:0 0 6px 0">Unser Standard</h3>
+    <p style="margin:0;color:#b7c0e0">
+      DSGVO-konform, transparenter Betrieb, Export &amp; Löschung – und klare Absprachen im Erstgespräch.
+    </p>
+  </div>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+    <a class="btn" href="#home">Zur Startseite</a>
+  </div>
+</article>
+
+  </section>
+</main>
+
+<!-- IMPRESSUM (NUR ÜBER MENU) -->
+<main id="view-impressum" class="view" style="display:none">
+  <section class="container" style="padding:20px 0">
+    <article class="card" style="max-width:980px;margin:20px auto;">
+  <h1>Impressum</h1>
+  <p><strong>Diensteanbieter (§ 5 DDG):</strong> Komvox GbR, Bidembachstr. 11, 71640 Ludwigsburg, Deutschland</p>
+  <p><strong>Vertretungsberechtigte:</strong> Finn Hess und Maximilian Riedel</p>
+  <p><strong>Kontakt:</strong> info@komvox.de · +49 151 14933670 · +49 177 8626170</p>
+  <p style="color:#b7c0e0"><em>Hinweis:</em> Angebot richtet sich an Unternehmer (§ 14 BGB).</p>
+  <div style="margin-top:14px">
+    <a class="btn" href="#home">Zur Startseite</a>
+  </div>
+</article>
+  </section>
+</main>
+
+<!-- DATENSCHUTZ (NUR ÜBER MENU) -->
+<main id="view-datenschutz" class="view" style="display:none">
+  <section class="container" style="padding:20px 0">
+    <article class="card" style="max-width:980px;margin:20px auto;">
+  <h1>Datenschutzerklärung</h1>
+
+  <h2>1. Verantwortlicher</h2>
+  <p>
+    Komvox GbR<br>
+    Bidembachstr. 11, 71640 Ludwigsburg, Deutschland<br>
+    E-Mail: <a href="mailto:info@komvox.de">info@komvox.de</a>
+  </p>
+
+  <h2>2. Verarbeitung beim Besuch der Website (Hosting über GitHub Pages)</h2>
+  <p>
+    Unsere Website wird über GitHub Pages bereitgestellt. Beim Aufruf der Website werden technisch notwendige Daten verarbeitet
+    (z. B. IP-Adresse, Datum/Uhrzeit, angeforderte Ressource, Browser-/Geräteinformationen), um die Website auszuliefern sowie
+    Stabilität und Sicherheit zu gewährleisten.
+  </p>
+  <p><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an sicherem, stabilem Betrieb).</p>
+  <p><strong>Empfänger:</strong> GitHub, Inc. (GitHub Pages) als technischer Dienstleister.</p>
+
+  <h2>3. Domain/DNS (IONOS)</h2>
+  <p>
+    Unsere Domain und DNS-Verwaltung erfolgt über IONOS. Im Rahmen der technischen Bereitstellung (insbesondere Domain-/DNS-Auflösung)
+    können technische Verbindungsdaten verarbeitet werden.
+  </p>
+  <p><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. f DSGVO (Betrieb und Sicherheit).</p>
+  <p><strong>Empfänger:</strong> IONOS als Domain-/DNS-Dienstleister.</p>
+
+  <h2>4. Kontaktaufnahme per E-Mail</h2>
+  <p>
+    Wenn Sie uns per E-Mail kontaktieren, verarbeiten wir die von Ihnen übermittelten Daten (z. B. Name, E-Mail-Adresse, Inhalt der Nachricht)
+    zur Bearbeitung Ihrer Anfrage und zur Kommunikation.
+  </p>
+  <p><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO bzw. Art. 6 Abs. 1 lit. f DSGVO.</p>
+
+  <h2>5. Terminbuchung über Calendly (externer Link)</h2>
+  <p>
+    Auf unserer Website befindet sich ein Link zu Calendly. Beim Anklicken verlassen Sie unsere Website und werden auf die Seiten von Calendly weitergeleitet.
+    Ab diesem Zeitpunkt verarbeitet Calendly Daten in eigener Verantwortlichkeit.
+  </p>
+  <p><strong>Rechtsgrundlage (unsere Verarbeitung):</strong> Art. 6 Abs. 1 lit. b DSGVO.</p>
+
+  <h2>6. Cookies/Tracking</h2>
+  <p>Wir setzen nach aktuellem Stand keine Cookies oder vergleichbare Tracking-Technologien zu Analyse- oder Marketingzwecken ein.</p>
+
+  <h2>7. Ihre Rechte</h2>
+  <p>
+    Sie haben das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18),
+    Datenübertragbarkeit (Art. 20) sowie Widerspruch (Art. 21).
+  </p>
+  <p>Sie haben außerdem das Recht, sich bei einer Datenschutzaufsichtsbehörde zu beschweren (Art. 77 DSGVO).</p>
+
+  <div style="margin-top:14px">
+    <a class="btn" href="#home">Zur Startseite</a>
+  </div>
+</article>
+  </section>
+</main>
+
+
+<footer>
+  <div class="container foot-grid">
+    <div class="brand" style="gap:8px">
+      <img class="logo-img" alt="Komvox Logo" src="/komvox-logo.png" onerror="this.style.display='none'"/>
+      <span>© 2025 Komvox – komvox.de</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Burger: nur Menü öffnen/schließen. KEIN Abfangen von Link-Klicks.
+(function(){
+  const toggle = document.querySelector('.nav-toggle');
+  const drawer = document.getElementById('nav-drawer');
+  function closeMenu(){ drawer.classList.remove('open'); toggle.setAttribute('aria-expanded','false'); }
+  if(toggle && drawer){
+    toggle.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const open=!drawer.classList.contains('open');
+      drawer.classList.toggle('open', open);
+      toggle.setAttribute('aria-expanded', open?'true':'false');
+    });
+    document.addEventListener('click', (e)=>{
+      if(drawer.classList.contains('open') && !drawer.contains(e.target) && e.target!==toggle) closeMenu();
+    });
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeMenu(); });
+  }
+})();
+</script>
+
+
+<script>
+// Nav: Menü nach Klick auf einen Link schließen (für Ankerlinks)
+(function(){
+  const drawer = document.getElementById('nav-drawer');
+  const toggle = document.querySelector('.nav-toggle');
+  if(!drawer || !toggle) return;
+  drawer.addEventListener('click', (e)=>{
+    const a = e.target.closest('a');
+    if(!a) return;
+    drawer.classList.remove('open');
+    toggle.setAttribute('aria-expanded','false');
+    // Re-run routing/scroll even if hash didn't change
+    setTimeout(()=>{ try{ window.KVX && KVX.route && KVX.route(); }catch(e){} }, 0);
+  });
+})();
+</script>
+
+
+
+<script>
+// Suite UI: Angebot (Inbound/Outbound/Newsletter) auswählen + Tabs (Ablauf/Preise/FAQ/Kontakt)
+(function(){
+  const data = {
+    inbound: {
+      label: "KI-Rezeptionist (Inbound)",
+      sub: "Keine verpassten Anrufe (24/7 erreichbar), saubere Gesprächslogik nach euren Prozessen und Integration in euren Kalender – mit schneller Anpassung in der Go-Live.",
+      ablauf: `
+        <h3 style="margin:0 0 10px 0">Ablauf (End-to-End) – Inbound</h3>
+        <div class="grid-5">
+          <div class="card"><strong>0</strong><h3>Erstgespräch</h3><p>Wir klären Ziele, Use Cases, Regeln, Öffnungszeiten und Eskalationen.</p></div>
+          <div class="card"><strong>1</strong><h3>Kickoff &amp; Ziele</h3><p>Feinspezifikation &amp; Plan: Verantwortlichkeiten, Timeline, Zugänge.</p></div>
+          <div class="card"><strong>2</strong><h3>Agent bauen</h3><p>Dialog, Wissen/FAQs, Stimme, Sprachen.</p></div>
+          <div class="card"><strong>3</strong><h3>Anbindung</h3><p>Rufnummer, Weiterleitung, Kalender.</p></div>
+          <div class="card"><strong>4</strong><h3>Go-Live &amp; Betrieb</h3><p>Start im Live-Betrieb mit aktiver Optimierung &amp; Reporting.</p></div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3 style="margin:0 0 6px 0">Dialog &amp; Testing</h3>
+          <p style="margin:0;color:#b7c0e0">
+            Testcalls + Edge Cases (z. B. unklare Anliegen, Rückfragen, Abbrüche). Optimierung von Formulierungen, Routing &amp; Übergabe an Mitarbeiter.
+            Messgrößen: Termin/Auftrag-Erfolg, Abbruchquote, Gesprächsdauer.
+          </p>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3 style="margin:0 0 6px 0">Go-Live Begleitung</h3>
+          <div class="grid-3">
+            <div class="card"><h3 style="margin:0 0 6px 0;font-size:18px">Start &amp; Umfang</h3>
+              <p style="margin:0;color:#b7c0e0">Start: nach Erstgespräch + Setup (typ. 7–14 Tage)<br>Umfang: nach Bedarf (Anrufminuten gemäß Nutzung)</p>
+            </div>
+            <div class="card"><h3 style="margin:0 0 6px 0;font-size:18px">Was wir liefern</h3>
+              <p style="margin:0;color:#b7c0e0">Setup + Live-Schaltung<br>Regelmäßiges Reporting<br>Aktive Optimierung im Live-Betrieb<br>Übergabe/Dokumentation</p>
+            </div>
+            <div class="card"><h3 style="margin:0 0 6px 0;font-size:18px">Im Erstgespräch klären</h3>
+              <p style="margin:0;color:#b7c0e0">Ziel-Use-Cases (Termin/FAQ)<br>Kalender/Telefonie-Setup<br>Eskalationsregeln &amp; Öffnungszeiten</p>
+            </div>
+          </div>
+        </div>
+      `,
+      preise: `
+        <h3 style="margin:0 0 10px 0">Pricing – Inbound</h3>
+
+        <div class="card" style="margin:0 0 14px 0">
+          <div style="font-size:18px;font-weight:800;letter-spacing:.2px">
+            Abrechnung am Monatsende: <span style="color:#cbd5ff">Anrufminuten × 0,16 €</span>
+          </div>
+        </div>
+
+        <div class="grid-3" style="grid-template-columns:repeat(3,1fr);gap:18px">
+          <div class="card">
+            <h3 style="margin:0 0 8px 0">Setup-kosten (einmalig)</h3>
+            <p style="margin:0;color:#b7c0e0">Je nach Aufwand (z. B. Integrationen, Regeln, Umfang). Details klären wir im Erstgespräch.</p>
+          </div>
+          <div class="card">
+            <h3 style="margin:0 0 8px 0">Aktive Optimierung &amp; Reporting</h3>
+            <p style="margin:0;color:#b7c0e0">Aktive Optimierung &amp; Reporting (Probleme finden und lösen).</p>
+          </div>
+          <div class="card">
+            <h3 style="margin:0 0 8px 0">Pay-per-Use</h3>
+            <p style="margin:0;color:#b7c0e0">Sie zahlen nur, wenn der Telefonassistent wirklich arbeitet.</p>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-top:18px">
+          <div class="card">
+            <div style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(13,16,34,.75);color:#b7c0e0;font-size:12px">After Hour</div>
+            <h3 style="margin:10px 0 6px 0">After Hour Paket</h3>
+            <ul style="color:#b7c0e0;margin:0;padding-left:18px">
+              <li>Während der Öffnungszeiten gehen Anrufe ganz normal im Unternehmen ein</li>
+              <li>Außerhalb der Öffnungszeiten übernimmt der KI-Assistent</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(13,16,34,.75);color:#b7c0e0;font-size:12px">Working Hours</div>
+            <h3 style="margin:10px 0 6px 0">Working Hours Paket</h3>
+            <ul style="color:#b7c0e0;margin:0;padding-left:18px">
+              <li>Anrufe außerhalb der Öffnungszeiten werden nicht entgegengenommen</li>
+              <li>Ideal, wenn das Team zu Peak-Zeiten entlastet werden soll</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(13,16,34,.75);color:#b7c0e0;font-size:12px">24/7</div>
+            <h3 style="margin:10px 0 6px 0">24/7 Paket</h3>
+            <ul style="color:#b7c0e0;margin:0;padding-left:18px">
+              <li>Maximale Erreichbarkeit für Kunden</li>
+              <li>Pay-per-Use: Abrechnung nach Anrufminuten</li>
+            </ul>
+          </div>
+        </div>
+      `,
+      faq: `
+        <h3 style="margin:0 0 10px 0">FAQ – Inbound</h3>
+        <details><summary>Wie läuft die Zusammenarbeit ab?</summary><p>Kickoff &amp; Ziele → Agent bauen → Anbindung →  Go-Live → Aktivphase mit laufenden Verbesserungen.</p></details>
+        <details><summary>Was kostet es?</summary><p>Setup: <strong>je nach Aufwand</strong>. Danach <strong>0,16 € pro Anrufminute</strong> (Abrechnung am Monatsende). In der Go-Live optimieren wir aktiv und reporten regelmäßig.</p></details>
+        <details><summary>Wo werden Daten verarbeitet?</summary><p>Komvox verarbeitet Daten nach DSGVO. Je nach eingesetzten Dienstleistern kann eine Verarbeitung auch außerhalb der EU/EEA stattfinden. In diesen Fällen setzen wir geeignete Garantien wie Standardvertragsklauseln ein und wenden Datenminimierung sowie Löschkonzepte an.</p></details>
+      `
+    },
+    outbound: {
+      label: "KI-Kaltakquise (Outbound Calls)",
+      sub: "KI führt Outbound-Calls, qualifiziert Leads und setzt Termine – mit klaren Regeln, Reporting und laufender Optimierung.",
+      ablauf: `
+        <h3 style="margin:0 0 10px 0">Ablauf (End-to-End) – Outbound</h3>
+        <div class="grid-5">
+          <div class="card"><strong>0</strong><h3>Erstgespräch</h3><p>Wir klären Zielgruppe, Angebot, Qualifizierungsfragen und Compliance-Rahmen.</p></div>
+          <div class="card"><strong>1</strong><h3>Kickoff &amp; Ziele</h3><p>Feinspezifikation: Pitch, Einwände, Calling-Fenster, Reporting.</p></div>
+          <div class="card"><strong>2</strong><h3>Agent bauen</h3><p>Dialog, Einwandbehandlung, Tonalität, Sprachen.</p></div>
+          <div class="card"><strong>3</strong><h3>Anbindung</h3><p>Absenderkennung, Übergabe/Terminflow, ggf. Kalender.</p></div>
+          <div class="card"><strong>4</strong><h3>Go-Live &amp; Betrieb</h3><p>Start im Live-Betrieb mit aktiver Optimierung &amp; Reporting.</p></div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3 style="margin:0 0 6px 0">Dialog &amp; Testing</h3>
+          <p style="margin:0;color:#b7c0e0">
+            Testcalls + Edge Cases (z. B. Gatekeeper, Rückfragen, Einwände, Abbrüche). Optimierung von Pitch, Qualifizierungsfragen,
+            Einwandbehandlung sowie Übergabe/Terminlogik. Messgrößen: Kontaktquote, Qualifizierungen, Terminrate, Gesprächsdauer.
+          </p>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h3 style="margin:0 0 6px 0">Go-Live Begleitung</h3>
+          <div class="grid-3">
+            <div class="card"><h3 style="margin:0 0 6px 0;font-size:18px">Start &amp; Umfang</h3>
+              <p style="margin:0;color:#b7c0e0">Start: nach Erstgespräch + Setup (typ. 7–14 Tage)<br>Umfang: nach Bedarf (Anrufminuten gemäß Nutzung)</p>
+            </div>
+            <div class="card"><h3 style="margin:0 0 6px 0;font-size:18px">Was wir liefern</h3>
+              <p style="margin:0;color:#b7c0e0">Setup + Live-Schaltung<br>Regelmäßiges Reporting<br>Aktive Optimierung im Live-Betrieb<br>Übergabe/Dokumentation</p>
+            </div>
+            <div class="card"><h3 style="margin:0 0 6px 0;font-size:18px">Im Erstgespräch klären</h3>
+              <p style="margin:0;color:#b7c0e0">Zielgruppe &amp; Pitch<br>Qualifizierungslogik &amp; Einwände<br>Übergabe/Terminflow &amp; Calling-Fenster</p>
+            </div>
+          </div>
+        </div>
+      `,
+      preise: `
+        <h3 style="margin:0 0 10px 0">Pricing – Outbound</h3>
+
+        <div class="card" style="margin:0 0 14px 0">
+          <div style="font-size:18px;font-weight:800;letter-spacing:.2px">
+            Abrechnung am Monatsende: <span style="color:#cbd5ff">Anrufminuten × 0,16 €</span>
+          </div>
+        </div>
+
+        <div class="grid-3" style="grid-template-columns:repeat(3,1fr);gap:18px">
+          <div class="card">
+            <h3 style="margin:0 0 8px 0">Setup-kosten (einmalig)</h3>
+            <p style="margin:0;color:#b7c0e0">Je nach Aufwand (z. B. Skript, Einwände, Übergabe/Terminflow, Reporting). Details klären wir im Erstgespräch.</p>
+          </div>
+          <div class="card">
+            <h3 style="margin:0 0 8px 0">Aktive Optimierung &amp; Reporting</h3>
+            <p style="margin:0;color:#b7c0e0">Aktive Optimierung &amp; Reporting (Probleme finden und lösen).</p>
+          </div>
+          <div class="card">
+            <h3 style="margin:0 0 8px 0">Pay-per-Use</h3>
+            <p style="margin:0;color:#b7c0e0">Sie zahlen nur, wenn die KI wirklich arbeitet.</p>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <p style="margin:0;color:#b7c0e0">
+            Details (z. B. Calling-Fenster, Qualifizierungslogik, Übergabe/Terminflow &amp; Reporting) klären wir im Erstgespräch.
+          </p>
+        </div>
+      `,
+      faq: `
+        <h3 style="margin:0 0 10px 0">FAQ – Outbound</h3>
+        <details><summary>Wie wird qualifiziert?</summary><p>Nach euren Kriterien (z. B. Bedarf, Budget, Timing). Wir definieren das im Kickoff &amp; testen es in der Pilotphase.</p></details>
+        <details><summary>Wie werden Termine gesetzt?</summary><p>Je nach Setup direkt per Terminflow oder als Warm-Lead an euer Team zur Übernahme.</p></details>
+        <details><summary>Gibt es Reporting?</summary><p>Ja – z. B. wöchentlich: Kontaktquote, Qualifizierungen, Terminstatus und häufige Einwände.</p></details>
+      `
+    },
+    newsletter: {
+      label: "E‑Mail‑Marketing (Newsletter & Follow-ups)",
+      sub: "Newsletter & Follow-ups an Bestandskunden – Inhalte und Frequenz stimmen wir ab, Versand läuft anschließend automatisiert.",
+      ablauf: `
+        <h3 style="margin:0 0 10px 0">Ablauf – E-Mail-Marketing</h3>
+        <div class="grid-5">
+          <div class="card"><strong>0</strong><h3>Erstgespräch</h3><p>Inhalte, Ziel, Frequenz &amp; Verteiler klären (Newsletter/Follow-ups).</p></div>
+          <div class="card"><strong>1</strong><h3>Kickoff &amp; Ziele</h3><p>Themenplan, Freigabeprozess, Versandzeiten.</p></div>
+          <div class="card"><strong>2</strong><h3>Template bauen</h3><p>Design/CI + Textbausteine + Struktur.</p></div>
+          <div class="card"><strong>3</strong><h3>Anbindung</h3><p>Versandtool, Absender, Liste/Opt-ins.</p></div>
+          <div class="card"><strong>4</strong><h3>Go-Live &amp; Betrieb</h3><p>Automatisierter Versand + laufende Optimierung &amp; Auswertung.</p></div>
+        </div>
+      `,
+      preise: `
+        <h3 style="margin:0 0 10px 0">Preise – E‑Mail‑Marketing</h3>
+        <p style="color:#b7c0e0;margin:0 0 10px 0">
+          Abhängig vom Aufwand (Anzahl Vorlagen, Versandfrequenz, Verteilergröße). Details klären wir im Kickoff.
+        </p>
+        <div class="grid-3" style="grid-template-columns:repeat(3,1fr);gap:18px">
+          <div class="card"><h3 style="margin:0 0 8px 0">Setup (einmalig)</h3><p style="margin:0;color:#b7c0e0">Nach Aufwand (Template/Einrichtung).</p></div>
+          <div class="card"><h3 style="margin:0 0 8px 0">Optimierung &amp; Reporting</h3><p style="margin:0;color:#b7c0e0">Testversand &amp; Freigabe – optional als r Pilot.</p></div>
+          <div class="card"><h3 style="margin:0 0 8px 0">Laufend</h3><p style="margin:0;color:#b7c0e0">Monatlich nach Umfang (Versand &amp; Auswertung).</p></div>
+        </div>
+      `,
+      faq: `
+        <h3 style="margin:0 0 10px 0">FAQ – E‑Mail‑Marketing</h3>
+        <details><summary>Brauchen wir bereits einen Verteiler?</summary><p>Ideal: ja. Wir binden eure Bestandskunden-Liste an und richten den Versand sauber ein.</p></details>
+        <details><summary>Wie oft wird versendet?</summary><p>Nach Absprache (z. B. wöchentlich, zweiwöchentlich, monatlich).</p></details>
+        <details><summary>Können Inhalte vor Versand freigegeben werden?</summary><p>Ja – per Testversand/Preview vor dem Go-Live.</p></details>
+      `
+    }
+  };
+
+  let activeModule = "inbound";
+
+  function setModule(module){
+    if(!data[module]) return;
+    activeModule = module;
+
+    // Toggle module buttons
+    document.querySelectorAll('.kvx-module-btn').forEach(b=>{
+      b.setAttribute('aria-selected', b.dataset.module === module ? 'true' : 'false');
+    });
+
+    // Update subtitle
+    const sub = document.getElementById('kvx-module-sub');
+    if(sub) sub.textContent = data[module].sub;
+
+    // Render panels
+    const a = document.getElementById('kvx-panel-ablauf');
+    const p = document.getElementById('kvx-panel-preise');
+    const f = document.getElementById('kvx-panel-faq');
+    if(a) a.innerHTML = data[module].ablauf;
+    if(p) p.innerHTML = data[module].preise;
+    if(f) f.innerHTML = data[module].faq;
+  }
+
+  // Public helper for "Details ansehen" buttons
+  window.KVX = window.KVX || {};
+  window.KVX.go = function(module, tab){
+    setModule(module);
+    // open tab
+    const btn = document.getElementById('tabbtn-' + tab);
+    if(btn) btn.click();
+    const el = document.getElementById('home-tabs');
+    if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  };
+
+  // Hook module buttons
+  document.addEventListener('click', (e)=>{
+    const mb = e.target.closest('.kvx-module-btn');
+    if(mb){
+      setModule(mb.dataset.module);
+    }
+  });
+
+  // Init on DOMContentLoaded
+  document.addEventListener('DOMContentLoaded', ()=>{
+    setModule(activeModule);
+
+    // Kontakt panel is static (shared)
+    const k = document.getElementById('kvx-panel-kontakt');
+    if(k){
+      k.innerHTML = `
+        <h3 style="margin:0 0 10px 0">Kontakt</h3>
+        <div style="display:grid;gap:10px;font-size:18px">
+          <div><strong>E-Mail:</strong> <a href="mailto:info@komvox.de">info@komvox.de</a></div>
+          <div><strong>Telefon:</strong> <a href="tel:+491778626170">+49 177 8626170</a> · <a href="tel:+4915114933670">+49 151 14933670</a></div>
+          <div style="margin-top:8px; text-align:right;">
+</div>
+        </div>
+      `;
+    }
+  });
+})();
+</script>
+
+<script>
+// Tabs auf der Startseite (Ablauf/Preise/FAQ/Kontakt): Nur lokale Umschaltung, keine Seiten-Navigation.
+(function(){
+  document.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.tab-btn');
+    if(!btn) return;
+
+    // If it's a module button, ignore (handled elsewhere)
+    if(btn.classList.contains('kvx-module-btn')) return;
+
+    const homeTabs = btn.closest('#home-tabs');
+    if(!homeTabs) return;
+
+    const target = btn.getAttribute('aria-controls');
+    if(!target) return;
+
+    homeTabs.querySelectorAll('.tab-bar[aria-label="Inhalte"] .tab-btn').forEach(b=>b.setAttribute('aria-selected','false'));
+    btn.setAttribute('aria-selected','true');
+    homeTabs.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+    const panel = homeTabs.querySelector('#'+target);
+    if(panel) panel.classList.add('active');
+  });
+})();
+</script>
+
+
+<script>
+// Single-File Router: zeigt nur die Landingpage ODER eine Menü-Seite (Hash-basiert)
+(function(){
+  const views = {
+    home: 'home',
+    so: 'view-so',
+    'ueber-uns': 'view-ueber-uns',
+    impressum: 'view-impressum',
+    datenschutz: 'view-datenschutz'
+  };
+
+  function hideAll(){
+    document.querySelectorAll('main.view').forEach(el => { el.style.display='none'; el.classList.remove('active'); });
+  }
+
+  function show(id){
+    hideAll();
+    const el = document.getElementById(id);
+    if(el){ el.style.display='block'; el.classList.add('active'); }
+    window.scrollTo({top:0, behavior:'auto'});
+  }
+
+  function handle(){
+    const raw = (location.hash || '#home').replace('#','');
+    // Landing Anchors: #angebote, #details, #kontakt -> stay on home
+    if(['angebote','details','kontakt','home-tabs','home'].includes(raw)){
+      show('home');
+      if(raw === 'angebote') document.getElementById('angebote')?.scrollIntoView({behavior:'smooth', block:'start'});
+      if(raw === 'details') document.getElementById('home-tabs')?.scrollIntoView({behavior:'smooth', block:'start'});
+      if(raw === 'kontakt'){ show('home'); window.KVX && KVX.go('inbound','kontakt'); }
+      return;
+    }
+    const viewId = views[raw];
+    if(viewId){ show(viewId); return; }
+    // Fallback
+    show('home');
+  }
+
+  window.KVX = window.KVX || {};
+  window.KVX.route = handle;
+
+  window.addEventListener('hashchange', handle);
+  document.addEventListener('DOMContentLoaded', handle);
+})();
+</script>
+
+<script>
+// Fix: "Weiter zur Terminbuchung" Button öffnet Calendly in neuem Tab mit Parametern.
+(function(){
+  function attachBookingHandler(){
+    const btn = document.getElementById('t-submit');
+    if(!btn) return;
+    // Verhindere doppelte Listener
+    btn.replaceWith(btn.cloneNode(true));
+    const freshBtn = document.getElementById('t-submit');
+    freshBtn.addEventListener('click', function() {
+      const vor = (document.getElementById('t-vorname')||{}).value?.trim()||'';
+      const nach= (document.getElementById('t-nachname')||{}).value?.trim()||'';
+      const email=(document.getElementById('t-email')||{}).value?.trim()||'';
+      const phone=(document.getElementById('t-phone')||{}).value?.trim()||'';
+      const note =(document.getElementById('t-note')||{}).value?.trim()||'';
+      const ok   =(document.getElementById('t-consent')||{}).checked||false;
+      if(!vor||!nach||!email){ alert('Bitte Vorname, Nachname und E-Mail ausfüllen.'); return; }
+      if(!ok){ alert('Bitte Einwilligung zur Datenverarbeitung bestätigen.'); return; }
+      const name = encodeURIComponent(vor + ' ' + nach);
+      const mail = encodeURIComponent(email);
+      const phoneEnc = encodeURIComponent(phone);
+      const noteEnc  = encodeURIComponent(note);
+      let url = 'https://calendly.com/komvox/vorstellung';
+      url += (url.includes('?') ? '&' : '?') + 'name=' + name + '&email=' + mail + '&a1=' + phoneEnc + '&a2=' + noteEnc;
+      window.open(url, '_blank', 'noopener');
+    });
+  }
+  // Beim Initial-Load und bei jedem (potenziellen) View-Wechsel sicherstellen
+  document.addEventListener('DOMContentLoaded', attachBookingHandler);
+  window.addEventListener('pageshow', attachBookingHandler);
+})();
+</script>
+
+
+</body>
+</html>
