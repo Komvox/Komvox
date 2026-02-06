@@ -12,7 +12,7 @@
   gtag('config', 'G-CMCH55YML3');
 </script>
 
-  <script>
+ <script>
   // Track clicks to Calendly links
   document.addEventListener('click', function (e) {
     const a = e.target.closest && e.target.closest('a');
@@ -21,11 +21,13 @@
     const href = a.getAttribute('href') || '';
     if (href.includes('calendly.com')) {
       gtag('event', 'outbound_click_calendly', {
-        link_url: href
+        link_url: href,
+        page_path: location.pathname
       });
     }
   }, true);
 </script>
+
 
   
 <link rel="icon" href="/favicon.ico" sizes="any">
