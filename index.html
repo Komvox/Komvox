@@ -885,37 +885,50 @@
 </script>
 
 <script>
-// Fix: "Weiter zur Terminbuchung" Button öffnet Calendly in neuem Tab mit Parametern.
-(function(){
+(function() {
   function attachBookingHandler(){
     const btn = document.getElementById('t-submit');
     if(!btn) return;
-    // Verhindere doppelte Listener
+
+    // verhindert doppelte Listener
     btn.replaceWith(btn.cloneNode(true));
     const freshBtn = document.getElementById('t-submit');
+
     freshBtn.addEventListener('click', function() {
-      const vor = (document.getElementById('t-vorname')||{}).value?.trim()||'';
-      const nach= (document.getElementById('t-nachname')||{}).value?.trim()||'';
-      const email=(document.getElementById('t-email')||{}).value?.trim()||'';
-      const phone=(document.getElementById('t-phone')||{}).value?.trim()||'';
-      const note =(document.getElementById('t-note')||{}).value?.trim()||'';
-      const ok   =(document.getElementById('t-consent')||{}).checked||false;
-      if(!vor||!nach||!email){ alert('Bitte Vorname, Nachname und E-Mail ausfüllen.'); return; }
+      const vor   = (document.getElementById('t-vorname')   || {}).value?.trim() || '';
+      const nach  = (document.getElementById('t-nachname')  || {}).value?.trim() || '';
+      const email = (document.getElementById('t-email')     || {}).value?.trim() || '';
+      const phone = (document.getElementById('t-phone')     || {}).value?.trim() || '';
+      const note  = (document.getElementById('t-note')      || {}).value?.trim() || '';
+      const ok    = !!(document.getElementById('t-consent') || {}).checked;
+
+      if(!vor || !nach || !email){ alert('Bitte Vorname, Nachname und E-Mail ausfüllen.'); return; }
       if(!ok){ alert('Bitte Einwilligung zur Datenverarbeitung bestätigen.'); return; }
+
       const name = encodeURIComponent(vor + ' ' + nach);
       const mail = encodeURIComponent(email);
       const phoneEnc = encodeURIComponent(phone);
       const noteEnc  = encodeURIComponent(note);
+
       let url = 'https://calendly.com/komvox/vorstellung';
       url += (url.includes('?') ? '&' : '?') + 'name=' + name + '&email=' + mail + '&a1=' + phoneEnc + '&a2=' + noteEnc;
+
+      // ✅ Lead-Event (wichtig): erst jetzt, nach erfolgreicher Validierung
+      gtag('event', 'generate_lead', {
+        lead_type: 'booking_form_ok',
+        page_path: location.pathname,
+        link_url: url
+      });
+
       window.open(url, '_blank', 'noopener');
     });
   }
-  // Beim Initial-Load und bei jedem (potenziellen) View-Wechsel sicherstellen
+
   document.addEventListener('DOMContentLoaded', attachBookingHandler);
   window.addEventListener('pageshow', attachBookingHandler);
 })();
 </script>
+
 
 
 </body>
