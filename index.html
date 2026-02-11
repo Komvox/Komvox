@@ -39,7 +39,12 @@
   margin:0;
   font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
   color:var(--text);
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: linear-gradient(to right, var(--bg) 0%, rgba(255,255,255,0) 14%, rgba(255,255,255,0) 86%, var(--bg) 100%), url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http://www.w3.org/2000/svg%22%20width%3D%221400%22%20height%3D%221400%22%20viewBox%3D%220%200%201400%201400%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%22%20stop-color%3D%22%232f7bff%22%20stop-opacity%3D%220.30%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220.5%22%20stop-color%3D%22%2300e0b8%22%20stop-opacity%3D%220.24%22/%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%221%22%20stop-color%3D%22%237b5cff%22%20stop-opacity%3D%220.26%22/%3E%0A%20%20%20%20%3C/linearGradient%3E%0A%0A%20%20%20%20%3C!--%20One%20%22bundle%22%20of%20parallel%20lines%20with%20tighter%20spacing%20--%3E%0A%20%20%20%20%3Cg%20id%3D%22bundle%22%20fill%3D%22none%22%20stroke%3D%22url(%23g)%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%0A%20%20%20%20%20%20%3C!--%20All%20paths%20start/end%20off-canvas%20so%20endpoints%20are%20never%20visible%20--%3E%0A%20%20%20%20%20%20%3Cpath%20d%3D%22M-260%200%20C%20-80%20-60,%20140%2070,%20340%2010%20S%20740%20-30,%20980%2060%20S%201220%20140,%201660%2010%22%20/%3E%0A%20%20%20%20%20%20%3Cpath%20d%3D%22M-260%208%20C%20-80%20-52,%20140%2078,%20340%2018%20S%20740%20-22,%20980%2068%20S%201220%20148,%201660%2018%22%20/%3E%0A%20%20%20%20%20%20%3Cpath%20d%3D%22M-260%2016%20C%20-80%20-44,%20140%2086,%20340%2026%20S%20740%20-14,%20980%2076%20S%201220%20156,%201660%2026%22%20/%3E%0A%20%20%20%20%20%20%3Cpath%20d%3D%22M-260%2024%20C%20-80%20-36,%20140%2094,%20340%2034%20S%20740%20-6,%20980%2084%20S%201220%20164,%201660%2034%22%20/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%3C/defs%3E%0A%0A%20%20%3C!--%20Place%20bundles%20so%20they%20always%20run%20into%20a%20border%20(off-canvas)%20--%3E%0A%20%20%3Cg%20opacity%3D%220.92%22%20transform%3D%22translate(0%20120)%20rotate(-12%20700%200)%22%3E%0A%20%20%20%20%3Cuse%20href%3D%22%23bundle%22/%3E%0A%20%20%3C/g%3E%0A%0A%20%20%3Cg%20opacity%3D%220.86%22%20transform%3D%22translate(0%20360)%20rotate(9%20700%200)%22%3E%0A%20%20%20%20%3Cuse%20href%3D%22%23bundle%22/%3E%0A%20%20%3C/g%3E%0A%0A%20%20%3Cg%20opacity%3D%220.82%22%20transform%3D%22translate(0%20640)%20rotate(-6%20700%200)%22%3E%0A%20%20%20%20%3Cuse%20href%3D%22%23bundle%22/%3E%0A%20%20%3C/g%3E%0A%0A%20%20%3Cg%20opacity%3D%220.78%22%20transform%3D%22translate(0%20980)%20rotate(16%20700%200)%22%3E%0A%20%20%20%20%3Cuse%20href%3D%22%23bundle%22/%3E%0A%20%20%3C/g%3E%0A%0A%20%20%3C!--%20A%20few%20additional%20edge-to-edge%20shorter%20bundles%20(still%20off-canvas%20endpoints)%20--%3E%0A%20%20%3Cg%20opacity%3D%220.70%22%20transform%3D%22translate(0%201220)%20rotate(-4%20700%200)%22%3E%0A%20%20%20%20%3Cg%20fill%3D%22none%22%20stroke%3D%22url(%23g)%22%20stroke-width%3D%223%22%20stroke-linecap%3D%22round%22%3E%0A%20%20%20%20%20%20%3Cpath%20d%3D%22M-260%200%20C%20-60%20-40,%20160%2040,%20360%200%20S%20720%20-20,%20960%2040%20S%201200%2090,%201660%200%22%20/%3E%0A%20%20%20%20%20%20%3Cpath%20d%3D%22M-260%208%20C%20-60%20-32,%20160%2048,%20360%208%20S%20720%20-12,%20960%2048%20S%201200%2098,%201660%208%22%20/%3E%0A%20%20%20%20%20%20%3Cpath%20d%3D%22M-260%2016%20C%20-60%20-24,%20160%2056,%20360%2016%20S%20720%20-4,%20960%2056%20S%201200%20106,%201660%2016%22%20/%3E%0A%20%20%20%20%3C/g%3E%0A%20%20%3C/g%3E%0A%3C/svg%3E');
+  background-repeat: no-repeat, repeat-y;
+  background-size: 100% 100%, 2000px 2000px;
+  background-attachment: scroll, scroll;
+  background-position: 0 0, 50% 0;
   line-height:1.55;
 }
   a{color:inherit;text-decoration:none}
@@ -85,6 +90,10 @@
   text-decoration:none
 }
   .btn:hover{filter:brightness(1.05); transform: translateY(-1px);}
+
+/* Home: Details-Buttons in den drei Kästen */
+a.card[href^="#details-"]{display:inline-flex;transition:filter .15s ease, transform .15s ease;}
+a.card[href^="#details-"]:hover{filter:brightness(1.05); transform: translateY(-1px);}
   footer{padding:40px 0 64px;border-top:1px solid var(--stroke);color:var(--muted)}
   .foot-grid{display:grid;grid-template-columns:1fr;place-items:center;gap:10px}
   .card{
@@ -109,7 +118,7 @@
   .tabs{margin:40px auto 0;max-width:var(--container);}
   .tab-bar{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
   .tab-btn{
-  padding:8px 12px;border-radius:12px;
+  padding:12px 18px;border-radius:12px;
   border:1px solid var(--stroke);
   background:#ffffff;
   color:var(--text);
@@ -120,6 +129,8 @@
   background:linear-gradient(135deg, rgba(123,92,255,.14), rgba(0,224,184,.14));
   border-color:rgba(0,0,0,.18)
 }
+
+.tab-btn:hover{filter:brightness(1.05); transform: translateY(-1px);}
   .tab-panel{display:none}
   .tab-panel.active{display:block}
 </style>
@@ -175,7 +186,7 @@
 
     <div class="grid-3" style="grid-template-columns:repeat(3,1fr)">
       <div class="card">
-        <span class="card" style="display:inline-flex;padding:6px 10px;border-radius:999px;border:1px solid var(--stroke);color:#000000;background:var(--cta)">Inbound</span>
+        <a class="card" style="display:inline-flex;padding:6px 10px;border-radius:999px;border:1px solid var(--stroke);color:#000000;background:var(--cta)" href="#details-inbound">Details</a>
         <h3 style="margin-top:12px">KI-Rezeptionist</h3>
         <p style="color:#000000;margin:0 0 10px 0">Komvox beantwortet Anrufe in Sekunden, qualifiziert Anliegen und vergibt Termine nach Regeln.</p>
         <ul style="color:#000000;margin:0;padding-left:18px">
@@ -188,7 +199,7 @@
       </div>
 
       <div class="card">
-        <span class="card" style="display:inline-flex;padding:6px 10px;border-radius:999px;border:1px solid var(--stroke);color:#000000;background:var(--cta)">Outbound</span>
+        <a class="card" style="display:inline-flex;padding:6px 10px;border-radius:999px;border:1px solid var(--stroke);color:#000000;background:var(--cta)" href="#details-outbound">Details</a>
         <h3 style="margin-top:12px">KI-Kaltakquise (Calls)</h3>
         <p style="color:#000000;margin:0 0 10px 0">Komvox führt Outbound-Calls, qualifiziert Leads und vereinbart Gesprächstermine – nach euren Vorgaben.</p>
         <ul style="color:#000000;margin:0;padding-left:18px">
@@ -201,7 +212,7 @@
       </div>
 
       <div class="card">
-        <span class="card" style="display:inline-flex;padding:6px 10px;border-radius:999px;border:1px solid var(--stroke);color:#000000;background:var(--cta)">E‑Mail‑Marketing</span>
+        <a class="card" style="display:inline-flex;padding:6px 10px;border-radius:999px;border:1px solid var(--stroke);color:#000000;background:var(--cta)" href="#details-newsletter">Details</a>
         <h3 style="margin-top:12px">Newsletter & Follow-ups</h3>
         <p style="color:#000000;margin:0 0 10px 0">Automatisierte Newsletter & Follow-ups an Bestandskunden – abgestimmt auf eure Inhalte und Frequenz.</p>
         <ul style="color:#000000;margin:0;padding-left:18px">
@@ -219,21 +230,6 @@
   
   <!-- Small links / Tabs -->
   <div id="details"></div>
-  <section class="tabs container" id="details-links">
-    <div class="card" style="max-width:980px;margin:0 auto 14px">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">
-        <div>
-          <h3 style="margin:0 0 6px 0">Details auswählen</h3>
-          <p style="margin:0;color:#000000">Wähle ein Angebot – die Details öffnen als eigene Seite.</p>
-        </div>
-      </div>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
-        <a class="btn" href="#details-inbound">KI‑Rezeptionist</a>
-        <a class="btn" href="#details-outbound">KI‑Kaltakquise</a>
-        <a class="btn" href="#details-newsletter">Newsletter &amp; Follow‑ups</a>
-      </div>
-    </div>
-  </section>
 </main>
 
 
@@ -250,20 +246,6 @@
       <a class="btn ghost small" href="#details" style="margin-bottom:12px">← Zurück</a>
       <div style="height:6px"></div>
       <section class="tabs container" id="home-tabs">
-    <!-- Module selector -->
-    <div class="card" style="max-width:980px;margin:0 auto 14px">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap">
-        <div>
-          <h3 style="margin:0 0 6px 0">Details auswählen</h3>
-          <p id="kvx-module-sub" style="margin:0;color:#000000">Wähle ein Angebot – dann siehst du Ablauf, Preise, FAQ und Kontakt.</p>
-        </div>
-        <div class="tab-bar" role="tablist" aria-label="Angebote" style="justify-content:flex-end;margin:0">
-          <button class="tab-btn kvx-module-btn" type="button" data-module="inbound" aria-selected="true">Inbound</button>
-          <button class="tab-btn kvx-module-btn" type="button" data-module="outbound" aria-selected="false">Outbound</button>
-          <button class="tab-btn kvx-module-btn" type="button" data-module="newsletter" aria-selected="false">E‑Mail‑Marketing</button>
-        </div>
-      </div>
-    </div>
 
     <!-- Detail tabs -->
     <div class="tab-bar" role="tablist" aria-label="Inhalte">
@@ -661,7 +643,7 @@
 
         <div class="grid-3" style="margin-top:18px">
           <div class="card">
-            <div style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(13,16,34,.75);color:#000000;font-size:12px">After Hour</div>
+            <div style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:var(--cta);color:#000000;font-size:12px">After Hour</div>
             <h3 style="margin:10px 0 6px 0">After Hour Paket</h3>
             <ul style="color:#000000;margin:0;padding-left:18px">
               <li>Während der Öffnungszeiten gehen Anrufe ganz normal im Unternehmen ein</li>
@@ -670,7 +652,7 @@
           </div>
 
           <div class="card">
-            <div style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(13,16,34,.75);color:#000000;font-size:12px">Working Hours</div>
+            <div style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:var(--cta);color:#000000;font-size:12px">Working Hours</div>
             <h3 style="margin:10px 0 6px 0">Working Hours Paket</h3>
             <ul style="color:#000000;margin:0;padding-left:18px">
               <li>Anrufe außerhalb der Öffnungszeiten werden nicht entgegengenommen</li>
@@ -679,7 +661,7 @@
           </div>
 
           <div class="card">
-            <div style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:rgba(13,16,34,.75);color:#000000;font-size:12px">24/7</div>
+            <div style="display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;border:1px solid rgba(255,255,255,.10);background:var(--cta);color:#000000;font-size:12px">24/7</div>
             <h3 style="margin:10px 0 6px 0">24/7 Paket</h3>
             <ul style="color:#000000;margin:0;padding-left:18px">
               <li>Maximale Erreichbarkeit für Kunden</li>
