@@ -244,7 +244,8 @@ a.card[href^="#details-"]:hover{filter:brightness(1.05); transform: translateY(-
       <section class="tabs container" id="home-tabs">
 
     <!-- Detail tabs -->
-    <div class="tab-bar" role="tablist" aria-label="Inhalte">
+        <p id="details-intro" style="margin:0 0 12px 0;color:var(--muted);line-height:1.55;display:none"></p>
+<div class="tab-bar" role="tablist" aria-label="Inhalte">
       <button class="tab-btn" role="tab" aria-controls="tab-ablauf" aria-selected="true" id="tabbtn-ablauf">Ablauf</button>
       <button class="tab-btn" role="tab" aria-controls="tab-preise" aria-selected="false" id="tabbtn-preise">Preise</button>
       <button class="tab-btn" role="tab" aria-controls="tab-faq" aria-selected="false" id="tabbtn-faq">FAQ</button>
@@ -792,6 +793,23 @@ a.card[href^="#details-"]:hover{filter:brightness(1.05); transform: translateY(-
     if(a) a.innerHTML = data[module].ablauf;
     if(p) p.innerHTML = data[module].preise;
     if(f) f.innerHTML = data[module].faq;
+    const intro = document.getElementById('details-intro');
+    if(intro){
+      if(module === 'inbound'){
+        intro.style.display = 'block';
+        intro.innerHTML = 'Kennen Sie das: Sie sind gerade im Einsatz und währenddessen klingelt ständig das Telefon oder Anrufe gehen komplett verloren, auch nach Feierabend. Das kostet Fokus, Nerven und im Zweifel Aufträge. <strong>Unser KI-Telefonassistent</strong> nimmt Anrufe zuverlässig an, beantwortet Fragen und sorgt dafür, dass kein Kontakt verloren geht.';
+      } else if(module === 'outbound'){
+        intro.style.display = 'block';
+        intro.innerHTML = 'Leads kommen rein aber im Alltag bleibt oft keine Zeit, jeden Interessenten schnell anzurufen und konsequent nachzufassen. Genau da gehen Chancen verloren, bevor überhaupt ein Angebot rausgeht. <strong>Unser KI-Outbound-Assistent</strong> ruft Leads automatisiert an, qualifiziert sie und bringt planbar neue Termine und Aufträge in Ihren Kalender.';
+      } else if(module === 'newsletter'){
+        intro.style.display = 'block';
+        intro.innerHTML = 'Viele Unternehmen haben gute Leistungen aber zu wenig planbare Anfragen, weil sie bei Interessenten und Bestandskunden nicht regelmäßig präsent sind. Ohne sauberes Outreach oder Newsletter bleibt Umsatzpotenzial liegen. <strong>Unser E-Mail-Marketing</strong> sorgt für kontinuierliche Sichtbarkeit, mehr Antworten und mehr Aufträge, systematisch und messbar.';
+      } else {
+        intro.style.display = 'none';
+        intro.innerHTML = '';
+      }
+    }
+
     if((module === 'outbound' || module === 'inbound' || module === 'newsletter') && f) f.innerHTML = '';
 
     // Outbound: FAQ-Tab ausblenden
