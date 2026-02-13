@@ -968,7 +968,6 @@ a.card[href^="#details-"]:hover{filter:brightness(1.05); transform: translateY(-
   function attachBookingHandler(){
     const btn = document.getElementById('t-submit');
     if(!btn) return;
-    // Verhindere doppelte Listener
     btn.replaceWith(btn.cloneNode(true));
     const freshBtn = document.getElementById('t-submit');
     freshBtn.addEventListener('click', function() {
@@ -980,19 +979,43 @@ a.card[href^="#details-"]:hover{filter:brightness(1.05); transform: translateY(-
       const ok   =(document.getElementById('t-consent')||{}).checked||false;
       if(!vor||!nach||!email){ alert('Bitte Vorname, Nachname und E-Mail ausfüllen.'); return; }
       if(!ok){ alert('Bitte Einwilligung zur Datenverarbeitung bestätigen.'); return; }
+
       const name = encodeURIComponent(vor + ' ' + nach);
       const mail = encodeURIComponent(email);
       const phoneEnc = encodeURIComponent(phone);
       const noteEnc  = encodeURIComponent(note);
       let url = 'https://calendly.com/komvox/vorstellung';
       url += (url.includes('?') ? '&' : '?') + 'name=' + name + '&email=' + mail + '&a1=' + phoneEnc + '&a2=' + noteEnc;
+
+      // ✅ HIER NEU:
+      gtag('event', 'generate_lead', {
+        lead_type: 'booking_form_ok',
+        page_path: location.pathname,
+        link_url: url
+      });
+
       window.open(url, '_blank', 'noopener');
     });
   }
-  // Beim Initial-Load und bei jedem (potenziellen) View-Wechsel sicherstellen
   document.addEventListener('DOMContentLoaded', attachBookingHandler);
   window.addEventListener('pageshow', attachBookingHandler);
 })();
+</script>
+
+<script>
+  // Track clicks to Calendly links überall (Nav + Buttons + Footer etc.)
+  document.addEventListener('click', function (e) {
+    const a = e.target.closest && e.target.closest('a');
+    if (!a) return;
+
+    const href = a.getAttribute('href') || '';
+    if (href.includes('calendly.com')) {
+      gtag('event', 'outbound_click_calendly', {
+        link_url: href,
+        page_path: location.pathname
+      });
+    }
+  }, true);
 </script>
 
 
