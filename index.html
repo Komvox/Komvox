@@ -134,6 +134,16 @@ a.card[href^="#details-"]:hover{filter:brightness(1.05); transform: translateY(-
   .tab-panel{display:none}
   .tab-panel.active{display:block}
 </style>
+
+<!-- Google Analytics 4 (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CMCH55YML3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-CMCH55YML3');
+</script>
+
 </head>
 <body>
 <header>
@@ -978,6 +988,22 @@ a.card[href^="#details-"]:hover{filter:brightness(1.05); transform: translateY(-
       const noteEnc  = encodeURIComponent(note);
       let url = 'https://calendly.com/komvox/vorstellung';
       url += (url.includes('?') ? '&' : '?') + 'name=' + name + '&email=' + mail + '&a1=' + phoneEnc + '&a2=' + noteEnc;
+      
+      // Tracking: Lead/Calendly
+      try{
+        if(typeof gtag === 'function'){
+          gtag('event', 'generate_lead', {
+            lead_type: 'booking_form_ok',
+            page_path: location.pathname,
+            link_url: url
+          });
+          gtag('event', 'outbound_click_calendly', {
+            link_url: url,
+            page_path: location.pathname
+          });
+        }
+      }catch(e){}
+
       window.open(url, '_blank', 'noopener');
     });
   }
@@ -987,6 +1013,27 @@ a.card[href^="#details-"]:hover{filter:brightness(1.05); transform: translateY(-
 })();
 </script>
 
+
+
+<script>
+  // Track clicks to Calendly links überall (Nav + Buttons + Footer etc.)
+  document.addEventListener('click', function (e) {
+    const a = e.target.closest && e.target.closest('a');
+    if (!a) return;
+
+    const href = a.getAttribute('href') || '';
+    if (href.includes('calendly.com')) {
+      try{
+        if(typeof gtag === 'function'){
+          gtag('event', 'outbound_click_calendly', {
+            link_url: href,
+            page_path: location.pathname
+          });
+        }
+      }catch(err){}
+    }
+  }, true);
+</script>
 
 </body>
 </html>
