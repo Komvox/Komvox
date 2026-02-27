@@ -134,7 +134,6 @@ a.card[href^="#details-"]:hover{filter:brightness(1.05); transform: translateY(-
   .tab-panel{display:none}
   .tab-panel.active{display:block}
 </style>
-
 <!-- Google Analytics 4 (GA4) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-CMCH55YML3"></script>
 <script>
@@ -228,6 +227,19 @@ a.card[href^="#details-"]:hover{filter:brightness(1.05); transform: translateY(-
           <li>Konvertierende Inhalte</li>
           <li>Empfängerliste / Verteiler</li>
           <li>Auswertung (Öffnungen/Klicks)</li>
+        </ul>
+        <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+</div>
+      </div>
+
+      <div class="card">
+        <a class="card" style="display:inline-flex;padding:6px 10px;border-radius:999px;border:1px solid var(--stroke);color:#000000;background:var(--cta)" href="#details-reviews">Details</a>
+        <h3 style="margin-top:12px">Rezensionen-Automation (E-Mail &amp; SMS)</h3>
+        <p style="color:#000000;margin:0 0 10px 0">Automatische Nachrichten nach dem Auftrag, um mehr echte Bewertungen zu erhalten – ohne Mehraufwand fürs Team.</p>
+        <ul style="color:#000000;margin:0;padding-left:18px">
+          <li>Automatische Anfrage nach X Tagen</li>
+          <li>Google-Link mit 1-Klick Bewertung</li>
+          <li>Feedback-Loop statt Stress</li>
         </ul>
         <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
 </div>
@@ -782,6 +794,30 @@ a.card[href^="#details-"]:hover{filter:brightness(1.05); transform: translateY(-
         </div>
       `
     }
+
+    ,
+    reviews: {
+      label: "Rezensionen-Automation (E-Mail & SMS)",
+      sub: "Automatische Nachrichten nach dem Auftrag, um mehr echte Bewertungen zu erhalten – ohne Mehraufwand fürs Team.",
+      ablauf: `
+        <div class="grid-3" style="grid-template-columns:repeat(3,1fr);gap:18px">
+          <div class="card"><strong>0</strong><h3>Erstgespräch</h3><p>Ziel (mehr Rezensionen/Feedback), Timing 2–5 Tage nach Auftrag</p></div>
+          <div class="card"><strong>1</strong><h3>Kickoff</h3><p>Textvorlagen E-Mail + SMS, Absender/Nummer/Signatur/Opt-out</p></div>
+          <div class="card"><strong>2</strong><h3>Einrichtung</h3><p>Trigger „Auftrag erledigt“/„Termin abgeschlossen“, optional Segmentierung</p></div>
+          <div class="card"><strong>3</strong><h3>Anbindung</h3><p>Kontaktdatenquelle (CRM/Kalender/Liste), Google-Bewertungslink je Standort</p></div>
+          <div class="card"><strong>4</strong><h3>Go-Live</h3><p>Testlauf, Feintuning (Betreff/Länge/Versandzeit)</p></div>
+          <div class="card"><strong>5</strong><h3>Aktivphase</h3><p>Laufender Betrieb, Auswertung (Versand→Klicks→Rezensionen) + Optimierung</p></div>
+        </div>
+      `,
+      preise: `
+        <div class="card" style="margin:0 0 14px 0">
+          <div style="font-size:18px;font-weight:800;letter-spacing:.2px">
+            Preise: <span style="color:#000000">Details klären wir im Erstgespräch.</span>
+          </div>
+        </div>
+      `,
+      faq: ``
+    }
   };
 
   let activeModule = "inbound";
@@ -817,18 +853,21 @@ a.card[href^="#details-"]:hover{filter:brightness(1.05); transform: translateY(-
       } else if(module === 'newsletter'){
         intro.style.display = 'block';
         intro.innerHTML = 'Viele Unternehmen haben gute Leistungen aber zu wenig planbare Anfragen, weil sie bei Interessenten und Bestandskunden nicht regelmäßig präsent sind. Ohne sauberes Outreach oder Newsletter bleibt Umsatzpotenzial liegen. <strong>Unser E-Mail-Marketing</strong> sorgt für kontinuierliche Sichtbarkeit, mehr Antworten und mehr Aufträge, systematisch und messbar.';
+      } else if(module === 'reviews'){
+        intro.style.display = 'block';
+        intro.innerHTML = 'Kennen Sie das: Ein Auftrag ist erledigt, der Kunde war zufrieden aber im Alltag geht die Bitte um eine Bewertung unter. So bleiben viele gute Erfahrungen unsichtbar, obwohl sie Ihnen neue Anfragen bringen könnten. <strong>Unsere Rezensionen-Automation</strong> versendet automatisch ein paar Tage nach dem Auftrag eine freundliche E-Mail oder SMS mit dem passenden Bewertungslink. So sammeln Sie kontinuierlich mehr echte Rezensionen, ohne dass Ihr Team extra nachhaken muss.';
       } else {
         intro.style.display = 'none';
         intro.innerHTML = '';
       }
     }
 
-    if((module === 'outbound' || module === 'inbound' || module === 'newsletter') && f) f.innerHTML = '';
+    if((module === 'outbound' || module === 'inbound' || module === 'newsletter' || module === 'reviews') && f) f.innerHTML = '';
 
     // Outbound: FAQ-Tab ausblenden
     const faqBtn = document.getElementById('tabbtn-faq');
     const faqPanel = document.getElementById('tab-faq');
-    if(module === 'outbound' || module === 'inbound' || module === 'newsletter'){
+    if(module === 'outbound' || module === 'inbound' || module === 'newsletter' || module === 'reviews'){
       if(faqBtn) faqBtn.style.display = 'none';
       if(faqPanel) faqPanel.style.display = 'none';
       if(faqBtn && faqBtn.getAttribute('aria-selected') === 'true'){
@@ -941,12 +980,13 @@ a.card[href^="#details-"]:hover{filter:brightness(1.05); transform: translateY(-
       return;
     }
     // Details-Nebenseiten (Hash-basiert)
-    if(['details-inbound','details-outbound','details-newsletter'].includes(raw)){
+    if(['details-inbound','details-outbound','details-newsletter','details-reviews'].includes(raw)){
       show('view-details');
       if(window.KVX && typeof KVX.go === 'function'){
         if(raw === 'details-inbound') KVX.go('inbound','ablauf');
         if(raw === 'details-outbound') KVX.go('outbound','ablauf');
         if(raw === 'details-newsletter') KVX.go('newsletter','ablauf');
+        if(raw === 'details-reviews') KVX.go('reviews','ablauf');
       }
       return;
     }
@@ -988,21 +1028,12 @@ a.card[href^="#details-"]:hover{filter:brightness(1.05); transform: translateY(-
       const noteEnc  = encodeURIComponent(note);
       let url = 'https://calendly.com/komvox/vorstellung';
       url += (url.includes('?') ? '&' : '?') + 'name=' + name + '&email=' + mail + '&a1=' + phoneEnc + '&a2=' + noteEnc;
-      
-      // Tracking: Lead/Calendly
-      try{
-        if(typeof gtag === 'function'){
-          gtag('event', 'generate_lead', {
-            lead_type: 'booking_form_ok',
-            page_path: location.pathname,
-            link_url: url
-          });
-          gtag('event', 'outbound_click_calendly', {
-            link_url: url,
-            page_path: location.pathname
-          });
-        }
-      }catch(e){}
+      // GA4 Lead-Event (nur wenn Validierung + Einwilligung ok)
+      gtag('event', 'generate_lead', {
+        lead_type: 'booking_form_ok',
+        page_path: location.pathname,
+        link_url: url
+      });
 
       window.open(url, '_blank', 'noopener');
     });
@@ -1023,14 +1054,10 @@ a.card[href^="#details-"]:hover{filter:brightness(1.05); transform: translateY(-
 
     const href = a.getAttribute('href') || '';
     if (href.includes('calendly.com')) {
-      try{
-        if(typeof gtag === 'function'){
-          gtag('event', 'outbound_click_calendly', {
-            link_url: href,
-            page_path: location.pathname
-          });
-        }
-      }catch(err){}
+      gtag('event', 'outbound_click_calendly', {
+        link_url: href,
+        page_path: location.pathname
+      });
     }
   }, true);
 </script>
