@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Komvox – KI-Automationen &amp; Workflows</title>
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cyan:    #00e5ff;
+      --blue:    #4f8cff;
+      --purple:  #a259ff;
+      --dark:    #080b14;
+      --dark2:   #0d1120;
+      --dark3:   #111827;
+      --text:    #e2e8f0;
+      --muted:   #94a3b8;
+      --glow-c:  rgba(0,229,255,0.18);
+      --glow-p:  rgba(162,89,255,0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── Scrollbar ─── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--dark); }
+    ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+
+    /* ─── Noise overlay ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 48px;
+      background: rgba(8,11,20,0.7);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0,229,255,0.08);
+      transition: background 0.3s;
+    }
+    nav.scrolled { background: rgba(8,11,20,0.95); }
+
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo img { height: 36px; width: 36px; object-fit: contain; }
+    .nav-logo span {
+      font-size: 1.2rem; font-weight: 700; letter-spacing: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--muted); font-size: 0.9rem;
+      letter-spacing: 0.5px; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+
+    .nav-cta {
+      padding: 8px 22px; border-radius: 50px;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      color: #fff; font-size: 0.88rem; font-weight: 600;
+      text-decoration: none; letter-spacing: 0.5px;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 0 20px rgba(79,140,255,0.35);
+    }
+    .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* ─── Hero ─── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0; z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 40%, rgba(0,229,255,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 80% 30%, rgba(162,89,255,0.08) 0%, transparent 55%),
+        radial-gradient(ellipse 50% 80% at 50% 90%, rgba(79,140,255,0.06) 0%, transparent 60%);
+    }
+
+    /* Animated grid */
+    .hero-grid {
+      position: absolute; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+    }
+
+    /* Floating orbs */
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(80px); pointer-events: none; z-index: 0;
+      animation: float 8s ease-in-out infinite;
+    }
+    .orb1 { width: 400px; height: 400px; background: rgba(0,229,255,0.06); top: 10%; left: -10%; }
+    .orb2 { width: 500px; height: 500px; background: rgba(162,89,255,0.06); top: 20%; right: -15%; animation-delay: -3s; }
+    .orb3 { width: 300px; height: 300px; background: rgba(79,140,255,0.08); bottom: 10%; left: 30%; animation-delay: -5s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 860px; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 18px; border-radius: 50px;
+      border: 1px solid rgba(0,229,255,0.25);
+      background: rgba(0,229,255,0.06);
+      font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 28px;
+    }
+    .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: pulse-dot 2s infinite; }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .hero-logo {
+      width: 110px; height: 110px; object-fit: contain;
+      margin-bottom: 28px;
+      filter: drop-shadow(0 0 30px rgba(0,229,255,0.4));
+      animation: logo-glow 4s ease-in-out infinite;
+    }
+    @keyframes logo-glow {
+      0%, 100% { filter: drop-shadow(0 0 30px rgba(0,229,255,0.4)); }
+      50% { filter: drop-shadow(0 0 50px rgba(162,89,255,0.5)); }
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+      font-weight: 800; line-height: 1.12; letter-spacing: -1px;
+      margin-bottom: 24px;
+    }
+    .gradient-text {
+      background: linear-gradient(135deg, var(--cyan) 0%, var(--blue) 50%, var(--purple) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--muted); line-height: 1.7; max-width: 620px; margin: 0 auto 40px;
+    }
+
+    .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    .btn-primary {
+      padding: 14px 36px; border-radius: 50px;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      color: var(--dark); font-weight: 700; font-size: 0.95rem;
+      text-decoration: none; letter-spacing: 0.5px;
+      box-shadow: 0 0 40px rgba(0,229,255,0.3), 0 4px 20px rgba(0,0,0,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(0,229,255,0.45), 0 8px 30px rgba(0,0,0,0.4); }
+
+    .btn-outline {
+      padding: 13px 36px; border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--text); font-size: 0.95rem;
+      text-decoration: none; background: rgba(255,255,255,0.04);
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--cyan); background: rgba(0,229,255,0.06); transform: translateY(-2px); }
+
+    .hero-stats {
+      display: flex; gap: 48px; justify-content: center; flex-wrap: wrap;
+      margin-top: 72px; padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-size: 2rem; font-weight: 800;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.5px; margin-top: 4px; }
+
+    /* ─── Section base ─── */
+    section { position: relative; z-index: 1; }
+
+    .section-inner { max-width: 1200px; margin: 0 auto; padding: 100px 48px; }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800; line-height: 1.2; margin-bottom: 16px;
+    }
+
+    .section-sub { font-size: 1.05rem; color: var(--muted); line-height: 1.7; max-width: 560px; }
+
+    /* ─── Scroll animation base ─── */
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .reveal-left {
+      opacity: 0; transform: translateX(-50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+
+    .reveal-right {
+      opacity: 0; transform: translateX(50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    .reveal-scale {
+      opacity: 0; transform: scale(0.9);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+    .delay-5 { transition-delay: 0.5s; }
+
+    /* ─── Services ─── */
+    #services { background: var(--dark2); }
+
+    .services-header {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; align-items: end; margin-bottom: 64px;
+    }
+
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+    }
+
+    .service-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px; padding: 36px 28px;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .service-card:hover { transform: translateY(-6px); border-color: rgba(0,229,255,0.2); box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 40px rgba(0,229,255,0.06); }
+    .service-card:hover::before { opacity: 1; }
+
+    .service-icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 20px;
+    }
+    .icon-cyan { background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.2); }
+    .icon-blue { background: rgba(79,140,255,0.1); border: 1px solid rgba(79,140,255,0.2); }
+    .icon-purple { background: rgba(162,89,255,0.1); border: 1px solid rgba(162,89,255,0.2); }
+    .icon-mix1 { background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.15); }
+    .icon-mix2 { background: rgba(162,89,255,0.08); border: 1px solid rgba(162,89,255,0.15); }
+    .icon-mix3 { background: rgba(79,140,255,0.08); border: 1px solid rgba(79,140,255,0.15); }
+
+    .service-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px; }
+    .service-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
+
+    .service-tag {
+      display: inline-block; margin-top: 16px;
+      padding: 4px 12px; border-radius: 50px;
+      font-size: 0.72rem; letter-spacing: 0.5px;
+      background: rgba(0,229,255,0.08); color: var(--cyan);
+      border: 1px solid rgba(0,229,255,0.15);
+    }
+
+    /* ─── How It Works ─── */
+    #how {
+      background: var(--dark);
+    }
+
+    .how-wrapper {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+
+    .steps { display: flex; flex-direction: column; gap: 8px; }
+
+    .step {
+      display: flex; gap: 20px; align-items: flex-start;
+      padding: 24px; border-radius: 16px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .step:hover, .step.active {
+      background: rgba(0,229,255,0.04);
+      border-color: rgba(0,229,255,0.12);
+    }
+
+    .step-num {
+      min-width: 40px; height: 40px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.85rem;
+      box-shadow: 0 0 20px rgba(79,140,255,0.3);
+    }
+
+    .step h4 { font-size: 0.98rem; font-weight: 700; margin-bottom: 6px; }
+    .step p { font-size: 0.87rem; color: var(--muted); line-height: 1.6; }
+
+    /* Visual panel */
+    .how-visual {
+      position: relative; height: 480px;
+    }
+
+    .visual-card {
+      position: absolute; border-radius: 20px;
+      padding: 24px; backdrop-filter: blur(10px);
+    }
+    .vc-main {
+      inset: 0;
+      background: rgba(13,17,32,0.9);
+      border: 1px solid rgba(0,229,255,0.12);
+      box-shadow: 0 0 80px rgba(0,229,255,0.08), 0 30px 80px rgba(0,0,0,0.5);
+      display: flex; flex-direction: column; justify-content: space-between;
+      overflow: hidden;
+    }
+    .vc-main::before {
+      content: '';
+      position: absolute; top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: radial-gradient(ellipse 40% 40% at 50% 50%, rgba(0,229,255,0.04), transparent 60%);
+      pointer-events: none;
+    }
+
+    .vc-header {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 20px;
+    }
+    .vc-dots { display: flex; gap: 6px; }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #ff5f56; }
+    .dot-y { background: #ffbd2e; }
+    .dot-g { background: #27c93f; }
+    .vc-title { font-size: 0.75rem; color: var(--muted); letter-spacing: 1px; margin-left: 8px; }
+
+    .flow-nodes { display: flex; flex-direction: column; gap: 12px; flex: 1; }
+
+    .flow-node {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px; border-radius: 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.82rem;
+      animation: node-pulse 3s ease-in-out infinite;
+    }
+    .flow-node:nth-child(2) { animation-delay: 0.5s; }
+    .flow-node:nth-child(3) { animation-delay: 1s; }
+    .flow-node:nth-child(4) { animation-delay: 1.5s; }
+    .flow-node:nth-child(5) { animation-delay: 2s; }
+
+    @keyframes node-pulse {
+      0%, 100% { border-color: rgba(255,255,255,0.06); }
+      50% { border-color: rgba(0,229,255,0.2); background: rgba(0,229,255,0.04); }
+    }
+
+    .node-icon { font-size: 1rem; width: 28px; text-align: center; }
+    .node-label { flex: 1; color: var(--text); }
+    .node-status {
+      font-size: 0.7rem; padding: 2px 8px; border-radius: 50px;
+      background: rgba(0,229,255,0.1); color: var(--cyan);
+      border: 1px solid rgba(0,229,255,0.2);
+    }
+    .node-status.done { background: rgba(39,201,63,0.1); color: #27c93f; border-color: rgba(39,201,63,0.2); }
+    .node-status.running {
+      background: rgba(255,189,46,0.1); color: #ffbd2e; border-color: rgba(255,189,46,0.2);
+      animation: blink 1.2s ease-in-out infinite;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    .vc-footer {
+      margin-top: 20px; padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .vc-metric { text-align: center; }
+    .vc-metric .val { font-size: 1.1rem; font-weight: 700; color: var(--cyan); }
+    .vc-metric .lbl { font-size: 0.7rem; color: var(--muted); }
+
+    /* Floating info cards */
+    .vc-float {
+      position: absolute; padding: 14px 18px;
+      background: rgba(13,17,32,0.95);
+      border: 1px solid rgba(162,89,255,0.2);
+      border-radius: 14px; font-size: 0.78rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4), 0 0 20px rgba(162,89,255,0.1);
+      backdrop-filter: blur(12px);
+    }
+    .vc-float1 { bottom: -20px; right: -30px; }
+    .vc-float2 { top: 30px; right: -40px; }
+
+    /* ─── Use Cases ─── */
+    #usecases { background: var(--dark2); }
+
+    .usecases-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px;
+      margin-top: 60px;
+    }
+
+    .usecase-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 20px; padding: 36px;
+      display: flex; gap: 24px;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .usecase-card:hover { transform: translateY(-4px); border-color: rgba(162,89,255,0.25); }
+
+    .uc-icon {
+      font-size: 2rem; width: 60px; height: 60px;
+      border-radius: 16px; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, rgba(162,89,255,0.15), rgba(0,229,255,0.08));
+      border: 1px solid rgba(162,89,255,0.2); flex-shrink: 0;
+    }
+
+    .uc-body h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+    .uc-body p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+    .uc-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 14px; font-size: 0.75rem; color: var(--purple);
+    }
+    .uc-tag::before { content: ''; width: 16px; height: 1px; background: var(--purple); }
+
+    /* ─── Results / Numbers ─── */
+    #results {
+      background: linear-gradient(135deg, var(--dark) 0%, var(--dark3) 100%);
+      overflow: hidden;
+    }
+
+    .results-inner {
+      max-width: 1200px; margin: 0 auto; padding: 100px 48px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+
+    .numbers-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      margin-top: 48px;
+    }
+
+    .number-card {
+      padding: 32px 24px; border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .number-card:hover { transform: scale(1.03); }
+
+    .num-big {
+      font-size: 2.6rem; font-weight: 900; line-height: 1;
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    .num-label { font-size: 0.85rem; color: var(--muted); }
+
+    .results-visual { position: relative; }
+
+    .testimonial {
+      background: rgba(13,17,32,0.9);
+      border: 1px solid rgba(0,229,255,0.1);
+      border-radius: 20px; padding: 32px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .testimonial-text {
+      font-size: 1rem; line-height: 1.75; color: var(--text);
+      font-style: italic; margin-bottom: 24px;
+    }
+    .testimonial-text::before { content: '"'; color: var(--cyan); font-size: 2rem; line-height: 0; vertical-align: -0.5rem; margin-right: 4px; }
+    .testimonial-author { display: flex; align-items: center; gap: 14px; }
+    .author-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.9rem;
+    }
+    .author-name { font-size: 0.9rem; font-weight: 600; }
+    .author-role { font-size: 0.78rem; color: var(--muted); }
+
+    /* ─── CTA Section ─── */
+    #cta {
+      background: var(--dark2);
+      position: relative; overflow: hidden;
+    }
+    #cta::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,229,255,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(162,89,255,0.06) 0%, transparent 50%);
+    }
+
+    .cta-inner {
+      max-width: 700px; margin: 0 auto;
+      padding: 120px 48px; text-align: center;
+      position: relative; z-index: 1;
+    }
+
+    .cta-inner h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; line-height: 1.2; margin-bottom: 20px; }
+    .cta-inner p { font-size: 1.05rem; color: var(--muted); line-height: 1.7; margin-bottom: 40px; }
+
+    .cta-form {
+      display: flex; gap: 12px; max-width: 480px; margin: 0 auto;
+      flex-wrap: wrap; justify-content: center;
+    }
+    .cta-input {
+      flex: 1; min-width: 240px;
+      padding: 14px 20px; border-radius: 50px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text); font-size: 0.95rem; outline: none;
+      transition: border-color 0.2s;
+    }
+    .cta-input::placeholder { color: var(--muted); }
+    .cta-input:focus { border-color: var(--cyan); }
+
+    .cta-trust {
+      display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;
+      margin-top: 28px;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.8rem; color: var(--muted);
+    }
+    .trust-item svg { color: var(--cyan); }
+
+    /* ─── Footer ─── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 48px;
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 24px;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 12px; }
+    .footer-logo img { height: 30px; object-fit: contain; }
+    .footer-logo span {
+      font-size: 1rem; font-weight: 700; letter-spacing: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .footer-copy { font-size: 0.82rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 0.82rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--cyan); }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 900px) {
+      nav { padding: 14px 24px; }
+      .nav-links { display: none; }
+      .section-inner { padding: 70px 24px; }
+      .services-header { grid-template-columns: 1fr; gap: 16px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .how-wrapper { grid-template-columns: 1fr; }
+      .how-visual { height: 360px; }
+      .usecases-grid { grid-template-columns: 1fr; }
+      .results-inner { grid-template-columns: 1fr; gap: 48px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+
+    @media (max-width: 600px) {
+      .hero-stats { gap: 24px; }
+      .numbers-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── Navigation ─── -->
+  <nav id="navbar">
+    <a class="nav-logo" href="#">
+      <img src="komvox-logo.png" alt="Komvox Logo" />
+      <span>KOMVOX</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#services">Leistungen</a></li>
+      <li><a href="#how">Wie es funktioniert</a></li>
+      <li><a href="#usecases">Anwendungsfälle</a></li>
+      <li><a href="#results">Ergebnisse</a></li>
+    </ul>
+    <a href="#cta" class="nav-cta">Kostenlos beraten lassen</a>
+  </nav>
+
+  <!-- ─── Hero ─── -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge"><span></span>KI-Automation der nächsten Generation</div>
+      <img src="komvox-logo.png" alt="Komvox" class="hero-logo" />
+      <h1>Weniger Aufwand.<br /><span class="gradient-text">Mehr Aufträge.</span></h1>
+      <p class="hero-sub">
+        Komvox baut KI-Automationen und Workflows, die Ihr Unternehmen von Routineaufgaben befreien –
+        von smarten Workflows über Telefonassistenten bis hin zu vollwertigen digitalen Bürokräften.
+      </p>
+      <div class="hero-actions">
+        <a href="#cta" class="btn-primary">Jetzt Automation starten</a>
+        <a href="#how" class="btn-outline">Wie es funktioniert</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">80%</div>
+          <div class="stat-label">Zeitersparnis</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">3×</div>
+          <div class="stat-label">Mehr Aufträge</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">24/7</div>
+          <div class="stat-label">Immer erreichbar</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">48h</div>
+          <div class="stat-label">Go-Live garantiert</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Services ─── -->
+  <section id="services">
+    <div class="section-inner">
+      <div class="services-header">
+        <div class="reveal">
+          <div class="section-tag">Unsere Leistungen</div>
+          <h2 class="section-title">Alles was Ihr Unternehmen braucht</h2>
+        </div>
+        <div class="reveal delay-2">
+          <p class="section-sub">
+            Von der ersten Prozessanalyse bis zum vollautomatisierten Workflow – wir liefern massgeschneiderte KI-Lösungen, die sofort Ergebnisse bringen.
+          </p>
+        </div>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card reveal delay-1">
+          <div class="service-icon icon-cyan">⚡</div>
+          <h3>Smarte Workflows</h3>
+          <p>Repetitive Aufgaben automatisieren, Daten zwischen Tools synchronisieren und ganze Prozesse auf Autopilot schalten.</p>
+          <span class="service-tag">Zapier · Make · n8n</span>
+        </div>
+
+        <div class="service-card reveal delay-2">
+          <div class="service-icon icon-blue">📞</div>
+          <h3>KI-Telefonassistent</h3>
+          <p>Ein intelligenter Sprachassistent nimmt Anrufe entgegen, qualifiziert Leads, vereinbart Termine – rund um die Uhr, direkt in Ihr CRM.</p>
+          <span class="service-tag">Vapi · ElevenLabs · CRM</span>
+        </div>
+
+        <div class="service-card reveal delay-3">
+          <div class="service-icon icon-purple">🤖</div>
+          <h3>Digitale Bürokraft</h3>
+          <p>Eine vollwertige KI-Bürokraft die E-Mails beantwortet, Angebote erstellt, Aufträge verwaltet und Ihr Team entlastet.</p>
+          <span class="service-tag">GPT-4 · Vollintegration</span>
+        </div>
+
+        <div class="service-card reveal delay-2">
+          <div class="service-icon icon-mix1">🔗</div>
+          <h3>Systemintegrationen</h3>
+          <p>Verbinden Sie jedes Tool mit jedem anderen – CRM, ERP, Buchhaltung, Kalender. Einmal einrichten, für immer profitieren.</p>
+          <span class="service-tag">REST · Webhooks · API</span>
+        </div>
+
+        <div class="service-card reveal delay-3">
+          <div class="service-icon icon-mix2">💬</div>
+          <h3>Chat &amp; Messaging Bots</h3>
+          <p>WhatsApp, Website-Chat oder Instagram – unsere Bots beantworten Anfragen sofort und leiten Kaufinteressen automatisch weiter.</p>
+          <span class="service-tag">WhatsApp · Chat · Social</span>
+        </div>
+
+        <div class="service-card reveal delay-4">
+          <div class="service-icon icon-mix3">📊</div>
+          <h3>Analyse &amp; Reporting</h3>
+          <p>Automatische Reports, Live-Dashboards und KI-gestützte Auswertungen – alle Daten, die Sie brauchen, ohne manuellen Aufwand.</p>
+          <span class="service-tag">Dashboard · Reports · BI</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── How It Works ─── -->
+  <section id="how">
+    <div class="section-inner">
+      <div class="how-wrapper">
+        <div>
+          <div class="reveal">
+            <div class="section-tag">Prozess</div>
+            <h2 class="section-title">In 4 Schritten zur fertigen Automation</h2>
+            <p class="section-sub" style="margin-bottom: 36px;">Kein langer Vorlauf, kein Chaos. Wir analysieren, bauen, integrieren und optimieren – Sie profitieren sofort.</p>
+          </div>
+          <div class="steps">
+            <div class="step reveal delay-1">
+              <div class="step-num">01</div>
+              <div>
+                <h4>Analyse &amp; Discovery</h4>
+                <p>Wir verstehen Ihre Prozesse, identifizieren Engpässe und definieren gemeinsam den größten Hebel für Ihre Automation.</p>
+              </div>
+            </div>
+            <div class="step reveal delay-2">
+              <div class="step-num">02</div>
+              <div>
+                <h4>Konzept &amp; Architektur</h4>
+                <p>Sie erhalten einen konkreten Plan: welche Tools, welche Flows, welche Integrationen – transparent und verständlich erklärt.</p>
+              </div>
+            </div>
+            <div class="step reveal delay-3">
+              <div class="step-num">03</div>
+              <div>
+                <h4>Aufbau &amp; Integration</h4>
+                <p>Wir bauen Ihre Automation, verbinden alle Systeme und testen jeden Edge Case – bis alles reibungslos läuft.</p>
+              </div>
+            </div>
+            <div class="step reveal delay-4">
+              <div class="step-num">04</div>
+              <div>
+                <h4>Go-Live &amp; Optimierung</h4>
+                <p>Nach dem Launch überwachen wir die Performance und optimieren kontinuierlich – damit die Automation immer besser wird.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="how-visual reveal-right">
+          <div class="visual-card vc-main">
+            <div>
+              <div class="vc-header">
+                <div class="vc-dots">
+                  <div class="dot dot-r"></div>
+                  <div class="dot dot-y"></div>
+                  <div class="dot dot-g"></div>
+                </div>
+                <span class="vc-title">KOMVOX · LIVE AUTOMATION</span>
+              </div>
+              <div class="flow-nodes">
+                <div class="flow-node">
+                  <span class="node-icon">📥</span>
+                  <span class="node-label">Neuer Lead eingetroffen</span>
+                  <span class="node-status done">Done</span>
+                </div>
+                <div class="flow-node">
+                  <span class="node-icon">🤖</span>
+                  <span class="node-label">KI qualifiziert Lead</span>
+                  <span class="node-status done">Done</span>
+                </div>
+                <div class="flow-node">
+                  <span class="node-icon">📞</span>
+                  <span class="node-label">Rückruf automatisch geplant</span>
+                  <span class="node-status running">Läuft</span>
+                </div>
+                <div class="flow-node">
+                  <span class="node-icon">📋</span>
+                  <span class="node-label">CRM-Eintrag wird erstellt</span>
+                  <span class="node-status">Wartet</span>
+                </div>
+                <div class="flow-node">
+                  <span class="node-icon">✉️</span>
+                  <span class="node-label">Angebot wird versendet</span>
+                  <span class="node-status">Wartet</span>
+                </div>
+              </div>
+            </div>
+            <div class="vc-footer">
+              <div class="vc-metric"><div class="val">3m 12s</div><div class="lbl">Laufzeit</div></div>
+              <div class="vc-metric"><div class="val" style="color: var(--purple);">5</div><div class="lbl">Schritte</div></div>
+              <div class="vc-metric"><div class="val" style="color: #27c93f;">0</div><div class="lbl">Fehler</div></div>
+              <div class="vc-metric"><div class="val">100%</div><div class="lbl">Auto</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Use Cases ─── -->
+  <section id="usecases">
+    <div class="section-inner">
+      <div style="text-align:center; margin-bottom: 0;" class="reveal">
+        <div class="section-tag">Anwendungsfälle</div>
+        <h2 class="section-title" style="max-width:600px; margin: 0 auto 16px;">Für welche Branchen &amp; Szenarien</h2>
+        <p class="section-sub" style="margin: 0 auto; text-align: center;">Komvox löst echte Probleme in echten Unternehmen – branchenübergreifend und skalierbar.</p>
+      </div>
+      <div class="usecases-grid">
+        <div class="usecase-card reveal-left delay-1">
+          <div class="uc-icon">🏗️</div>
+          <div class="uc-body">
+            <h3>Handwerk &amp; Bau</h3>
+            <p>Automatische Angebotserstellung, Terminbuchung per KI-Telefon, Auftragsbestätigungen per WhatsApp – keine Sekretärin nötig.</p>
+            <div class="uc-tag">Bis zu 15 Stunden/Woche gespart</div>
+          </div>
+        </div>
+        <div class="usecase-card reveal-right delay-1">
+          <div class="uc-icon">🏠</div>
+          <div class="uc-body">
+            <h3>Immobilien</h3>
+            <p>Lead-Qualifikation rund um die Uhr, automatische Besichtigungsplanung, Follow-Up Sequenzen die nie vergessen zu antworten.</p>
+            <div class="uc-tag">3× mehr qualifizierte Leads</div>
+          </div>
+        </div>
+        <div class="usecase-card reveal-left delay-2">
+          <div class="uc-icon">⚖️</div>
+          <div class="uc-body">
+            <h3>Kanzleien &amp; Beratung</h3>
+            <p>Mandantenanfragen automatisch vorsortieren, Termine buchen, Standarddokumente generieren und Fristen tracken.</p>
+            <div class="uc-tag">Verwaltungsaufwand halbiert</div>
+          </div>
+        </div>
+        <div class="usecase-card reveal-right delay-2">
+          <div class="uc-icon">🛒</div>
+          <div class="uc-body">
+            <h3>E-Commerce &amp; Handel</h3>
+            <p>Bestellprozesse automatisieren, Retouren intelligent managen, Kundensupport durch KI-Chatbots auf Autopilot stellen.</p>
+            <div class="uc-tag">Support-Kosten –60%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Results ─── -->
+  <section id="results">
+    <div class="results-inner">
+      <div>
+        <div class="reveal">
+          <div class="section-tag">Ergebnisse</div>
+          <h2 class="section-title">Zahlen die überzeugen</h2>
+          <p class="section-sub">Unsere Kunden berichten von messbaren Ergebnissen – oft schon in der ersten Woche nach Go-Live.</p>
+        </div>
+        <div class="numbers-grid">
+          <div class="number-card reveal-scale delay-1">
+            <div class="num-big">80%</div>
+            <div class="num-label">Weniger manuelle Arbeit</div>
+          </div>
+          <div class="number-card reveal-scale delay-2">
+            <div class="num-big">3×</div>
+            <div class="num-label">Mehr bearbeitete Aufträge</div>
+          </div>
+          <div class="number-card reveal-scale delay-3">
+            <div class="num-big">24/7</div>
+            <div class="num-label">Erreichbarkeit ohne Personal</div>
+          </div>
+          <div class="number-card reveal-scale delay-4">
+            <div class="num-big">48h</div>
+            <div class="num-label">Bis zum ersten Live-System</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="results-visual reveal-right">
+        <div class="testimonial">
+          <p class="testimonial-text">
+            Seit wir Komvox einsetzen, nimmt unser KI-Assistent alle eingehenden Anrufe entgegen, trägt alles ins CRM ein und schickt selbstständig Angebote raus. Wir haben 60% mehr Aufträge bei gleichem Team.
+          </p>
+          <div class="testimonial-author">
+            <div class="author-avatar">MK</div>
+            <div>
+              <div class="author-name">Markus K.</div>
+              <div class="author-role">Geschäftsführer, Sanitärtechnik GmbH</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA ─── -->
+  <section id="cta">
+    <div class="cta-inner">
+      <div class="reveal">
+        <div class="section-tag">Jetzt starten</div>
+        <h2>Bereit für Ihren KI-Turbo?</h2>
+        <p>
+          Vereinbaren Sie ein kostenloses 30-Minuten-Gespräch. Wir analysieren Ihre Prozesse und zeigen Ihnen konkret, wo Automation den größten Unterschied macht.
+        </p>
+        <div class="cta-form">
+          <input type="email" class="cta-input" placeholder="Ihre E-Mail-Adresse" />
+          <a href="mailto:kontakt@komvox.de" class="btn-primary">Gespräch buchen</a>
+        </div>
+        <div class="cta-trust">
+          <span class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Kostenlos &amp; unverbindlich
+          </span>
+          <span class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Keine Vertragsbindung
+          </span>
+          <span class="trust-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Antwort innerhalb 24h
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Footer ─── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <img src="komvox-logo.png" alt="Komvox" />
+        <span>KOMVOX</span>
+      </div>
+      <div class="footer-copy">© 2025 Komvox · KI-Automationen &amp; Workflows</div>
+      <div class="footer-links">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutz</a>
+        <a href="mailto:kontakt@komvox.de">kontakt@komvox.de</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ─── JavaScript ─── -->
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Intersection Observer for scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        const target = document.querySelector(anchor.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Counter animation for hero stats
+    function animateCounters() {
+      document.querySelectorAll('.stat-num, .num-big').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(10px)';
+        el.style.transition = 'opacity 0.6s, transform 0.6s';
+        const io = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) {
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+            io.disconnect();
+          }
+        }, { threshold: 0.5 });
+        io.observe(el);
+      });
+    }
+    animateCounters();
+
+    // Parallax effect on hero orbs
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      document.querySelectorAll('.orb').forEach((orb, i) => {
+        const speed = 0.08 + i * 0.04;
+        orb.style.transform = `translateY(${scrollY * speed}px)`;
+      });
+      const heroGrid = document.querySelector('.hero-grid');
+      if (heroGrid) heroGrid.style.transform = `translateY(${scrollY * 0.15}px)`;
+    });
+
+    // Active step highlight
+    const steps = document.querySelectorAll('.step');
+    steps.forEach((step, i) => {
+      step.addEventListener('mouseenter', () => {
+        steps.forEach(s => s.classList.remove('active'));
+        step.classList.add('active');
+      });
+    });
+    if (steps.length) steps[0].classList.add('active');
+  </script>
+
+</body>
+</html>
