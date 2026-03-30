@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Komvox – KI-Automationen &amp; Workflows</title>
+  <title>Komvox, KI-Automationen &amp; Workflows</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800;900&family=Roboto+Serif:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     /* ─── Reset & Base ─── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,16 +27,35 @@
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-family: 'Roboto Serif', Georgia, serif;
       background: var(--dark);
       color: var(--text);
       overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Roboto Serif', Georgia, serif;
     }
 
     /* ─── Scrollbar ─── */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: var(--dark); }
     ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+
+    /* ─── Top fade mask — hides content scrolling behind nav ─── */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 130px;
+      background: linear-gradient(to bottom,
+        #080b14 0%,
+        #080b14 52%,
+        transparent 100%
+      );
+      pointer-events: none;
+      z-index: 99;
+    }
 
     /* ─── Noise overlay ─── */
     body::before {
@@ -55,17 +77,15 @@
       align-items: center;
       justify-content: space-between;
       padding: 16px 48px;
-      background: rgba(8,11,20,0.7);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(0,229,255,0.08);
+      background: transparent;
       transition: background 0.3s;
     }
-    nav.scrolled { background: rgba(8,11,20,0.95); }
+    nav.scrolled { background: transparent; }
 
     .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-    .nav-logo img { height: 36px; width: 36px; object-fit: contain; }
+    .nav-logo img { height: 64px; width: 64px; object-fit: contain; vertical-align: middle; }
     .nav-logo span {
-      font-size: 1.2rem; font-weight: 700; letter-spacing: 2px;
+      font-size: 1.2rem; font-weight: 800; letter-spacing: 2px;
       background: linear-gradient(90deg, var(--cyan), var(--purple));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
@@ -95,49 +115,35 @@
       text-align: center;
       padding: 120px 24px 80px;
       overflow: hidden;
+      background: #000;
     }
 
-    .hero-bg {
-      position: absolute; inset: 0; z-index: 0;
-      background:
-        radial-gradient(ellipse 80% 60% at 20% 40%, rgba(0,229,255,0.07) 0%, transparent 60%),
-        radial-gradient(ellipse 60% 50% at 80% 30%, rgba(162,89,255,0.08) 0%, transparent 55%),
-        radial-gradient(ellipse 50% 80% at 50% 90%, rgba(79,140,255,0.06) 0%, transparent 60%);
+
+    #hero-waves {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      z-index: 0; pointer-events: none;
     }
 
-    /* Animated grid */
-    .hero-grid {
-      position: absolute; inset: 0; z-index: 0;
-      background-image:
-        linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 80%);
+    /* Smooth gradient fade into next section */
+    #hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 260px;
+      background: linear-gradient(to bottom, transparent 0%, #000 40%, var(--dark2) 100%);
+      z-index: 2;
+      pointer-events: none;
     }
 
-    /* Floating orbs */
-    .orb {
-      position: absolute; border-radius: 50%;
-      filter: blur(80px); pointer-events: none; z-index: 0;
-      animation: float 8s ease-in-out infinite;
-    }
-    .orb1 { width: 400px; height: 400px; background: rgba(0,229,255,0.06); top: 10%; left: -10%; }
-    .orb2 { width: 500px; height: 500px; background: rgba(162,89,255,0.06); top: 20%; right: -15%; animation-delay: -3s; }
-    .orb3 { width: 300px; height: 300px; background: rgba(79,140,255,0.08); bottom: 10%; left: 30%; animation-delay: -5s; }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-30px) scale(1.05); }
-    }
-
-    .hero-content { position: relative; z-index: 1; max-width: 860px; }
+    .hero-content { position: relative; z-index: 3; max-width: 860px; }
 
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 6px 18px; border-radius: 50px;
       border: 1px solid rgba(0,229,255,0.25);
       background: rgba(0,229,255,0.06);
-      font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase;
       color: var(--cyan); margin-bottom: 28px;
     }
     .hero-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: pulse-dot 2s infinite; }
@@ -195,8 +201,7 @@
 
     .hero-stats {
       display: flex; gap: 48px; justify-content: center; flex-wrap: wrap;
-      margin-top: 72px; padding-top: 40px;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      margin-top: 160px;
     }
     .stat-item { text-align: center; }
     .stat-num {
@@ -213,6 +218,7 @@
 
     .section-tag {
       display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
       color: var(--cyan); margin-bottom: 16px;
     }
@@ -264,7 +270,7 @@
     }
 
     .services-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
     }
 
     .service-card {
@@ -301,7 +307,8 @@
     .service-tag {
       display: inline-block; margin-top: 16px;
       padding: 4px 12px; border-radius: 50px;
-      font-size: 0.72rem; letter-spacing: 0.5px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.5px;
       background: rgba(0,229,255,0.08); color: var(--cyan);
       border: 1px solid rgba(0,229,255,0.15);
     }
@@ -322,13 +329,25 @@
       display: flex; gap: 20px; align-items: flex-start;
       padding: 24px; border-radius: 16px;
       border: 1px solid transparent;
-      cursor: pointer;
+      cursor: pointer; position: relative; overflow: hidden;
       transition: background 0.3s, border-color 0.3s;
     }
     .step:hover, .step.active {
       background: rgba(0,229,255,0.04);
       border-color: rgba(0,229,255,0.12);
     }
+    .step-progress {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px; background: rgba(255,255,255,0.05);
+    }
+    .step-progress-bar {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--cyan), var(--blue));
+    }
+    .step.active .step-progress-bar {
+      animation: stepFill 10s linear forwards;
+    }
+    @keyframes stepFill { from { width: 0% } to { width: 100% } }
 
     .step-num {
       min-width: 40px; height: 40px; border-radius: 10px;
@@ -338,13 +357,19 @@
       box-shadow: 0 0 20px rgba(79,140,255,0.3);
     }
 
-    .step h4 { font-size: 0.98rem; font-weight: 700; margin-bottom: 6px; }
-    .step p { font-size: 0.87rem; color: var(--muted); line-height: 1.6; }
+    .step h4 { font-size: 1.05rem; font-weight: 700; }
 
     /* Visual panel */
     .how-visual {
-      position: relative; height: 480px;
+      position: relative; height: 480px; overflow: hidden;
     }
+    .how-panel {
+      position: absolute; inset: 0;
+      transform: translateX(110%);
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .how-panel.active { transform: translateX(0); }
+    .how-panel.exiting { transform: translateX(110%); }
 
     .visual-card {
       position: absolute; border-radius: 20px;
@@ -355,9 +380,64 @@
       background: rgba(13,17,32,0.9);
       border: 1px solid rgba(0,229,255,0.12);
       box-shadow: 0 0 80px rgba(0,229,255,0.08), 0 30px 80px rgba(0,0,0,0.5);
-      display: flex; flex-direction: column; justify-content: space-between;
+      display: flex; flex-direction: column;
       overflow: hidden;
     }
+    /* Panel body styles */
+    .panel-body { flex: 1; display: flex; flex-direction: column; gap: 14px; overflow: hidden; }
+    .panel-intro { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+    .panel-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; flex: 1; }
+    .panel-info-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(0,229,255,0.1);
+      border-radius: 12px; padding: 14px;
+    }
+    .panel-info-card.wide { grid-column: span 2; }
+    .panel-info-icon { font-size: 1.2rem; margin-bottom: 6px; }
+    .panel-info-title { font-size: 0.78rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .panel-info-desc { font-size: 0.72rem; color: var(--muted); line-height: 1.5; }
+    .panel-flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .panel-flow-node {
+      background: rgba(79,140,255,0.1); border: 1px solid rgba(79,140,255,0.25);
+      border-radius: 8px; padding: 6px 12px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--blue);
+    }
+    .panel-flow-arrow { color: var(--muted); font-size: 0.8rem; }
+    .panel-tool-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .panel-tool-col-label {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--cyan);
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 7px;
+    }
+    .panel-tool-tags { display: flex; flex-direction: column; gap: 5px; }
+    .panel-tool-tag {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px; padding: 5px 8px;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text);
+    }
+    .panel-phase { margin-bottom: 10px; }
+    .panel-phase-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .panel-phase-label { font-size: 0.73rem; color: var(--text); font-family: 'JetBrains Mono', monospace; }
+    .panel-phase-pct { font-size: 0.7rem; color: var(--cyan); font-family: 'JetBrains Mono', monospace; }
+    .panel-phase-track { height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+    .panel-phase-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--cyan), var(--blue)); }
+    .panel-online { display: flex; align-items: center; gap: 10px; padding: 14px; background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.2); border-radius: 12px; }
+    .panel-online-dot { width: 10px; height: 10px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 8px #22c55e; animation: livePulse 2s ease infinite; flex-shrink: 0; }
+    .panel-online-text { font-size: 0.88rem; font-weight: 700; color: #22c55e; flex: 1; }
+    .panel-online-sub { font-size: 0.7rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+    .panel-status-rows { display: flex; flex-direction: column; gap: 8px; }
+    .panel-status-row {
+      display: flex; align-items: center; gap: 12px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px; padding: 10px 14px;
+    }
+    .panel-status-icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .panel-status-text { font-size: 0.8rem; color: var(--text); }
+    .panel-duration {
+      margin-top: auto; padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+    }
+    .panel-duration-val { font-size: 1.5rem; font-weight: 800; color: var(--cyan); font-family: 'JetBrains Mono', monospace; }
+    .panel-duration-label { font-size: 0.73rem; color: var(--muted); text-align: right; line-height: 1.5; }
     .vc-main::before {
       content: '';
       position: absolute; top: -50%; left: -50%;
@@ -375,7 +455,7 @@
     .dot-r { background: #ff5f56; }
     .dot-y { background: #ffbd2e; }
     .dot-g { background: #27c93f; }
-    .vc-title { font-size: 0.75rem; color: var(--muted); letter-spacing: 1px; margin-left: 8px; }
+    .vc-title { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--muted); letter-spacing: 1px; margin-left: 8px; }
 
     .flow-nodes { display: flex; flex-direction: column; gap: 12px; flex: 1; }
 
@@ -398,7 +478,7 @@
     }
 
     .node-icon { font-size: 1rem; width: 28px; text-align: center; }
-    .node-label { flex: 1; color: var(--text); }
+    .node-label { flex: 1; color: var(--text); font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; }
     .node-status {
       font-size: 0.7rem; padding: 2px 8px; border-radius: 50px;
       background: rgba(0,229,255,0.1); color: var(--cyan);
@@ -441,7 +521,7 @@
     }
 
     .usecase-card {
-      background: rgba(255,255,255,0.02);
+      background: var(--dark3);
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 20px; padding: 36px;
       display: flex; gap: 24px;
@@ -460,7 +540,8 @@
     .uc-body p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
     .uc-tag {
       display: inline-flex; align-items: center; gap: 6px;
-      margin-top: 14px; font-size: 0.75rem; color: var(--purple);
+      margin-top: 14px; font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; color: var(--purple);
     }
     .uc-tag::before { content: ''; width: 16px; height: 1px; background: var(--purple); }
 
@@ -499,31 +580,215 @@
 
     .results-visual { position: relative; }
 
-    .testimonial {
-      background: rgba(13,17,32,0.9);
-      border: 1px solid rgba(0,229,255,0.1);
-      border-radius: 20px; padding: 32px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    .trust-signals {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
     }
-    .testimonial-text {
-      font-size: 1rem; line-height: 1.75; color: var(--text);
-      font-style: italic; margin-bottom: 24px;
+    .trust-signal-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px; padding: 24px;
+      transition: transform 0.3s, border-color 0.3s;
     }
-    .testimonial-text::before { content: '"'; color: var(--cyan); font-size: 2rem; line-height: 0; vertical-align: -0.5rem; margin-right: 4px; }
-    .testimonial-author { display: flex; align-items: center; gap: 14px; }
-    .author-avatar {
-      width: 44px; height: 44px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--blue), var(--purple));
+    .trust-signal-card:hover { transform: translateY(-4px); border-color: rgba(0,229,255,0.2); }
+    .trust-icon { font-size: 1.5rem; margin-bottom: 10px; }
+    .trust-label { font-weight: 600; font-size: 0.95rem; margin-bottom: 6px; }
+    .trust-desc { color: var(--muted); font-size: 0.82rem; line-height: 1.6; }
+
+    /* ─── iPhone Mockup ─── */
+    #dashboard { background: var(--dark2); }
+    .dash-two-col {
+      display: grid; grid-template-columns: 1fr auto; gap: 80px; align-items: center;
+    }
+    .dash-text-col { max-width: 480px; }
+    .dash-text-col .section-tag { margin-bottom: 16px; }
+    .dash-text-col .section-title { text-align: left; margin-bottom: 20px; font-size: clamp(1.8rem, 3vw, 2.6rem); }
+    .dash-desc { font-size: 1rem; color: var(--muted); line-height: 1.75; margin-bottom: 32px; }
+    .dash-features { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .dash-features li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: 0.9rem; color: var(--text); line-height: 1.5;
+    }
+    .dash-features li::before {
+      content: '';
+      flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px;
+      border-radius: 50%;
+      background: rgba(0,229,255,0.12);
+      border: 1px solid rgba(0,229,255,0.3);
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2300e5ff' stroke-width='3' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: center; background-size: 10px;
+    }
+    .dash-phone-col { display: flex; justify-content: center; }
+    .phone-scene {
+      display: flex; justify-content: center; align-items: center;
+      position: relative;
+    }
+    .phone-scene::before {
+      content: '';
+      position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+      width: 200px; height: 40px;
+      background: radial-gradient(ellipse, rgba(0,229,255,0.28) 0%, transparent 70%);
+      filter: blur(20px); pointer-events: none; z-index: 0;
+    }
+    .phone-wrapper { position: relative; z-index: 1; }
+    @media (max-width: 960px) {
+      .dash-two-col { grid-template-columns: 1fr; }
+      .dash-text-col { max-width: 100%; }
+      .dash-text-col .section-title { text-align: center; }
+      .dash-text-col .section-tag { text-align: center; }
+      .dash-desc { text-align: center; }
+      .dash-features { align-items: flex-start; max-width: 420px; margin: 0 auto; }
+    }
+    .phone-frame {
+      position: relative; width: 285px; height: 590px;
+      background: #141414;
+      border-radius: 52px;
+      border: 2px solid rgba(255,255,255,0.12);
+      box-shadow:
+        0 0 0 1px rgba(0,0,0,0.9),
+        0 40px 100px rgba(0,0,0,0.7),
+        0 0 80px rgba(0,229,255,0.1),
+        inset 0 0 0 1px rgba(255,255,255,0.04);
+      overflow: visible;
+    }
+    /* Side buttons */
+    .phone-btn-l {
+      position: absolute; left: -4px; top: 110px;
+      width: 3px; height: 34px; background: #2a2a2a; border-radius: 2px 0 0 2px;
+      box-shadow: 0 46px 0 #2a2a2a;
+    }
+    .phone-btn-r {
+      position: absolute; right: -4px; top: 140px;
+      width: 3px; height: 70px; background: #2a2a2a; border-radius: 0 2px 2px 0;
+    }
+    .phone-notch {
+      position: absolute; top: 15px; left: 50%; transform: translateX(-50%);
+      width: 96px; height: 26px; background: #141414; border-radius: 20px; z-index: 20;
+    }
+    .phone-screen {
+      position: absolute; inset: 0;
+      background: #f4f4f6; border-radius: 50px;
+      overflow: hidden; display: flex; flex-direction: column;
+    }
+    /* App UI */
+    .app-header {
+      padding: 52px 20px 14px; background: #fff;
+      border-bottom: 1px solid #e5e7eb; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .app-header-title {
+      font-family: 'Roboto Serif', serif; font-size: 1.15rem; font-weight: 700; color: #111;
+    }
+    .app-live-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: #22c55e;
+      box-shadow: 0 0 6px #22c55e; animation: livePulse 2s ease infinite;
+    }
+    @keyframes livePulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+    .app-period-tabs {
+      display: flex; gap: 7px; padding: 10px 14px;
+      background: #fff; flex-shrink: 0;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .period-tab {
+      padding: 5px 11px; border-radius: 20px;
+      border: 1px solid #d1d5db; background: transparent;
+      font-size: 0.68rem; color: #374151; cursor: pointer;
+      font-family: 'Roboto Serif', serif; transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .period-tab.active { background: #2563eb; border-color: #2563eb; color: #fff; }
+    .app-views { flex: 1; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; }
+    .app-views::-webkit-scrollbar { display: none; }
+    .app-view { display: none; padding: 14px; }
+    .app-view.active { display: block; }
+    .app-kpi-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;
+    }
+    .app-kpi-card {
+      background: #fff; border-radius: 14px; padding: 13px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .app-kpi-label {
+      font-size: 0.63rem; color: #6b7280;
+      font-family: 'JetBrains Mono', monospace;
+      margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.4px;
+    }
+    .app-kpi-value {
+      font-size: 1.55rem; font-weight: 800;
+      font-family: 'Roboto Serif', serif; line-height: 1;
+    }
+    .app-kpi-value.blue  { color: #2563eb; }
+    .app-kpi-value.red   { color: #dc2626; }
+    .app-kpi-value.green { color: #16a34a; }
+    .app-kpi-value.orange{ color: #d97706; }
+    .app-kpi-sub { font-size: 0.58rem; color: #9ca3af; margin-top: 3px; font-family: 'JetBrains Mono', monospace; }
+    .app-chart-card {
+      background: #fff; border-radius: 14px; padding: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .app-chart-title {
+      font-size: 0.72rem; font-weight: 700; color: #111; margin-bottom: 10px;
+      font-family: 'Roboto Serif', serif;
+    }
+    .app-chart-svg { width: 100%; height: 80px; }
+    .app-chart-xlabels {
+      display: flex; justify-content: space-between; margin-top: 4px;
+    }
+    .app-chart-xlabels span {
+      font-size: 0.55rem; color: #9ca3af; font-family: 'JetBrains Mono', monospace;
+    }
+    .app-chart-legend {
+      display: flex; gap: 14px; margin-top: 8px;
+    }
+    .legend-item {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 0.6rem; color: #6b7280; font-family: 'JetBrains Mono', monospace;
+    }
+    .legend-line { width: 16px; height: 2px; border-radius: 1px; }
+    /* Calls / Termine stat rows */
+    .app-stat-row {
+      background: #fff; border-radius: 12px; padding: 13px 14px;
+      margin-bottom: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .app-stat-name { font-size: 0.75rem; color: #374151; font-family: 'Roboto Serif', serif; }
+    .app-stat-val { font-size: 1.05rem; font-weight: 800; font-family: 'Roboto Serif', serif; }
+    /* Mehr view */
+    .app-more-item {
+      background: #fff; border-radius: 12px; padding: 12px 14px;
+      margin-bottom: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      display: flex; align-items: center; gap: 11px;
+      font-size: 0.78rem; color: #111; font-family: 'Roboto Serif', serif;
+    }
+    .app-more-icon {
+      width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
-      font-weight: 700; font-size: 0.9rem;
     }
-    .author-name { font-size: 0.9rem; font-weight: 600; }
-    .author-role { font-size: 0.78rem; color: var(--muted); }
+    /* Bottom nav */
+    .app-bottomnav {
+      display: flex; background: #fff; border-top: 1px solid #e5e7eb;
+      padding: 8px 0 22px; flex-shrink: 0;
+    }
+    .bnav-item {
+      flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+      padding: 4px 0; border: none; background: transparent; cursor: pointer;
+      font-family: 'JetBrains Mono', monospace; font-size: 0.54rem; color: #9ca3af;
+      transition: color 0.2s;
+    }
+    .bnav-item svg { width: 20px; height: 20px; }
+    .bnav-item.active { color: #2563eb; }
+    @media (max-width: 600px) {
+      .phone-frame { width: 260px; height: 540px; }
+    }
 
     /* ─── CTA Section ─── */
     #cta {
       background: var(--dark2);
       position: relative; overflow: hidden;
+    }
+    #cta-network {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      z-index: 0; pointer-events: none;
     }
     #cta::before {
       content: '';
@@ -569,9 +834,10 @@
 
     /* ─── Footer ─── */
     footer {
-      background: var(--dark);
+      background: #050810;
       border-top: 1px solid rgba(255,255,255,0.06);
       padding: 48px;
+      position: relative; isolation: isolate;
     }
     .footer-inner {
       max-width: 1200px; margin: 0 auto;
@@ -579,7 +845,7 @@
       flex-wrap: wrap; gap: 24px;
     }
     .footer-logo { display: flex; align-items: center; gap: 12px; }
-    .footer-logo img { height: 30px; object-fit: contain; }
+    .footer-logo img { height: 64px; width: 64px; object-fit: contain; }
     .footer-logo span {
       font-size: 1rem; font-weight: 700; letter-spacing: 2px;
       background: linear-gradient(90deg, var(--cyan), var(--purple));
@@ -615,54 +881,48 @@
   <!-- ─── Navigation ─── -->
   <nav id="navbar">
     <a class="nav-logo" href="#">
-      <img src="komvox-logo.png" alt="Komvox Logo" />
+      <img src="komvox-logo-no-name.png" alt="Komvox Logo" />
       <span>KOMVOX</span>
     </a>
     <ul class="nav-links">
+      <li><a href="#">Home</a></li>
       <li><a href="#services">Leistungen</a></li>
-      <li><a href="#how">Wie es funktioniert</a></li>
-      <li><a href="#usecases">Anwendungsfälle</a></li>
       <li><a href="#results">Ergebnisse</a></li>
+      <li><a href="demo.html">Demo</a></li>
+      <li><a href="ueber-uns.html">Über uns</a></li>
+      <li><a href="kontakt.html">Kontakt</a></li>
     </ul>
-    <a href="#cta" class="nav-cta">Kostenlos beraten lassen</a>
+    <a href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener" class="nav-cta">Termin buchen</a>
   </nav>
 
   <!-- ─── Hero ─── -->
   <section id="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-grid"></div>
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
+    <canvas id="hero-waves"></canvas>
 
     <div class="hero-content">
-      <div class="hero-badge"><span></span>KI-Automation der nächsten Generation</div>
-      <img src="komvox-logo.png" alt="Komvox" class="hero-logo" />
-      <h1>Weniger Aufwand.<br /><span class="gradient-text">Mehr Aufträge.</span></h1>
+      <h1>Weniger Aufwand<br /><span class="gradient-text">Mehr Aufträge</span></h1>
       <p class="hero-sub">
-        Komvox baut KI-Automationen und Workflows, die Ihr Unternehmen von Routineaufgaben befreien –
-        von smarten Workflows über Telefonassistenten bis hin zu vollwertigen digitalen Bürokräften.
       </p>
       <div class="hero-actions">
-        <a href="#cta" class="btn-primary">Jetzt Automation starten</a>
-        <a href="#how" class="btn-outline">Wie es funktioniert</a>
+        <a href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener" class="btn-primary">Termin buchen</a>
+        <a href="demo.html" class="btn-outline">Demo</a>
       </div>
       <div class="hero-stats">
         <div class="stat-item">
-          <div class="stat-num">80%</div>
-          <div class="stat-label">Zeitersparnis</div>
+          <div class="stat-num" data-target="80" data-suffix="%">0%</div>
+          <div class="stat-label">Weniger Routineaufgaben</div>
         </div>
         <div class="stat-item">
-          <div class="stat-num">3×</div>
-          <div class="stat-label">Mehr Aufträge</div>
+          <div class="stat-num" data-target="3" data-suffix="×">0×</div>
+          <div class="stat-label">Mehr bearbeitete Anfragen</div>
         </div>
         <div class="stat-item">
-          <div class="stat-num">24/7</div>
-          <div class="stat-label">Immer erreichbar</div>
+          <div class="stat-num" data-static="24/7">24/7</div>
+          <div class="stat-label">Immer einsatzbereit</div>
         </div>
         <div class="stat-item">
-          <div class="stat-num">48h</div>
-          <div class="stat-label">Go-Live garantiert</div>
+          <div class="stat-num" data-static="0">0</div>
+          <div class="stat-label">Verpasste Anfragen</div>
         </div>
       </div>
     </div>
@@ -678,7 +938,7 @@
         </div>
         <div class="reveal delay-2">
           <p class="section-sub">
-            Von der ersten Prozessanalyse bis zum vollautomatisierten Workflow – wir liefern massgeschneiderte KI-Lösungen, die sofort Ergebnisse bringen.
+            Ihr KI-Mitarbeiter übernimmt Routineaufgaben, verbindet Ihre Systeme und liefert Ihnen jederzeit volle Transparenz über alle Ergebnisse.
           </p>
         </div>
       </div>
@@ -686,44 +946,26 @@
       <div class="services-grid">
         <div class="service-card reveal delay-1">
           <div class="service-icon icon-cyan">⚡</div>
-          <h3>Smarte Workflows</h3>
-          <p>Repetitive Aufgaben automatisieren, Daten zwischen Tools synchronisieren und ganze Prozesse auf Autopilot schalten.</p>
-          <span class="service-tag">Zapier · Make · n8n</span>
+          <h3>KI-Mitarbeiter</h3>
+          <p>Ihr digitaler Mitarbeiter übernimmt Aufgaben autonom: Anfragen beantworten, Termine planen, Aufträge verarbeiten, Kunden betreuen. Rund um die Uhr, ohne Pause.</p>
         </div>
 
         <div class="service-card reveal delay-2">
-          <div class="service-icon icon-blue">📞</div>
-          <h3>KI-Telefonassistent</h3>
-          <p>Ein intelligenter Sprachassistent nimmt Anrufe entgegen, qualifiziert Leads, vereinbart Termine – rund um die Uhr, direkt in Ihr CRM.</p>
-          <span class="service-tag">Vapi · ElevenLabs · CRM</span>
+          <div class="service-icon icon-blue">🔗</div>
+          <h3>Workflow-Automatisierung</h3>
+          <p>Repetitive Prozesse auf Autopilot schalten. Daten synchronisieren, Aufgaben verteilen, Abläufe verbinden. Alles automatisch, alles fehlerfrei.</p>
         </div>
 
         <div class="service-card reveal delay-3">
-          <div class="service-icon icon-purple">🤖</div>
-          <h3>Digitale Bürokraft</h3>
-          <p>Eine vollwertige KI-Bürokraft die E-Mails beantwortet, Angebote erstellt, Aufträge verwaltet und Ihr Team entlastet.</p>
-          <span class="service-tag">GPT-4 · Vollintegration</span>
-        </div>
-
-        <div class="service-card reveal delay-2">
-          <div class="service-icon icon-mix1">🔗</div>
-          <h3>Systemintegrationen</h3>
-          <p>Verbinden Sie jedes Tool mit jedem anderen – CRM, ERP, Buchhaltung, Kalender. Einmal einrichten, für immer profitieren.</p>
-          <span class="service-tag">REST · Webhooks · API</span>
-        </div>
-
-        <div class="service-card reveal delay-3">
-          <div class="service-icon icon-mix2">💬</div>
-          <h3>Chat &amp; Messaging Bots</h3>
-          <p>WhatsApp, Website-Chat oder Instagram – unsere Bots beantworten Anfragen sofort und leiten Kaufinteressen automatisch weiter.</p>
-          <span class="service-tag">WhatsApp · Chat · Social</span>
+          <div class="service-icon icon-purple">🔌</div>
+          <h3>Systemintegration</h3>
+          <p>Ihre KI fügt sich nahtlos in bestehende Tools ein: CRM, ERP, Kalender, Kommunikation. Einmal verbunden, dauerhaft synchronisiert.</p>
         </div>
 
         <div class="service-card reveal delay-4">
           <div class="service-icon icon-mix3">📊</div>
-          <h3>Analyse &amp; Reporting</h3>
-          <p>Automatische Reports, Live-Dashboards und KI-gestützte Auswertungen – alle Daten, die Sie brauchen, ohne manuellen Aufwand.</p>
-          <span class="service-tag">Dashboard · Reports · BI</span>
+          <h3>Dashboard &amp; Reporting</h3>
+          <p>Alle Ergebnisse auf einen Blick. Live-Statistiken zu gesparter Zeit, bearbeiteten Anfragen und Automatisierungs-Performance, jederzeit abrufbar.</p>
         </div>
       </div>
     </div>
@@ -737,84 +979,189 @@
           <div class="reveal">
             <div class="section-tag">Prozess</div>
             <h2 class="section-title">In 4 Schritten zur fertigen Automation</h2>
-            <p class="section-sub" style="margin-bottom: 36px;">Kein langer Vorlauf, kein Chaos. Wir analysieren, bauen, integrieren und optimieren – Sie profitieren sofort.</p>
+            <p class="section-sub" style="margin-bottom: 36px;">Kein langer Vorlauf, kein Chaos. Wir analysieren, bauen, integrieren und optimieren, Sie profitieren sofort.</p>
           </div>
           <div class="steps">
-            <div class="step reveal delay-1">
+            <div class="step" data-step="0">
               <div class="step-num">01</div>
-              <div>
-                <h4>Analyse &amp; Discovery</h4>
-                <p>Wir verstehen Ihre Prozesse, identifizieren Engpässe und definieren gemeinsam den größten Hebel für Ihre Automation.</p>
-              </div>
+              <div><h4>Analyse &amp; Discovery</h4></div>
+              <div class="step-progress"><div class="step-progress-bar"></div></div>
             </div>
-            <div class="step reveal delay-2">
+            <div class="step" data-step="1">
               <div class="step-num">02</div>
-              <div>
-                <h4>Konzept &amp; Architektur</h4>
-                <p>Sie erhalten einen konkreten Plan: welche Tools, welche Flows, welche Integrationen – transparent und verständlich erklärt.</p>
-              </div>
+              <div><h4>Konzept &amp; Architektur</h4></div>
+              <div class="step-progress"><div class="step-progress-bar"></div></div>
             </div>
-            <div class="step reveal delay-3">
+            <div class="step" data-step="2">
               <div class="step-num">03</div>
-              <div>
-                <h4>Aufbau &amp; Integration</h4>
-                <p>Wir bauen Ihre Automation, verbinden alle Systeme und testen jeden Edge Case – bis alles reibungslos läuft.</p>
-              </div>
+              <div><h4>Aufbau &amp; Integration</h4></div>
+              <div class="step-progress"><div class="step-progress-bar"></div></div>
             </div>
-            <div class="step reveal delay-4">
+            <div class="step" data-step="3">
               <div class="step-num">04</div>
-              <div>
-                <h4>Go-Live &amp; Optimierung</h4>
-                <p>Nach dem Launch überwachen wir die Performance und optimieren kontinuierlich – damit die Automation immer besser wird.</p>
-              </div>
+              <div><h4>Go-Live &amp; Optimierung</h4></div>
+              <div class="step-progress"><div class="step-progress-bar"></div></div>
             </div>
           </div>
         </div>
 
         <div class="how-visual reveal-right">
-          <div class="visual-card vc-main">
-            <div>
+          <!-- Panel 0: Analyse -->
+          <div class="how-panel active" data-panel="0">
+            <div class="visual-card vc-main">
               <div class="vc-header">
-                <div class="vc-dots">
-                  <div class="dot dot-r"></div>
-                  <div class="dot dot-y"></div>
-                  <div class="dot dot-g"></div>
-                </div>
-                <span class="vc-title">KOMVOX · LIVE AUTOMATION</span>
+                <div class="vc-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+                <span class="vc-title">KOMVOX · ANALYSE</span>
               </div>
-              <div class="flow-nodes">
-                <div class="flow-node">
-                  <span class="node-icon">📥</span>
-                  <span class="node-label">Neuer Lead eingetroffen</span>
-                  <span class="node-status done">Done</span>
+              <div class="panel-body">
+                <p class="panel-intro">Kostenloses Erstgespräch. Wir analysieren Ihr Unternehmen und zeigen, wo KI den größten Unterschied macht.</p>
+                <div class="panel-info-grid">
+                  <div class="panel-info-card">
+                    <div class="panel-info-icon">🔍</div>
+                    <div class="panel-info-title">Zeitfresser identifizieren</div>
+                    <div class="panel-info-desc">Welche Abläufe kosten täglich am meisten Zeit?</div>
+                  </div>
+                  <div class="panel-info-card">
+                    <div class="panel-info-icon">⚡</div>
+                    <div class="panel-info-title">Größte Hebel finden</div>
+                    <div class="panel-info-desc">Was bringt maximale Wirkung mit minimalem Aufwand?</div>
+                  </div>
+                  <div class="panel-info-card wide">
+                    <div class="panel-info-icon">💡</div>
+                    <div class="panel-info-title">Automatisierungspotenzial bewerten</div>
+                    <div class="panel-info-desc">Quick Wins sofort, langfristiges Potenzial klar aufzeigen.</div>
+                  </div>
                 </div>
-                <div class="flow-node">
-                  <span class="node-icon">🤖</span>
-                  <span class="node-label">KI qualifiziert Lead</span>
-                  <span class="node-status done">Done</span>
-                </div>
-                <div class="flow-node">
-                  <span class="node-icon">📞</span>
-                  <span class="node-label">Rückruf automatisch geplant</span>
-                  <span class="node-status running">Läuft</span>
-                </div>
-                <div class="flow-node">
-                  <span class="node-icon">📋</span>
-                  <span class="node-label">CRM-Eintrag wird erstellt</span>
-                  <span class="node-status">Wartet</span>
-                </div>
-                <div class="flow-node">
-                  <span class="node-icon">✉️</span>
-                  <span class="node-label">Angebot wird versendet</span>
-                  <span class="node-status">Wartet</span>
-                </div>
+              </div>
+              <div class="panel-duration">
+                <div class="panel-duration-val">45 Min.</div>
+                <div class="panel-duration-label">Kostenloses<br>Erstgespräch</div>
               </div>
             </div>
-            <div class="vc-footer">
-              <div class="vc-metric"><div class="val">3m 12s</div><div class="lbl">Laufzeit</div></div>
-              <div class="vc-metric"><div class="val" style="color: var(--purple);">5</div><div class="lbl">Schritte</div></div>
-              <div class="vc-metric"><div class="val" style="color: #27c93f;">0</div><div class="lbl">Fehler</div></div>
-              <div class="vc-metric"><div class="val">100%</div><div class="lbl">Auto</div></div>
+          </div>
+          <!-- Panel 1: Konzept -->
+          <div class="how-panel" data-panel="1">
+            <div class="visual-card vc-main">
+              <div class="vc-header">
+                <div class="vc-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+                <span class="vc-title">KOMVOX · KONZEPT</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-intro">Sie erhalten einen maßgeschneiderten Plan: konkret, verständlich und direkt umsetzbar.</p>
+                <div class="panel-flow">
+                  <span class="panel-flow-node">Ihre Prozesse</span>
+                  <span class="panel-flow-arrow">→</span>
+                  <span class="panel-flow-node">Tool-Stack</span>
+                  <span class="panel-flow-arrow">→</span>
+                  <span class="panel-flow-node">Workflows</span>
+                  <span class="panel-flow-arrow">→</span>
+                  <span class="panel-flow-node">Automation</span>
+                </div>
+                <div class="panel-tool-cols">
+                  <div class="panel-tool-col">
+                    <div class="panel-tool-col-label">Automation</div>
+                    <div class="panel-tool-tags">
+                      <span class="panel-tool-tag">n8n</span>
+                      <span class="panel-tool-tag">Make</span>
+                      <span class="panel-tool-tag">Zapier</span>
+                    </div>
+                  </div>
+                  <div class="panel-tool-col">
+                    <div class="panel-tool-col-label">Systeme</div>
+                    <div class="panel-tool-tags">
+                      <span class="panel-tool-tag">CRM</span>
+                      <span class="panel-tool-tag">ERP</span>
+                      <span class="panel-tool-tag">Kalender</span>
+                    </div>
+                  </div>
+                  <div class="panel-tool-col">
+                    <div class="panel-tool-col-label">Protokolle</div>
+                    <div class="panel-tool-tags">
+                      <span class="panel-tool-tag">REST</span>
+                      <span class="panel-tool-tag">Webhooks</span>
+                      <span class="panel-tool-tag">API</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-duration">
+                <div class="panel-duration-val">2 Tage</div>
+                <div class="panel-duration-label">Konkreter<br>Bauplan</div>
+              </div>
+            </div>
+          </div>
+          <!-- Panel 2: Aufbau -->
+          <div class="how-panel" data-panel="2">
+            <div class="visual-card vc-main">
+              <div class="vc-header">
+                <div class="vc-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+                <span class="vc-title">KOMVOX · AUFBAU</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-intro">Wir entwickeln die Automation, verbinden alle Systeme und testen jeden Edge Case bis alles reibungslos läuft.</p>
+                <div>
+                  <div class="panel-phase">
+                    <div class="panel-phase-header"><span class="panel-phase-label">Wo. 1–2 · Grundstruktur</span><span class="panel-phase-pct">25%</span></div>
+                    <div class="panel-phase-track"><div class="panel-phase-fill" style="width:25%"></div></div>
+                  </div>
+                  <div class="panel-phase">
+                    <div class="panel-phase-header"><span class="panel-phase-label">Wo. 3–4 · Integrationen</span><span class="panel-phase-pct">50%</span></div>
+                    <div class="panel-phase-track"><div class="panel-phase-fill" style="width:50%"></div></div>
+                  </div>
+                  <div class="panel-phase">
+                    <div class="panel-phase-header"><span class="panel-phase-label">Wo. 5–6 · Tests &amp; Tuning</span><span class="panel-phase-pct">75%</span></div>
+                    <div class="panel-phase-track"><div class="panel-phase-fill" style="width:75%"></div></div>
+                  </div>
+                  <div class="panel-phase">
+                    <div class="panel-phase-header"><span class="panel-phase-label">Wo. 7–8 · Go-Live-Check</span><span class="panel-phase-pct">100%</span></div>
+                    <div class="panel-phase-track"><div class="panel-phase-fill" style="width:100%"></div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-duration">
+                <div class="panel-duration-val">6–8 Wo.</div>
+                <div class="panel-duration-label">Entwicklung &amp;<br>Integration</div>
+              </div>
+            </div>
+          </div>
+          <!-- Panel 3: Go-Live -->
+          <div class="how-panel" data-panel="3">
+            <div class="visual-card vc-main">
+              <div class="vc-header">
+                <div class="vc-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+                <span class="vc-title">KOMVOX · GO-LIVE</span>
+              </div>
+              <div class="panel-body">
+                <div class="panel-online">
+                  <div class="panel-online-dot"></div>
+                  <span class="panel-online-text">System aktiv</span>
+                  <span class="panel-online-sub">100% Uptime</span>
+                </div>
+                <div class="panel-status-rows">
+                  <div class="panel-status-row">
+                    <div class="panel-status-icon" style="background:rgba(0,229,255,0.1);">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                    </div>
+                    <span class="panel-status-text">Kontinuierliche Optimierung</span>
+                  </div>
+                  <div class="panel-status-row">
+                    <div class="panel-status-icon" style="background:rgba(39,201,63,0.1);">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#27c93f" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.5"/></svg>
+                    </div>
+                    <span class="panel-status-text">Regelmäßige Updates &amp; immer aktuell</span>
+                  </div>
+                  <div class="panel-status-row">
+                    <div class="panel-status-icon" style="background:rgba(162,89,255,0.1);">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <span class="panel-status-text">Fehler werden direkt behoben</span>
+                  </div>
+                </div>
+              </div>
+              <div class="panel-duration">
+                <div class="panel-duration-val">∞</div>
+                <div class="panel-duration-label">Dauerhaft &amp;<br>immer aktuell</div>
+              </div>
             </div>
           </div>
         </div>
@@ -824,18 +1171,18 @@
 
   <!-- ─── Use Cases ─── -->
   <section id="usecases">
-    <div class="section-inner">
+<div class="section-inner">
       <div style="text-align:center; margin-bottom: 0;" class="reveal">
         <div class="section-tag">Anwendungsfälle</div>
         <h2 class="section-title" style="max-width:600px; margin: 0 auto 16px;">Für welche Branchen &amp; Szenarien</h2>
-        <p class="section-sub" style="margin: 0 auto; text-align: center;">Komvox löst echte Probleme in echten Unternehmen – branchenübergreifend und skalierbar.</p>
+        <p class="section-sub" style="margin: 0 auto; text-align: center;">Komvox löst echte Probleme in echten Unternehmen, branchenübergreifend und skalierbar.</p>
       </div>
       <div class="usecases-grid">
         <div class="usecase-card reveal-left delay-1">
           <div class="uc-icon">🏗️</div>
           <div class="uc-body">
             <h3>Handwerk &amp; Bau</h3>
-            <p>Automatische Angebotserstellung, Terminbuchung per KI-Telefon, Auftragsbestätigungen per WhatsApp – keine Sekretärin nötig.</p>
+            <p>Automatische Angebotserstellung, intelligente Terminplanung, Auftragsbestätigungen und Kundenkommunikation, keine Sekretärin nötig.</p>
             <div class="uc-tag">Bis zu 15 Stunden/Woche gespart</div>
           </div>
         </div>
@@ -873,48 +1220,243 @@
       <div>
         <div class="reveal">
           <div class="section-tag">Ergebnisse</div>
-          <h2 class="section-title">Zahlen die überzeugen</h2>
-          <p class="section-sub">Unsere Kunden berichten von messbaren Ergebnissen – oft schon in der ersten Woche nach Go-Live.</p>
+          <h2 class="section-title">Was Ihr KI-Mitarbeiter leistet</h2>
+          <p class="section-sub">Messbare Ergebnisse ab dem ersten Tag. Weniger Aufwand, mehr Kapazität, volle Transparenz.</p>
         </div>
         <div class="numbers-grid">
           <div class="number-card reveal-scale delay-1">
-            <div class="num-big">80%</div>
-            <div class="num-label">Weniger manuelle Arbeit</div>
+            <div class="num-big" data-target="80" data-suffix="%">0%</div>
+            <div class="num-label">Weniger Routineaufgaben</div>
           </div>
           <div class="number-card reveal-scale delay-2">
-            <div class="num-big">3×</div>
-            <div class="num-label">Mehr bearbeitete Aufträge</div>
+            <div class="num-big" data-target="3" data-suffix="×">0×</div>
+            <div class="num-label">Mehr bearbeitete Anfragen</div>
           </div>
           <div class="number-card reveal-scale delay-3">
-            <div class="num-big">24/7</div>
-            <div class="num-label">Erreichbarkeit ohne Personal</div>
+            <div class="num-big" data-static="24/7">24/7</div>
+            <div class="num-label">Immer einsatzbereit</div>
           </div>
           <div class="number-card reveal-scale delay-4">
-            <div class="num-big">48h</div>
-            <div class="num-label">Bis zum ersten Live-System</div>
+            <div class="num-big" data-static="0">0</div>
+            <div class="num-label">Verpasste Anfragen</div>
           </div>
         </div>
       </div>
 
       <div class="results-visual reveal-right">
-        <div class="testimonial">
-          <p class="testimonial-text">
-            Seit wir Komvox einsetzen, nimmt unser KI-Assistent alle eingehenden Anrufe entgegen, trägt alles ins CRM ein und schickt selbstständig Angebote raus. Wir haben 60% mehr Aufträge bei gleichem Team.
-          </p>
-          <div class="testimonial-author">
-            <div class="author-avatar">MK</div>
-            <div>
-              <div class="author-name">Markus K.</div>
-              <div class="author-role">Geschäftsführer, Sanitärtechnik GmbH</div>
-            </div>
+        <div class="trust-signals">
+          <div class="trust-signal-card">
+            <div class="trust-icon">🔒</div>
+            <div class="trust-label">DSGVO-konform</div>
+            <div class="trust-desc">Volle Transparenz, jederzeit Export und Löschung auf Anfrage.</div>
+          </div>
+          <div class="trust-signal-card">
+            <div class="trust-icon">🇩🇪</div>
+            <div class="trust-label">Made in Germany</div>
+            <div class="trust-desc">Entwickelt und betreut in Deutschland. Persönliche Ansprechpartner, keine anonymen Ticketsysteme.</div>
+          </div>
+          <div class="trust-signal-card">
+            <div class="trust-icon">🤝</div>
+            <div class="trust-label">Persönlicher Ansprechpartner</div>
+            <div class="trust-desc">Direkter Kontakt zu Ihrem Projektteam. Schnelle Reaktionszeiten, klare Kommunikation.</div>
+          </div>
+          <div class="trust-signal-card">
+            <div class="trust-icon">✓</div>
+            <div class="trust-label">Keine Vertragsbindung</div>
+            <div class="trust-desc">Flexible Zusammenarbeit ohne Mindestlaufzeit. Sie bleiben, weil es funktioniert.</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ─── Dashboard ─── -->
+  <section id="dashboard">
+    <div class="section-inner dash-two-col">
+      <div class="dash-text-col reveal">
+        <div class="section-tag">App Preview</div>
+        <h2 class="section-title">Ihr Dashboard, immer dabei</h2>
+        <p class="dash-desc">Alle wichtigen KPIs live auf Ihrem Smartphone: Anrufstatistiken, gebuchte Termine, Conversion und wie viel Zeit Ihre Automatisierung bereits gespart hat. Klicken Sie sich durch die Ansichten und erleben Sie das Komvox-Dashboard.</p>
+        <ul class="dash-features">
+          <li>Live-Statistiken zu Calls, Buchungen und Conversion</li>
+          <li>Zeiträume flexibel wechseln: Heute bis 90 Tage</li>
+          <li>Gesparte Stunden durch Automation jederzeit abrufbar</li>
+          <li>Kein verpasster Anruf, alle Daten transparent</li>
+        </ul>
+      </div>
+      <div class="dash-phone-col reveal-scale delay-1">
+      <div class="phone-scene">
+        <div class="phone-wrapper">
+          <div class="phone-frame">
+            <div class="phone-btn-l"></div>
+            <div class="phone-btn-r"></div>
+            <div class="phone-notch"></div>
+            <div class="phone-screen">
+              <!-- App Header -->
+              <div class="app-header">
+                <div class="app-header-title">Übersicht</div>
+                <div class="app-live-dot"></div>
+              </div>
+              <!-- Period Tabs -->
+              <div class="app-period-tabs">
+                <button class="period-tab" data-period="heute">Heute</button>
+                <button class="period-tab" data-period="7tage">7 Tage</button>
+                <button class="period-tab" data-period="30tage">30 Tage</button>
+                <button class="period-tab active" data-period="90tage">90 Tage</button>
+              </div>
+              <!-- Views -->
+              <div class="app-views">
+                <!-- Übersicht -->
+                <div class="app-view active" id="app-view-overview">
+                  <div class="app-kpi-grid">
+                    <div class="app-kpi-card">
+                      <div class="app-kpi-label">Calls gesamt</div>
+                      <div class="app-kpi-value blue" id="ov-calls">568</div>
+                    </div>
+                    <div class="app-kpi-card">
+                      <div class="app-kpi-label">Calls verpasst</div>
+                      <div class="app-kpi-value red" id="ov-verpasst">0</div>
+                      <div class="app-kpi-sub">mit Komvox</div>
+                    </div>
+                    <div class="app-kpi-card">
+                      <div class="app-kpi-label">Bookings</div>
+                      <div class="app-kpi-value green" id="ov-bookings">115</div>
+                    </div>
+                    <div class="app-kpi-card">
+                      <div class="app-kpi-label">Conversion</div>
+                      <div class="app-kpi-value orange" id="ov-conversion">20.2%</div>
+                      <div class="app-kpi-sub">Bookings / Calls</div>
+                    </div>
+                  </div>
+                  <div class="app-chart-card">
+                    <div class="app-chart-title">Calls &amp; Bookings pro Tag</div>
+                    <svg class="app-chart-svg" viewBox="0 0 240 80" preserveAspectRatio="none">
+                      <line x1="0" y1="20" x2="240" y2="20" stroke="#f0f0f0" stroke-width="1"/>
+                      <line x1="0" y1="40" x2="240" y2="40" stroke="#f0f0f0" stroke-width="1"/>
+                      <line x1="0" y1="60" x2="240" y2="60" stroke="#f0f0f0" stroke-width="1"/>
+                      <polyline points="0,45 13,40 25,50 38,20 51,35 63,30 76,46 88,28 101,35 114,25 126,40 139,46 152,30 164,25 177,40 190,65 202,46 215,30 227,15 240,30" fill="none" stroke="#2563eb" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+                      <polyline points="0,72 13,74 25,72 38,70 51,74 63,72 76,74 88,70 101,72 114,72 126,74 139,72 152,70 164,72 177,74 190,76 202,74 215,72 227,68 240,68" fill="none" stroke="#16a34a" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+                    </svg>
+                    <div class="app-chart-xlabels">
+                      <span>01-30</span><span>02-07</span><span>02-15</span><span>02-25</span>
+                    </div>
+                    <div class="app-chart-legend">
+                      <span class="legend-item"><span class="legend-line" style="background:#2563eb;"></span>Calls</span>
+                      <span class="legend-item"><span class="legend-line" style="background:#16a34a;"></span>Bookings</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- Anrufe -->
+                <div class="app-view" id="app-view-calls">
+                  <div class="app-kpi-grid" style="grid-template-columns:1fr;">
+                    <div class="app-kpi-card">
+                      <div class="app-kpi-label">Eingehende Anrufe</div>
+                      <div class="app-kpi-value blue" id="ca-total">568</div>
+                      <div class="app-kpi-sub" id="calls-growth">23% mehr</div>
+                    </div>
+                  </div>
+                  <div class="app-stat-row">
+                    <span class="app-stat-name">Angenommen</span>
+                    <span class="app-stat-val" style="color:#16a34a;" id="ca-angenommen">568</span>
+                  </div>
+                  <div class="app-stat-row">
+                    <span class="app-stat-name">Verpasst</span>
+                    <span class="app-stat-val" style="color:#16a34a;" id="ca-verpasst">0</span>
+                  </div>
+                  <div class="app-stat-row">
+                    <span class="app-stat-name">Ø Gesprächsdauer</span>
+                    <span class="app-stat-val" style="color:#2563eb;" id="ca-dur">2:34 min</span>
+                  </div>
+                  <div class="app-stat-row">
+                    <span class="app-stat-name">Außerh. Öffnungszeit</span>
+                    <span class="app-stat-val" style="color:#2563eb;" id="ca-nacht">89</span>
+                  </div>
+                </div>
+                <!-- Termine -->
+                <div class="app-view" id="app-view-termine">
+                  <div class="app-kpi-grid" style="grid-template-columns:1fr;">
+                    <div class="app-kpi-card">
+                      <div class="app-kpi-label">Gebuchte Termine</div>
+                      <div class="app-kpi-value green" id="te-total">115</div>
+                      <div class="app-kpi-sub" id="bookings-growth">18% mehr</div>
+                    </div>
+                  </div>
+                  <div class="app-stat-row">
+                    <span class="app-stat-name">Bestätigt</span>
+                    <span class="app-stat-val" style="color:#16a34a;" id="te-bestaetigt">108</span>
+                  </div>
+                  <div class="app-stat-row">
+                    <span class="app-stat-name">Ausstehend</span>
+                    <span class="app-stat-val" style="color:#d97706;" id="te-ausstehend">7</span>
+                  </div>
+                  <div class="app-stat-row">
+                    <span class="app-stat-name">Abgesagt</span>
+                    <span class="app-stat-val" style="color:#dc2626;" id="te-abgesagt">12</span>
+                  </div>
+                  <div class="app-stat-row">
+                    <span class="app-stat-name">Conversion Rate</span>
+                    <span class="app-stat-val" style="color:#2563eb;" id="te-conversion">20.2%</span>
+                  </div>
+                </div>
+                <!-- Mehr -->
+                <div class="app-view" id="app-view-mehr">
+                  <div class="app-more-item">
+                    <div class="app-more-icon" style="background:#eff6ff;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                    </div>
+                    Berichte exportieren
+                  </div>
+                  <div class="app-more-item">
+                    <div class="app-more-icon" style="background:#f0fdf4;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+                    </div>
+                    KI-Einstellungen
+                  </div>
+                  <div class="app-more-item">
+                    <div class="app-more-icon" style="background:#fef3c7;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    Datenschutz &amp; DSGVO
+                  </div>
+                  <div class="app-more-item">
+                    <div class="app-more-icon" style="background:#fdf4ff;">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9333ea" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                    </div>
+                    Mein Konto
+                  </div>
+                </div>
+              </div>
+              <!-- Bottom Nav -->
+              <div class="app-bottomnav">
+                <button class="bnav-item active" data-view="overview">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+                  Übersicht
+                </button>
+                <button class="bnav-item" data-view="calls">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.64a16 16 0 0 0 6 6l1.01-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                  Anrufe
+                </button>
+                <button class="bnav-item" data-view="termine">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  Termine
+                </button>
+                <button class="bnav-item" data-view="mehr">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="5" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="19" cy="12" r="1.5" fill="currentColor"/></svg>
+                  Mehr
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ─── CTA ─── -->
   <section id="cta">
+    <canvas id="cta-network"></canvas>
     <div class="cta-inner">
       <div class="reveal">
         <div class="section-tag">Jetzt starten</div>
@@ -923,8 +1465,7 @@
           Vereinbaren Sie ein kostenloses 30-Minuten-Gespräch. Wir analysieren Ihre Prozesse und zeigen Ihnen konkret, wo Automation den größten Unterschied macht.
         </p>
         <div class="cta-form">
-          <input type="email" class="cta-input" placeholder="Ihre E-Mail-Adresse" />
-          <a href="mailto:kontakt@komvox.de" class="btn-primary">Gespräch buchen</a>
+          <a href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener" class="btn-primary">Gespräch buchen</a>
         </div>
         <div class="cta-trust">
           <span class="trust-item">
@@ -937,7 +1478,7 @@
           </span>
           <span class="trust-item">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-            Antwort innerhalb 24h
+            Kein Risiko
           </span>
         </div>
       </div>
@@ -948,13 +1489,13 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-logo">
-        <img src="komvox-logo.png" alt="Komvox" />
+        <img src="komvox-logo-no-name.png" alt="Komvox" />
         <span>KOMVOX</span>
       </div>
-      <div class="footer-copy">© 2025 Komvox · KI-Automationen &amp; Workflows</div>
+      <div class="footer-copy">© 2026 Komvox. Alle Rechte vorbehalten.</div>
       <div class="footer-links">
-        <a href="#">Impressum</a>
-        <a href="#">Datenschutz</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
         <a href="mailto:kontakt@komvox.de">kontakt@komvox.de</a>
       </div>
     </div>
@@ -968,11 +1509,13 @@
       navbar.classList.toggle('scrolled', window.scrollY > 50);
     });
 
-    // Intersection Observer for scroll animations
+    // Intersection Observer for scroll animations (re-triggers on every scroll)
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+        } else {
+          entry.target.classList.remove('visible');
         }
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
@@ -992,44 +1535,648 @@
       });
     });
 
-    // Counter animation for hero stats
-    function animateCounters() {
+    // Count-up animation for stat numbers
+    function initCountUp() {
+      const ease = t => 1 - Math.pow(1 - t, 4); // easeOutQuart
+      const duration = 1500; // ms
+
       document.querySelectorAll('.stat-num, .num-big').forEach(el => {
+        // Static values (24/7, 0) just fade in
+        if (el.dataset.static !== undefined) {
+          el.style.opacity = '0';
+          el.style.transform = 'translateY(10px)';
+          el.style.transition = 'opacity 0.6s, transform 0.6s';
+          const io = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+              el.style.opacity = '1';
+              el.style.transform = 'translateY(0)';
+              io.unobserve(el);
+            }
+          }, { threshold: 0.5 });
+          io.observe(el);
+          return;
+        }
+
+        const target = parseFloat(el.dataset.target);
+        const suffix = el.dataset.suffix || '';
+        if (!target) return;
+
         el.style.opacity = '0';
         el.style.transform = 'translateY(10px)';
         el.style.transition = 'opacity 0.6s, transform 0.6s';
+
         const io = new IntersectionObserver(([entry]) => {
           if (entry.isIntersecting) {
             el.style.opacity = '1';
             el.style.transform = 'translateY(0)';
-            io.disconnect();
+            let start = null;
+            function tick(ts) {
+              if (!start) start = ts;
+              const progress = Math.min((ts - start) / duration, 1);
+              const value = Math.round(ease(progress) * target);
+              el.textContent = value + suffix;
+              if (progress < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+            io.unobserve(el);
           }
         }, { threshold: 0.5 });
         io.observe(el);
       });
     }
-    animateCounters();
+    initCountUp();
 
-    // Parallax effect on hero orbs
-    window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      document.querySelectorAll('.orb').forEach((orb, i) => {
-        const speed = 0.08 + i * 0.04;
-        orb.style.transform = `translateY(${scrollY * speed}px)`;
-      });
-      const heroGrid = document.querySelector('.hero-grid');
-      if (heroGrid) heroGrid.style.transform = `translateY(${scrollY * 0.15}px)`;
-    });
+    // ─── How-It-Works: auto-advance steps ───
+    (function() {
+      const steps   = document.querySelectorAll('.step');
+      const panels  = document.querySelectorAll('.how-panel');
+      if (!steps.length || !panels.length) return;
 
-    // Active step highlight
-    const steps = document.querySelectorAll('.step');
-    steps.forEach((step, i) => {
-      step.addEventListener('mouseenter', () => {
-        steps.forEach(s => s.classList.remove('active'));
-        step.classList.add('active');
+      let current = -1;
+      let timer   = null;
+
+      function goTo(index, fromAuto) {
+        if (index === current && !fromAuto) return;
+        const prev = current;
+        current = index;
+
+        // Steps
+        steps.forEach((s, i) => {
+          s.classList.toggle('active', i === current);
+          // Restart progress bar animation
+          const bar = s.querySelector('.step-progress-bar');
+          if (bar) {
+            bar.style.animation = 'none';
+            bar.offsetHeight; // force reflow
+            bar.style.animation = '';
+          }
+        });
+
+        // Panels: exit old, enter new
+        panels.forEach((p, i) => {
+          if (i === prev) {
+            p.classList.remove('active');
+            p.classList.add('exiting');
+            setTimeout(() => p.classList.remove('exiting'), 600);
+          } else if (i === current) {
+            p.classList.add('active');
+          } else {
+            p.classList.remove('active', 'exiting');
+          }
+        });
+
+        resetTimer();
+      }
+
+      function resetTimer() {
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+          goTo((current + 1) % steps.length, true);
+        }, 10000);
+      }
+
+      // Click handlers
+      steps.forEach((step, i) => {
+        step.addEventListener('click', () => goTo(i, false));
       });
-    });
-    if (steps.length) steps[0].classList.add('active');
+
+      // Init
+      goTo(0, true);
+    })();
+
+    // ─── Hero Waves: interactive flowing background ───
+    (function () {
+      const canvas = document.getElementById('hero-waves');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let W, H;
+
+      function resize() {
+        const hero = document.getElementById('hero');
+        W = canvas.width = hero.offsetWidth;
+        H = canvas.height = hero.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      /* ── Simplex-style 3D noise (compact implementation) ── */
+      const F3 = 1 / 3, G3 = 1 / 6;
+      const perm = new Uint8Array(512);
+      const grad3 = [
+        [1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0],
+        [1,0,1],[-1,0,1],[1,0,-1],[-1,0,-1],
+        [0,1,1],[0,-1,1],[0,1,-1],[0,-1,-1]
+      ];
+      (function seedPerm() {
+        const p = [];
+        for (let i = 0; i < 256; i++) p[i] = i;
+        for (let i = 255; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [p[i], p[j]] = [p[j], p[i]];
+        }
+        for (let i = 0; i < 512; i++) perm[i] = p[i & 255];
+      })();
+
+      function noise3(x, y, z) {
+        const s = (x + y + z) * F3;
+        const i = Math.floor(x + s), j = Math.floor(y + s), k = Math.floor(z + s);
+        const t = (i + j + k) * G3;
+        const X0 = x - (i - t), Y0 = y - (j - t), Z0 = z - (k - t);
+        let i1, j1, k1, i2, j2, k2;
+        if (X0 >= Y0) {
+          if (Y0 >= Z0) { i1=1;j1=0;k1=0;i2=1;j2=1;k2=0; }
+          else if (X0 >= Z0) { i1=1;j1=0;k1=0;i2=1;j2=0;k2=1; }
+          else { i1=0;j1=0;k1=1;i2=1;j2=0;k2=1; }
+        } else {
+          if (Y0 < Z0) { i1=0;j1=0;k1=1;i2=0;j2=1;k2=1; }
+          else if (X0 < Z0) { i1=0;j1=1;k1=0;i2=0;j2=1;k2=1; }
+          else { i1=0;j1=1;k1=0;i2=1;j2=1;k2=0; }
+        }
+        const x1=X0-i1+G3, y1=Y0-j1+G3, z1=Z0-k1+G3;
+        const x2=X0-i2+2*G3, y2=Y0-j2+2*G3, z2=Z0-k2+2*G3;
+        const x3=X0-1+3*G3, y3=Y0-1+3*G3, z3=Z0-1+3*G3;
+        const ii=i&255, jj=j&255, kk=k&255;
+        let n = 0;
+        let t0 = 0.6 - X0*X0 - Y0*Y0 - Z0*Z0;
+        if (t0 > 0) { t0 *= t0; const g = grad3[perm[ii+perm[jj+perm[kk]]] % 12]; n += t0*t0*(g[0]*X0+g[1]*Y0+g[2]*Z0); }
+        let t1 = 0.6 - x1*x1 - y1*y1 - z1*z1;
+        if (t1 > 0) { t1 *= t1; const g = grad3[perm[ii+i1+perm[jj+j1+perm[kk+k1]]] % 12]; n += t1*t1*(g[0]*x1+g[1]*y1+g[2]*z1); }
+        let t2 = 0.6 - x2*x2 - y2*y2 - z2*z2;
+        if (t2 > 0) { t2 *= t2; const g = grad3[perm[ii+i2+perm[jj+j2+perm[kk+k2]]] % 12]; n += t2*t2*(g[0]*x2+g[1]*y2+g[2]*z2); }
+        let t3 = 0.6 - x3*x3 - y3*y3 - z3*z3;
+        if (t3 > 0) { t3 *= t3; const g = grad3[perm[ii+1+perm[jj+1+perm[kk+1]]] % 12]; n += t3*t3*(g[0]*x3+g[1]*y3+g[2]*z3); }
+        return 32 * n;
+      }
+
+      /* ── Mouse tracking ── */
+      const mouse = { x: -9999, y: -9999, active: false };
+      let pinchStrength = 0; // 0 = no pinch, 1 = full pinch — animated smoothly
+      const hero = document.getElementById('hero');
+      hero.addEventListener('mousemove', (e) => {
+        const rect = hero.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left;
+        mouse.y = e.clientY - rect.top;
+        mouse.active = true;
+      });
+      hero.addEventListener('mouseleave', () => {
+        mouse.active = false;
+      });
+
+      /* ── Komvox palette for the waves ── */
+      const palette = [
+        { r: 0,   g: 229, b: 255 },  // cyan
+        { r: 79,  g: 140, b: 255 },  // blue
+        { r: 162, g: 89,  b: 255 },  // purple
+        { r: 30,  g: 180, b: 255 },  // cyan-blue mix
+        { r: 120, g: 110, b: 255 },  // blue-purple mix
+      ];
+
+      /* ── Wave layers config ── */
+      const layers = [
+        { yBase: 0.48, amplitude: 0.12, freq: 0.0018, speed: 0.00008, thickness: 180, opacity: 0.14, colorIdx: 0 },
+        { yBase: 0.52, amplitude: 0.10, freq: 0.0022, speed: -0.00006, thickness: 160, opacity: 0.12, colorIdx: 1 },
+        { yBase: 0.56, amplitude: 0.14, freq: 0.0015, speed: 0.00010, thickness: 200, opacity: 0.10, colorIdx: 2 },
+        { yBase: 0.44, amplitude: 0.08, freq: 0.0025, speed: -0.00009, thickness: 140, opacity: 0.11, colorIdx: 3 },
+        { yBase: 0.60, amplitude: 0.11, freq: 0.0020, speed: 0.00007, thickness: 170, opacity: 0.09, colorIdx: 4 },
+      ];
+
+      /* ── Lerp between palette colours over time ── */
+      function getColor(idx, time) {
+        const shift = time * 0.00003;
+        const from = palette[Math.floor((idx + shift) % palette.length)];
+        const to = palette[Math.floor((idx + 1 + shift) % palette.length)];
+        const t = ((idx + shift) % 1);
+        return {
+          r: from.r + (to.r - from.r) * t,
+          g: from.g + (to.g - from.g) * t,
+          b: from.b + (to.b - from.b) * t,
+        };
+      }
+
+      let time = 0;
+      const pinchRadius = 260; // horizontal reach of the pinch in px
+      const pinchOuterDist = 340; // vertical distance where effect starts (gentle onset)
+      const pinchFullDist = 80; // vertical distance where pinch reaches 100%
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        time++;
+
+        const step = 4;
+
+        // Pinch target Y = average centre of all wave layers
+        const pinchY = layers.reduce((s, l) => s + H * l.yBase, 0) / layers.length;
+
+        // Pinch strength is purely distance-based — no time lerp
+        // Directly mapped from vertical cursor distance to wave centre
+        if (mouse.active) {
+          const dy = Math.abs(mouse.y - pinchY);
+          if (dy >= pinchOuterDist) {
+            pinchStrength = 0;
+          } else if (dy <= pinchFullDist) {
+            pinchStrength = 1;
+          } else {
+            // Map dy from [pinchFullDist..pinchOuterDist] → [1..0]
+            const t = (dy - pinchFullDist) / (pinchOuterDist - pinchFullDist);
+            // Smoothstep for natural feel
+            pinchStrength = 1 - t * t * (3 - 2 * t);
+          }
+        } else {
+          // Cursor left the hero — release smoothly so it doesn't snap
+          pinchStrength *= 0.92;
+          if (pinchStrength < 0.001) pinchStrength = 0;
+        }
+
+        layers.forEach((layer) => {
+          const col = getColor(layer.colorIdx, time);
+          const baseY = H * layer.yBase;
+          const points = [];
+
+          for (let x = 0; x <= W; x += step) {
+            const nx = x * layer.freq;
+            const nz = time * layer.speed * 60;
+
+            // Base wave from 3D noise
+            let y = baseY + noise3(nx, 0, nz) * H * layer.amplitude;
+
+            // Gentle secondary ripple
+            y += noise3(nx * 2.2, 1.5, nz * 0.7) * H * layer.amplitude * 0.3;
+
+            // Pinch: compress toward shared centre at mouse.x
+            if (pinchStrength > 0) {
+              const dx = Math.abs(x - mouse.x);
+              const spatialT = Math.max(0, 1 - dx / pinchRadius);
+              // Smoothstep for the horizontal falloff
+              const spatial = spatialT * spatialT * (3 - 2 * spatialT);
+              // Combine spatial proximity with overall pinch strength
+              const pinch = spatial * pinchStrength;
+              y = y + (pinchY - y) * pinch;
+            }
+
+            points.push({ x, y });
+          }
+
+          // Draw wave as a thick, soft gradient band
+          const half = layer.thickness / 2;
+
+          for (let offset = -half; offset <= half; offset += 3) {
+            const bandT = 1 - Math.abs(offset) / half;
+            const alpha = layer.opacity * bandT * bandT;
+
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y + offset);
+            for (let i = 1; i < points.length - 1; i++) {
+              const xc = (points[i].x + points[i + 1].x) / 2;
+              const yc = (points[i].y + points[i + 1].y + offset * 2) / 2;
+              ctx.quadraticCurveTo(points[i].x, points[i].y + offset, xc, yc);
+            }
+
+            ctx.strokeStyle = `rgba(${col.r|0},${col.g|0},${col.b|0},${alpha})`;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+          }
+        });
+
+        requestAnimationFrame(draw);
+      }
+
+      canvas.style.pointerEvents = 'none';
+      hero.style.cursor = 'default';
+
+      draw();
+    })();
+
+    // ─── CTA Network: 3D rotating node mesh ───
+    (function () {
+      const cvs = document.getElementById('cta-network');
+      if (!cvs) return;
+      const ctx = cvs.getContext('2d');
+      const section = document.getElementById('cta');
+      let W, H;
+
+      function resize() {
+        W = cvs.width = section.offsetWidth;
+        H = cvs.height = section.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      // Komvox colours for nodes/edges
+      const colors = [
+        [0, 229, 255],   // cyan
+        [79, 140, 255],  // blue
+        [162, 89, 255],  // purple
+      ];
+
+      // Generate a cloud of 3D points shaped roughly like a sphere/ellipsoid
+      const NODE_COUNT = 120;
+      const CONNECT_DIST = 0.38; // connection threshold in normalised coords
+      const nodes = [];
+
+      for (let i = 0; i < NODE_COUNT; i++) {
+        // Distribute in a sphere using rejection sampling
+        let x, y, z;
+        do {
+          x = (Math.random() - 0.5) * 2;
+          y = (Math.random() - 0.5) * 2;
+          z = (Math.random() - 0.5) * 2;
+        } while (x * x + y * y + z * z > 1);
+
+        // Stretch into an ellipsoid wider than tall
+        x *= 1.6;
+        y *= 0.9;
+        z *= 1.0;
+
+        nodes.push({
+          x, y, z,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          size: 1.2 + Math.random() * 1.8,
+        });
+      }
+
+      // Pre-compute edges (pairs within connection distance)
+      const edges = [];
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dz = nodes[i].z - nodes[j].z;
+          const d = Math.sqrt(dx * dx + dy * dy + dz * dz);
+          if (d < CONNECT_DIST) {
+            edges.push({ a: i, b: j, d });
+          }
+        }
+      }
+
+      // Rotation speed (very slow, relaxing)
+      const rotYSpeed = 0.0003;
+      const rotXSpeed = 0.00012;
+      let angle = 0;
+
+      function project(x, y, z) {
+        // Rotate around Y axis
+        const cosY = Math.cos(angle * rotYSpeed);
+        const sinY = Math.sin(angle * rotYSpeed);
+        let rx = x * cosY - z * sinY;
+        let rz = x * sinY + z * cosY;
+
+        // Slight rotation around X axis
+        const cosX = Math.cos(angle * rotXSpeed);
+        const sinX = Math.sin(angle * rotXSpeed);
+        let ry = y * cosX - rz * sinX;
+        rz = y * sinX + rz * cosX;
+
+        // Perspective projection
+        const fov = 3.5;
+        const scale = fov / (fov + rz);
+
+        return {
+          sx: W / 2 + rx * (Math.min(W, H) * 0.38) * scale,
+          sy: H / 2 + ry * (Math.min(W, H) * 0.38) * scale,
+          scale,
+          depth: rz,
+        };
+      }
+
+      function drawFrame() {
+        ctx.clearRect(0, 0, W, H);
+        angle++;
+
+        // Project all nodes
+        const projected = nodes.map(n => ({
+          ...project(n.x, n.y, n.z),
+          color: n.color,
+          size: n.size,
+        }));
+
+        // Draw edges first (behind nodes)
+        for (const edge of edges) {
+          const a = projected[edge.a];
+          const b = projected[edge.b];
+          // Fade by average depth and distance
+          const depthFade = Math.max(0, Math.min(1, (a.scale + b.scale) / 2));
+          const alpha = 0.06 * depthFade * depthFade;
+          // Mix colours of the two nodes
+          const cr = (a.color[0] + b.color[0]) >> 1;
+          const cg = (a.color[1] + b.color[1]) >> 1;
+          const cb = (a.color[2] + b.color[2]) >> 1;
+
+          ctx.beginPath();
+          ctx.moveTo(a.sx, a.sy);
+          ctx.lineTo(b.sx, b.sy);
+          ctx.strokeStyle = `rgba(${cr},${cg},${cb},${alpha})`;
+          ctx.lineWidth = 0.8 * depthFade;
+          ctx.stroke();
+        }
+
+        // Sort by depth (farthest first) for painter's algorithm
+        const sorted = projected.slice().sort((a, b) => a.depth - b.depth);
+
+        // Draw nodes
+        for (const p of sorted) {
+          const depthFade = Math.max(0, Math.min(1, p.scale));
+          const alpha = 0.15 * depthFade * depthFade;
+          const r = p.size * p.scale;
+
+          // Glow
+          const grad = ctx.createRadialGradient(p.sx, p.sy, 0, p.sx, p.sy, r * 4);
+          grad.addColorStop(0, `rgba(${p.color[0]},${p.color[1]},${p.color[2]},${alpha * 0.5})`);
+          grad.addColorStop(1, `rgba(${p.color[0]},${p.color[1]},${p.color[2]},0)`);
+          ctx.fillStyle = grad;
+          ctx.fillRect(p.sx - r * 4, p.sy - r * 4, r * 8, r * 8);
+
+          // Core dot
+          ctx.beginPath();
+          ctx.arc(p.sx, p.sy, r * depthFade, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${p.color[0]},${p.color[1]},${p.color[2]},${alpha * 2})`;
+          ctx.fill();
+        }
+
+        requestAnimationFrame(drawFrame);
+      }
+
+      drawFrame();
+    })();
+
+    // ─── iPhone App Interactions ───
+    (function() {
+      const periodData = {
+        heute: {
+          ov:   { calls: '12', verpasst: '0', bookings: '3', conversion: '25.0%' },
+          ca:   { total: '12', angenommen: '12', verpasst: '0', dur: '2:08 min', nacht: '3', growth: '—' },
+          te:   { total: '3', bestaetigt: '3', ausstehend: '0', abgesagt: '0', conversion: '25.0%', growth: '—' },
+          blue: '0,58 13,54 25,56 38,52 51,55 63,53 76,56 88,52 101,55 114,53 126,56 139,52 152,55 164,53 177,56 190,52 202,55 215,53 227,50 240,52',
+          green:'0,74 13,76 25,74 38,73 51,76 63,74 76,76 88,73 101,74 114,74 126,76 139,74 152,73 164,74 177,76 190,77 202,76 215,74 227,72 240,72',
+        },
+        '7tage': {
+          ov:   { calls: '47', verpasst: '0', bookings: '12', conversion: '25.5%' },
+          ca:   { total: '47', angenommen: '47', verpasst: '0', dur: '2:18 min', nacht: '11', growth: '19% mehr' },
+          te:   { total: '12', bestaetigt: '11', ausstehend: '1', abgesagt: '1', conversion: '25.5%', growth: '14% mehr' },
+          blue: '0,50 13,45 25,52 38,40 51,48 63,42 76,50 88,38 101,46 114,40 126,50 139,44 152,42 164,38 177,48 190,55 202,46 215,40 227,35 240,42',
+          green:'0,73 13,75 25,73 38,71 51,75 63,73 76,75 88,71 101,73 114,73 126,75 139,73 152,71 164,73 177,75 190,76 202,75 215,73 227,70 240,70',
+        },
+        '30tage': {
+          ov:   { calls: '198', verpasst: '0', bookings: '41', conversion: '20.7%' },
+          ca:   { total: '198', angenommen: '198', verpasst: '0', dur: '2:27 min', nacht: '38', growth: '18% mehr' },
+          te:   { total: '41', bestaetigt: '38', ausstehend: '2', abgesagt: '4', conversion: '20.7%', growth: '15% mehr' },
+          blue: '0,48 13,42 25,50 38,30 51,42 63,36 76,48 88,32 101,40 114,30 126,44 139,48 152,36 164,30 177,44 190,60 202,46 215,34 227,25 240,36',
+          green:'0,72 13,74 25,72 38,70 51,74 63,72 76,74 88,70 101,72 114,72 126,74 139,72 152,70 164,72 177,74 190,76 202,74 215,72 227,69 240,69',
+        },
+        '90tage': {
+          ov:   { calls: '568', verpasst: '0', bookings: '115', conversion: '20.2%' },
+          ca:   { total: '568', angenommen: '568', verpasst: '0', dur: '2:34 min', nacht: '89', growth: '23% mehr' },
+          te:   { total: '115', bestaetigt: '108', ausstehend: '7', abgesagt: '12', conversion: '20.2%', growth: '18% mehr' },
+          blue: '0,45 13,40 25,50 38,20 51,35 63,30 76,46 88,28 101,35 114,25 126,40 139,46 152,30 164,25 177,40 190,65 202,46 215,30 227,15 240,30',
+          green:'0,72 13,74 25,72 38,70 51,74 63,72 76,74 88,70 101,72 114,72 126,74 139,72 152,70 164,72 177,74 190,76 202,74 215,72 227,68 240,68',
+        },
+      };
+
+      let currentPeriod = '90tage';
+
+      function applyPeriod(p) {
+        const d = periodData[p];
+        if (!d) return;
+        // Overview
+        document.getElementById('ov-calls').textContent        = d.ov.calls;
+        document.getElementById('ov-verpasst').textContent     = d.ov.verpasst;
+        document.getElementById('ov-bookings').textContent     = d.ov.bookings;
+        document.getElementById('ov-conversion').textContent   = d.ov.conversion;
+        // Calls
+        document.getElementById('ca-total').textContent        = d.ca.total;
+        document.getElementById('ca-angenommen').textContent   = d.ca.angenommen;
+        document.getElementById('ca-verpasst').textContent     = d.ca.verpasst;
+        document.getElementById('ca-dur').textContent          = d.ca.dur;
+        document.getElementById('ca-nacht').textContent        = d.ca.nacht;
+        document.getElementById('calls-growth').textContent    = d.ca.growth;
+        // Termine
+        document.getElementById('te-total').textContent        = d.te.total;
+        document.getElementById('te-bestaetigt').textContent   = d.te.bestaetigt;
+        document.getElementById('te-ausstehend').textContent   = d.te.ausstehend;
+        document.getElementById('te-abgesagt').textContent     = d.te.abgesagt;
+        document.getElementById('te-conversion').textContent   = d.te.conversion;
+        document.getElementById('bookings-growth').textContent = d.te.growth;
+        // Chart lines
+        const svgEl = document.querySelector('.app-chart-svg');
+        if (svgEl) {
+          svgEl.querySelectorAll('polyline')[0].setAttribute('points', d.blue);
+          svgEl.querySelectorAll('polyline')[1].setAttribute('points', d.green);
+        }
+      }
+
+      // Period tabs
+      document.querySelectorAll('.period-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          tab.closest('.app-period-tabs').querySelectorAll('.period-tab').forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          currentPeriod = tab.dataset.period;
+          applyPeriod(currentPeriod);
+        });
+      });
+
+      // Bottom nav
+      const titles = { overview: 'Übersicht', calls: 'Anrufe', termine: 'Termine', mehr: 'Mehr' };
+      document.querySelectorAll('.bnav-item').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const view = btn.dataset.view;
+          document.querySelectorAll('.bnav-item').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+          const target = document.getElementById('app-view-' + view);
+          if (target) target.classList.add('active');
+          const header = btn.closest('.phone-screen').querySelector('.app-header-title');
+          if (header) header.textContent = titles[view] || 'Übersicht';
+        });
+      });
+    })();
+
+  </script>
+
+  <!-- ─── Cookie Consent Banner ─── -->
+  <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie-Einstellungen">
+    <div class="cookie-inner">
+      <div class="cookie-text">
+        <strong>Cookies & Datenschutz</strong>
+        <p>Wir verwenden Cookies, um die Nutzung unserer Website zu analysieren und zu verbessern. Weitere Informationen finden Sie in unserer <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+      </div>
+      <div class="cookie-actions">
+        <button id="cookie-decline" class="cookie-btn-outline">Ablehnen</button>
+        <button id="cookie-accept" class="cookie-btn-primary">Akzeptieren</button>
+      </div>
+    </div>
+  </div>
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 24px; left: 50%; transform: translateX(-50%) translateY(120px);
+      width: calc(100% - 48px); max-width: 780px;
+      background: var(--dark3);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 20px 28px;
+      z-index: 9999;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+      opacity: 0;
+      pointer-events: none;
+    }
+    #cookie-banner.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .cookie-inner {
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .cookie-text { flex: 1; }
+    .cookie-text strong {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+      text-transform: uppercase; letter-spacing: 1px; color: var(--cyan);
+      display: block; margin-bottom: 6px;
+    }
+    .cookie-text p {
+      font-size: 0.85rem; color: var(--muted); line-height: 1.5;
+    }
+    .cookie-text a { color: var(--cyan); text-decoration: none; }
+    .cookie-text a:hover { text-decoration: underline; }
+    .cookie-actions { display: flex; gap: 12px; flex-shrink: 0; }
+    .cookie-btn-outline {
+      padding: 10px 20px; border-radius: 50px;
+      background: transparent; border: 1px solid rgba(255,255,255,0.15);
+      color: var(--muted); font-size: 0.82rem; font-family: 'JetBrains Mono', monospace;
+      cursor: pointer; transition: border-color 0.2s, color 0.2s;
+    }
+    .cookie-btn-outline:hover { border-color: var(--muted); color: var(--text); }
+    .cookie-btn-primary {
+      padding: 10px 22px; border-radius: 50px;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      border: none; color: #000; font-size: 0.82rem;
+      font-family: 'JetBrains Mono', monospace; font-weight: 700;
+      cursor: pointer; transition: opacity 0.2s;
+    }
+    .cookie-btn-primary:hover { opacity: 0.85; }
+    @media (max-width: 600px) {
+      .cookie-inner { flex-direction: column; }
+      .cookie-actions { width: 100%; }
+      .cookie-btn-outline, .cookie-btn-primary { flex: 1; text-align: center; }
+    }
+  </style>
+  <script>
+    (function() {
+      var COOKIE_KEY = 'komvox_cookie_consent';
+      var banner = document.getElementById('cookie-banner');
+      if (!banner) return;
+      if (!localStorage.getItem(COOKIE_KEY)) {
+        setTimeout(function() { banner.classList.add('visible'); }, 800);
+      }
+      document.getElementById('cookie-accept').addEventListener('click', function() {
+        localStorage.setItem(COOKIE_KEY, 'accepted');
+        banner.classList.remove('visible');
+      });
+      document.getElementById('cookie-decline').addEventListener('click', function() {
+        localStorage.setItem(COOKIE_KEY, 'declined');
+        banner.classList.remove('visible');
+      });
+    })();
   </script>
 
 </body>

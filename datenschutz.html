@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Datenschutzerklärung | Komvox</title>
+  <meta name="description" content="Datenschutzerklärung von Komvox gemäß DSGVO." />
+  <meta name="robots" content="noindex, follow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800;900&family=Roboto+Serif:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cyan:    #00e5ff;
+      --blue:    #4f8cff;
+      --purple:  #a259ff;
+      --dark:    #080b14;
+      --dark2:   #0d1120;
+      --dark3:   #111827;
+      --text:    #e2e8f0;
+      --muted:   #94a3b8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Roboto Serif', Georgia, serif;
+      background: var(--dark);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── Top fade ─── */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 130px;
+      background: linear-gradient(to bottom, #080b14 0%, #080b14 52%, transparent 100%);
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 48px;
+      background: transparent;
+      transition: background 0.3s;
+    }
+    nav.scrolled { background: transparent; }
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo img { height: 64px; width: 64px; object-fit: contain; vertical-align: middle; }
+    .nav-logo span {
+      font-size: 1.2rem; font-weight: 800; letter-spacing: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--muted); font-size: 0.9rem;
+      letter-spacing: 0.5px; transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
+    .nav-cta {
+      padding: 8px 22px; border-radius: 50px;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      color: #fff; font-size: 0.88rem; font-weight: 600;
+      text-decoration: none; letter-spacing: 0.5px;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 0 20px rgba(79,140,255,0.35);
+    }
+    .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+    }
+
+    /* ─── Content ─── */
+    .legal-section {
+      padding: 160px 48px 100px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .section-tag {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
+      text-transform: uppercase; letter-spacing: 2px; color: var(--cyan);
+      margin-bottom: 20px; display: block;
+    }
+    .legal-section h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .legal-meta {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 60px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .legal-block {
+      margin-bottom: 52px;
+    }
+    .legal-block h2 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .legal-block h3 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+    .legal-block p {
+      font-size: 0.93rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 12px;
+    }
+    .legal-block ul {
+      margin: 8px 0 12px 24px;
+      font-size: 0.93rem;
+      color: var(--muted);
+      line-height: 1.85;
+    }
+    .legal-block ul li { margin-bottom: 4px; }
+    .legal-block a { color: var(--cyan); text-decoration: none; }
+    .legal-block a:hover { text-decoration: underline; }
+    .legal-highlight {
+      padding: 20px 24px;
+      background: rgba(0,229,255,0.04);
+      border: 1px solid rgba(0,229,255,0.12);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-top: 12px;
+    }
+    .legal-highlight strong { color: var(--text); }
+
+    /* ─── Footer ─── */
+    footer {
+      background: #050810;
+      padding: 48px;
+      position: relative;
+      isolation: isolate;
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 12px; }
+    .footer-logo img { height: 64px; width: 64px; object-fit: contain; }
+    .footer-logo span {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 800;
+      font-size: 1.1rem; color: var(--text); letter-spacing: 1px;
+    }
+    .footer-copy { font-size: 0.82rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 0.82rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--cyan); }
+    @media (max-width: 768px) {
+      footer { padding: 40px 24px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .legal-section { padding: 140px 24px 80px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── Nav ─── -->
+  <nav id="navbar">
+    <a class="nav-logo" href="index.html">
+      <img src="komvox-logo-no-name.png" alt="Komvox Logo" />
+      <span>KOMVOX</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#services">Leistungen</a></li>
+      <li><a href="index.html#results">Ergebnisse</a></li>
+      <li><a href="demo.html">Demo</a></li>
+      <li><a href="ueber-uns.html">Über uns</a></li>
+      <li><a href="kontakt.html">Kontakt</a></li>
+    </ul>
+    <a href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener" class="nav-cta">Termin buchen</a>
+  </nav>
+
+  <!-- ─── Content ─── -->
+  <main class="legal-section">
+    <span class="section-tag">Rechtliches</span>
+    <h1>Datenschutzerklärung</h1>
+    <p class="legal-meta">Stand: März 2026</p>
+
+    <!-- 1. Verantwortlicher -->
+    <div class="legal-block">
+      <h2>1. Verantwortlicher</h2>
+      <p>
+        Verantwortlicher für die Datenverarbeitung auf dieser Website ist:<br /><br />
+        <strong>Komvox GbR</strong><br />
+        Bidembachstr. 11<br />
+        71640 Ludwigsburg<br />
+        Deutschland<br /><br />
+        Vertreten durch: Finn Hess und Maximilian Riedel<br />
+        E-Mail: <a href="mailto:kontakt@komvox.de">kontakt@komvox.de</a><br />
+        Telefon: <a href="tel:+4915114933670">+49 151 14933670</a>
+      </p>
+    </div>
+
+    <!-- 2. Website-Hosting -->
+    <div class="legal-block">
+      <h2>2. Website-Hosting</h2>
+      <p>
+        Diese Website wird über <strong>GitHub Pages</strong> (GitHub, Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA) gehostet. Beim Aufruf unserer Website werden automatisch folgende Daten durch den Hosting-Anbieter verarbeitet:
+      </p>
+      <ul>
+        <li>IP-Adresse des anfragenden Geräts</li>
+        <li>Datum und Uhrzeit des Zugriffs</li>
+        <li>Aufgerufene URL, übertragene Datenmenge</li>
+        <li>Zuvor besuchte Website (Referrer)</li>
+        <li>Browser und Betriebssystem</li>
+      </ul>
+      <p>
+        Die Verarbeitung erfolgt auf Basis von Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einem sicheren und störungsfreien Betrieb der Website). GitHub kann Daten in die USA übermitteln. GitHub Inc. ist im EU-US Data Privacy Framework zertifiziert. Weitere Informationen: <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub Privacy Statement</a>.
+      </p>
+    </div>
+
+    <!-- 3. Domain & DNS -->
+    <div class="legal-block">
+      <h2>3. Domain und DNS</h2>
+      <p>
+        Unsere Domain wird über <strong>IONOS SE</strong> (Elgendorfer Str. 57, 56410 Montabaur) verwaltet. IONOS verarbeitet dabei die für den DNS-Betrieb erforderlichen Daten. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO. Weitere Informationen: <a href="https://www.ionos.de/terms-gtc/datenschutzerklaerung/" target="_blank" rel="noopener">IONOS Datenschutzerklärung</a>.
+      </p>
+    </div>
+
+    <!-- 4. Kontaktaufnahme per E-Mail -->
+    <div class="legal-block">
+      <h2>4. Kontaktaufnahme per E-Mail und Kontaktformular</h2>
+      <p>
+        Wenn Sie uns per E-Mail oder über das Kontaktformular auf unserer Website kontaktieren, werden die von Ihnen angegebenen Daten (Name, E-Mail-Adresse, Nachricht) gespeichert und verarbeitet, um Ihre Anfrage zu beantworten.
+      </p>
+      <p>
+        Das Kontaktformular wird über den Dienst <strong>Web3Forms</strong> (web3forms.com) verarbeitet. Dabei werden die eingegebenen Daten verschlüsselt übertragen und an unsere E-Mail-Adresse weitergeleitet. Web3Forms speichert übermittelte Formulardaten in seinem Dashboard. Weitere Informationen: <a href="https://web3forms.com/privacy" target="_blank" rel="noopener">Web3Forms Privacy Policy</a>.
+      </p>
+      <p>
+        Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung) sowie Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an der Bearbeitung von Anfragen). Die Daten werden gelöscht, sobald sie für die Erreichung des Zwecks nicht mehr erforderlich sind, spätestens nach 6 Monaten.
+      </p>
+    </div>
+
+    <!-- 5. Terminbuchung Calendly -->
+    <div class="legal-block">
+      <h2>5. Terminbuchung über Calendly</h2>
+      <p>
+        Für die Buchung von Beratungsterminen nutzen wir den Dienst <strong>Calendly</strong> (Calendly LLC, 271 17th St NW, Atlanta, GA 30363, USA). Beim Buchen eines Termins werden folgende Daten an Calendly übermittelt:
+      </p>
+      <ul>
+        <li>Name und E-Mail-Adresse</li>
+        <li>Gewählter Termin</li>
+        <li>Ggf. weitere von Ihnen eingegebene Angaben</li>
+      </ul>
+      <p>
+        Calendly kann Daten in die USA übermitteln. Calendly LLC ist im EU-US Data Privacy Framework zertifiziert. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertragsanbahnung). Weitere Informationen: <a href="https://calendly.com/de/pages/privacy" target="_blank" rel="noopener">Calendly Datenschutzerklärung</a>.
+      </p>
+    </div>
+
+    <!-- 6. KI-Telefonassistent -->
+    <div class="legal-block">
+      <h2>6. KI-Telefonassistent (Demo-Anruf)</h2>
+      <p>
+        Auf unserer Demo-Seite bieten wir Ihnen die Möglichkeit, unseren KI-Mitarbeiter per Telefon zu testen. Bei einem Anruf werden folgende Daten verarbeitet:
+      </p>
+      <ul>
+        <li>Sprachaufnahme des Gesprächs</li>
+        <li>Telefonnummer des Anrufers (Caller ID)</li>
+        <li>Datum und Uhrzeit des Anrufs</li>
+        <li>Gesprächsinhalte (für KI-Verarbeitung und Transkription)</li>
+      </ul>
+      <p>
+        Die für den Betrieb des KI-Telefonassistenten eingesetzte Technologie verarbeitet Sprachdaten auf Servern in den <strong>Vereinigten Staaten</strong>. Dies ist technisch für die Funktionsfähigkeit des Systems erforderlich.
+      </p>
+      <div class="legal-highlight">
+        <strong>Einwilligung bei Anruf:</strong> Zu Beginn eines Demo-Anrufs werden Sie darauf hingewiesen, dass Ihr Gespräch gemäß unserer Datenschutzrichtlinie verarbeitet wird. Durch Ihre Fortsetzung des Gesprächs erklären Sie sich mit dieser Verarbeitung einverstanden (Art. 6 Abs. 1 lit. a DSGVO). Sie können das Gespräch jederzeit beenden, ohne dass Ihnen daraus Nachteile entstehen.
+      </div>
+      <p style="margin-top: 12px;">
+        Die Gesprächsdaten werden ausschließlich zur Bereitstellung und Verbesserung des Demo-Services verwendet und nicht an Dritte für Marketingzwecke weitergegeben. Für Datenübermittlungen in die USA gelten die Standardvertragsklauseln der EU-Kommission (Art. 46 Abs. 2 lit. c DSGVO) sowie etwaige Zertifizierungen des Dienstleisters im Rahmen des EU-US Data Privacy Frameworks.
+      </p>
+    </div>
+
+    <!-- 7. Cookies und Tracking -->
+    <div class="legal-block">
+      <h2>7. Cookies und Einwilligungsverwaltung</h2>
+      <p>
+        Unsere Website verwendet Cookies. Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden und bestimmte Informationen enthalten.
+      </p>
+
+      <h3>Technisch notwendige Cookies</h3>
+      <p>
+        Wir setzen ein technisch notwendiges Cookie ein, um Ihre Einwilligung zur Cookie-Nutzung zu speichern (<code>komvox_cookie_consent</code>). Dieses Cookie enthält ausschließlich Ihre Einwilligungsentscheidung (akzeptiert / abgelehnt) und läuft nach 365 Tagen ab. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse am Betrieb einer datenschutzrechtskonformen Website).
+      </p>
+
+      <h3>Optionale Cookies (nur nach Einwilligung)</h3>
+      <p>
+        Weitere Cookies, etwa für Analyse oder Optimierung, werden nur gesetzt, wenn Sie dem bei Ihrem ersten Besuch ausdrücklich zugestimmt haben. Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen, indem Sie den Cookie-Einstellungen-Button unten auf dieser Seite nutzen oder Ihre Browser-Cookies löschen.
+      </p>
+
+      <h3>Cookie-Verwaltung</h3>
+      <p>
+        Sie können Cookies in Ihrem Browser jederzeit löschen oder das Setzen von Cookies deaktivieren. Bitte beachten Sie, dass dies die Funktionsfähigkeit der Website beeinträchtigen kann. Informationen zur Cookie-Verwaltung finden Sie in der Hilfefunktion Ihres Browsers.
+      </p>
+    </div>
+
+    <!-- 8. Ihre Rechte -->
+    <div class="legal-block">
+      <h2>8. Ihre Rechte als betroffene Person</h2>
+      <p>Sie haben gegenüber uns folgende Rechte hinsichtlich Ihrer personenbezogenen Daten:</p>
+      <ul>
+        <li><strong>Auskunftsrecht</strong> (Art. 15 DSGVO)</li>
+        <li><strong>Recht auf Berichtigung</strong> (Art. 16 DSGVO)</li>
+        <li><strong>Recht auf Löschung</strong> (Art. 17 DSGVO)</li>
+        <li><strong>Recht auf Einschränkung der Verarbeitung</strong> (Art. 18 DSGVO)</li>
+        <li><strong>Recht auf Datenübertragbarkeit</strong> (Art. 20 DSGVO)</li>
+        <li><strong>Widerspruchsrecht</strong> (Art. 21 DSGVO)</li>
+        <li><strong>Recht auf Widerruf einer Einwilligung</strong> (Art. 7 Abs. 3 DSGVO)</li>
+      </ul>
+      <p>
+        Zur Ausübung Ihrer Rechte wenden Sie sich bitte an: <a href="mailto:kontakt@komvox.de">kontakt@komvox.de</a>
+      </p>
+      <p>
+        Ferner haben Sie das Recht, sich bei der zuständigen Datenschutz-Aufsichtsbehörde zu beschweren. Die für uns zuständige Aufsichtsbehörde ist der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg, Postfach 10 29 32, 70025 Stuttgart.
+      </p>
+    </div>
+
+  </main>
+
+  <!-- ─── Footer ─── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <img src="komvox-logo-no-name.png" alt="Komvox" />
+        <span>KOMVOX</span>
+      </div>
+      <div class="footer-copy">© 2026 Komvox. Alle Rechte vorbehalten.</div>
+      <div class="footer-links">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="mailto:kontakt@komvox.de">kontakt@komvox.de</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ─── Cookie Consent Banner ─── -->
+  <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie-Einstellungen">
+    <div class="cookie-inner">
+      <div class="cookie-text">
+        <strong>Cookies & Datenschutz</strong>
+        <p>Wir verwenden Cookies, um die Nutzung unserer Website zu analysieren und zu verbessern. Weitere Informationen finden Sie in unserer <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+      </div>
+      <div class="cookie-actions">
+        <button id="cookie-decline" class="cookie-btn-outline">Ablehnen</button>
+        <button id="cookie-accept" class="cookie-btn-primary">Akzeptieren</button>
+      </div>
+    </div>
+  </div>
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 24px; left: 50%; transform: translateX(-50%) translateY(120px);
+      width: calc(100% - 48px); max-width: 780px;
+      background: var(--dark3);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 20px 28px;
+      z-index: 9999;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+      opacity: 0;
+      pointer-events: none;
+    }
+    #cookie-banner.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .cookie-inner {
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .cookie-text { flex: 1; }
+    .cookie-text strong {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+      text-transform: uppercase; letter-spacing: 1px; color: var(--cyan);
+      display: block; margin-bottom: 6px;
+    }
+    .cookie-text p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+    .cookie-text a { color: var(--cyan); text-decoration: none; }
+    .cookie-text a:hover { text-decoration: underline; }
+    .cookie-actions { display: flex; gap: 12px; flex-shrink: 0; }
+    .cookie-btn-outline {
+      padding: 10px 20px; border-radius: 50px;
+      background: transparent; border: 1px solid rgba(255,255,255,0.15);
+      color: var(--muted); font-size: 0.82rem; font-family: 'JetBrains Mono', monospace;
+      cursor: pointer; transition: border-color 0.2s, color 0.2s;
+    }
+    .cookie-btn-outline:hover { border-color: var(--muted); color: var(--text); }
+    .cookie-btn-primary {
+      padding: 10px 22px; border-radius: 50px;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      border: none; color: #000; font-size: 0.82rem;
+      font-family: 'JetBrains Mono', monospace; font-weight: 700;
+      cursor: pointer; transition: opacity 0.2s;
+    }
+    .cookie-btn-primary:hover { opacity: 0.85; }
+    @media (max-width: 600px) {
+      .cookie-inner { flex-direction: column; }
+      .cookie-actions { width: 100%; }
+      .cookie-btn-outline, .cookie-btn-primary { flex: 1; text-align: center; }
+    }
+  </style>
+  <script>
+    (function() {
+      var COOKIE_KEY = 'komvox_cookie_consent';
+      var banner = document.getElementById('cookie-banner');
+      if (!banner) return;
+      if (!localStorage.getItem(COOKIE_KEY)) {
+        setTimeout(function() { banner.classList.add('visible'); }, 800);
+      }
+      document.getElementById('cookie-accept').addEventListener('click', function() {
+        localStorage.setItem(COOKIE_KEY, 'accepted');
+        banner.classList.remove('visible');
+      });
+      document.getElementById('cookie-decline').addEventListener('click', function() {
+        localStorage.setItem(COOKIE_KEY, 'declined');
+        banner.classList.remove('visible');
+      });
+    })();
+  </script>
+
+</body>
+</html>
