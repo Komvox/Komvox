@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Impressum | Komvox</title>
+  <script>history.replaceState(null,'','/impressum');</script>
   <meta name="description" content="Impressum von Komvox – Angaben gemäß § 5 DDG." />
   <meta name="robots" content="noindex, follow" />
 
@@ -149,8 +150,10 @@
     .footer-logo { display: flex; align-items: center; gap: 12px; }
     .footer-logo img { height: 64px; width: 64px; object-fit: contain; }
     .footer-logo span {
-      font-family: 'Space Grotesk', sans-serif; font-weight: 800;
-      font-size: 1.1rem; color: var(--text); letter-spacing: 1px;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+      font-size: 1rem; letter-spacing: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
     .footer-copy { font-size: 0.82rem; color: var(--muted); }
     .footer-links { display: flex; gap: 24px; }
