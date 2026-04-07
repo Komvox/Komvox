@@ -5,6 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kontakt | Komvox – KI-Automatisierung für Ihr Unternehmen</title>
   <script>history.replaceState(null,'','/kontakt');</script>
+
+  <!-- Google Analytics 4 -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      analytics_storage: localStorage.getItem('komvox_cookie_consent') === 'accepted' ? 'granted' : 'denied'
+    });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CMCH55YML3"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-CMCH55YML3');
+    document.addEventListener('click', function(e) {
+      if (e.target && e.target.id === 'cookie-accept') {
+        gtag('consent', 'update', { analytics_storage: 'granted' });
+      }
+      var a = e.target.closest('a');
+      if (!a) return;
+      var h = a.getAttribute('href') || '';
+      if (h.includes('calendly.com')) {
+        gtag('event', 'outbound_click', { link_text: a.textContent.trim().substring(0, 50), outbound_type: 'calendly' });
+      } else if (h.startsWith('mailto:')) {
+        gtag('event', 'contact', { method: 'email' });
+      } else if (h.startsWith('tel:')) {
+        gtag('event', 'contact', { method: 'phone' });
+      }
+    });
+  </script>
   <meta name="description" content="Kontaktieren Sie Komvox – wir beantworten Ihre Fragen zu KI-Mitarbeitern und Workflow-Automatisierung. Oder buchen Sie direkt einen Termin." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -402,6 +431,7 @@
         if (res.ok) {
           document.getElementById('form-success').classList.add('visible');
           this.reset();
+          if (window.gtag) gtag('event', 'form_submit', { form_name: 'Kontaktformular' });
         } else {
           throw new Error();
         }

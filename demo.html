@@ -7,6 +7,35 @@
   <!-- SEO -->
   <title>Demo | Komvox – Testen Sie unseren KI-Mitarbeiter</title>
   <script>history.replaceState(null,'','/demo');</script>
+
+  <!-- Google Analytics 4 -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      analytics_storage: localStorage.getItem('komvox_cookie_consent') === 'accepted' ? 'granted' : 'denied'
+    });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CMCH55YML3"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-CMCH55YML3');
+    document.addEventListener('click', function(e) {
+      if (e.target && e.target.id === 'cookie-accept') {
+        gtag('consent', 'update', { analytics_storage: 'granted' });
+      }
+      var a = e.target.closest('a');
+      if (!a) return;
+      var h = a.getAttribute('href') || '';
+      if (h.includes('calendly.com')) {
+        gtag('event', 'outbound_click', { link_text: a.textContent.trim().substring(0, 50), outbound_type: 'calendly' });
+      } else if (h.startsWith('mailto:')) {
+        gtag('event', 'contact', { method: 'email' });
+      } else if (h.startsWith('tel:')) {
+        gtag('event', 'contact', { method: 'phone' });
+      }
+    });
+  </script>
   <meta name="description" content="Rufen Sie unseren KI-Mitarbeiter an und erleben Sie live, was intelligente Automatisierung für Ihr Unternehmen leisten kann." />
   <meta name="keywords" content="Komvox, KI-Mitarbeiter, KI-Demo, KI-Automatisierung, KI Telefon, Demo Agent, KI testen" />
   <meta name="robots" content="index, follow" />

@@ -5,6 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Komvox, KI-Automationen &amp; Workflows</title>
   <script>if(location.pathname!=='/') history.replaceState(null,'','/');</script>
+
+  <!-- Google Analytics 4 -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      analytics_storage: localStorage.getItem('komvox_cookie_consent') === 'accepted' ? 'granted' : 'denied'
+    });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CMCH55YML3"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-CMCH55YML3');
+    document.addEventListener('click', function(e) {
+      if (e.target && e.target.id === 'cookie-accept') {
+        gtag('consent', 'update', { analytics_storage: 'granted' });
+      }
+      var a = e.target.closest('a');
+      if (!a) return;
+      var h = a.getAttribute('href') || '';
+      if (h.includes('calendly.com')) {
+        gtag('event', 'outbound_click', { link_text: a.textContent.trim().substring(0, 50), outbound_type: 'calendly' });
+      } else if (h.startsWith('mailto:')) {
+        gtag('event', 'contact', { method: 'email' });
+      } else if (h.startsWith('tel:')) {
+        gtag('event', 'contact', { method: 'phone' });
+      }
+    });
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800;900&family=Roboto+Serif:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
