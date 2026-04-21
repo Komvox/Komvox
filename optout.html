@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Abmelden – Komvox</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F7F6F2;
+      --card: #FFFFFF;
+      --text: #1A1A18;
+      --muted: #6B6B67;
+      --accent: #1A1A18;
+      --border: #E4E3DE;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 48px 44px;
+      max-width: 440px;
+      width: 100%;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.45s cubic-bezier(0.22,1,0.36,1) 0.1s forwards;
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 36px;
+      display: block;
+    }
+
+    .logo span {
+      color: var(--muted);
+    }
+
+    h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.25;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px 24px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.15s ease, transform 0.15s ease;
+      letter-spacing: 0.01em;
+    }
+
+    .btn:hover { opacity: 0.82; transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    /* Confirmed state */
+    .confirmed { display: none; text-align: center; }
+    .confirmed .check {
+      width: 52px; height: 52px;
+      background: #F0FAF4;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 22px;
+    }
+    .confirmed h1 { font-size: 22px; margin-bottom: 10px; }
+    .confirmed p { margin-bottom: 0; }
+
+    .footer {
+      margin-top: 28px;
+      font-size: 11px;
+      color: #AEADA8;
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <!-- Landing view -->
+    <div id="view-landing">
+      <span class="logo">Komvox<span>.</span></span>
+      <h1>E-Mail-Abmeldung</h1>
+      <p>Möchten Sie keine weiteren E-Mails von Komvox erhalten? Klicken Sie auf den Button um Ihre Abmeldung zu bestätigen.</p>
+      <a id="confirm-btn" class="btn" href="#">Jetzt abmelden</a>
+    </div>
+
+    <!-- Success view -->
+    <div class="confirmed" id="view-confirmed">
+      <div class="check">✓</div>
+      <h1>Erfolgreich abgemeldet</h1>
+      <p>Ihre Abmeldung wurde gespeichert. Sie erhalten keine weiteren E-Mails von Komvox.</p>
+    </div>
+
+    <div class="footer">Komvox – KI-Lösungen für Ihr Unternehmen</div>
+  </div>
+
+  <script>
+    // Read email from URL query parameter
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get('email') || '';
+
+    // Build confirm URL
+    const confirmBase = 'https://n8nserver.your-voiceworks.de/webhook/optout-confirm';
+    const confirmUrl = email
+      ? confirmBase + '?email=' + encodeURIComponent(email)
+      : confirmBase;
+
+    const btn = document.getElementById('confirm-btn');
+    btn.href = confirmUrl;
+
+    // On click: fire confirm request in background, show success immediately
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      // Show confirmed view right away - no waiting for n8n
+      document.getElementById('view-landing').style.display = 'none';
+      document.getElementById('view-confirmed').style.display = 'block';
+
+      // Fire & forget - browser sends request, we don't wait
+      fetch(confirmUrl, { mode: 'no-cors' }).catch(function() {});
+    });
+  </script>
+</body>
+</html>
