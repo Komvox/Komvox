@@ -16,6 +16,7 @@
       --muted: #6B6B67;
       --accent: #1A1A18;
       --border: #E4E3DE;
+      --disabled: #C8C7C3;
     }
 
     body {
@@ -53,9 +54,7 @@
       display: block;
     }
 
-    .logo span {
-      color: var(--muted);
-    }
+    .logo span { color: var(--muted); }
 
     h1 {
       font-family: 'DM Serif Display', serif;
@@ -71,7 +70,55 @@
       font-size: 14px;
       color: var(--muted);
       line-height: 1.65;
-      margin-bottom: 32px;
+      margin-bottom: 24px;
+    }
+
+    .checkbox-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 28px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .checkbox-wrap input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      margin-top: 1px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      position: relative;
+    }
+
+    .checkbox-wrap input[type="checkbox"]:checked {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .checkbox-wrap input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      width: 5px;
+      height: 9px;
+      border: 2px solid #fff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+
+    .checkbox-wrap label {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+      cursor: pointer;
     }
 
     .btn {
@@ -84,7 +131,6 @@
       font-size: 14px;
       font-weight: 500;
       text-align: center;
-      text-decoration: none;
       border-radius: 8px;
       border: none;
       cursor: pointer;
@@ -92,10 +138,15 @@
       letter-spacing: 0.01em;
     }
 
-    .btn:hover { opacity: 0.82; transform: translateY(-1px); }
-    .btn:active { transform: translateY(0); }
+    .btn:hover:not(:disabled) { opacity: 0.82; transform: translateY(-1px); }
+    .btn:active:not(:disabled) { transform: translateY(0); }
 
-    /* Confirmed state */
+    .btn:disabled {
+      background: var(--disabled);
+      cursor: not-allowed;
+      transform: none;
+    }
+
     .confirmed { display: none; text-align: center; }
     .confirmed .check {
       width: 52px; height: 52px;
@@ -120,15 +171,19 @@
 <body>
   <div class="card">
 
-    <!-- Landing view -->
     <div id="view-landing">
       <span class="logo">Komvox<span>.</span></span>
       <h1>E-Mail-Abmeldung</h1>
-      <p>Möchten Sie keine weiteren E-Mails von Komvox erhalten? Klicken Sie auf den Button um Ihre Abmeldung zu bestätigen.</p>
-      <a id="confirm-btn" class="btn" href="#">Jetzt abmelden</a>
+      <p>Möchten Sie keine weiteren E-Mails von Komvox erhalten? Bestätigen Sie die Abmeldung mit dem Button unten.</p>
+
+      <div class="checkbox-wrap">
+        <input type="checkbox" id="confirm-check">
+        <label for="confirm-check">Ich möchte mich wirklich von weiteren E-Mails abmelden.</label>
+      </div>
+
+      <button id="confirm-btn" class="btn" disabled>Jetzt abmelden</button>
     </div>
 
-    <!-- Success view -->
     <div class="confirmed" id="view-confirmed">
       <div class="check">✓</div>
       <h1>Erfolgreich abgemeldet</h1>
@@ -139,28 +194,27 @@
   </div>
 
   <script>
-    // Read email from URL query parameter
     const params = new URLSearchParams(window.location.search);
     const email = params.get('email') || '';
 
-    // Build confirm URL
     const confirmBase = 'https://n8nserver.your-voiceworks.de/webhook/optout-confirm';
     const confirmUrl = email
       ? confirmBase + '?email=' + encodeURIComponent(email)
       : confirmBase;
 
+    const checkbox = document.getElementById('confirm-check');
     const btn = document.getElementById('confirm-btn');
-    btn.href = confirmUrl;
 
-    // On click: fire confirm request in background, show success immediately
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
+    checkbox.addEventListener('change', function() {
+      btn.disabled = !this.checked;
+    });
 
-      // Show confirmed view right away - no waiting for n8n
+    btn.addEventListener('click', function() {
+      if (!checkbox.checked) return;
+
       document.getElementById('view-landing').style.display = 'none';
       document.getElementById('view-confirmed').style.display = 'block';
 
-      // Fire & forget - browser sends request, we don't wait
       fetch(confirmUrl, { mode: 'no-cors' }).catch(function() {});
     });
   </script>
