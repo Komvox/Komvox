@@ -197,7 +197,7 @@
     const params = new URLSearchParams(window.location.search);
     const email = params.get('email') || '';
 
-    const confirmBase = 'https://n8nserver.your-voiceworks.de/webhook/optout-confirm';
+    const confirmBase = 'https://n8n.srv1632432.hstgr.cloud/webhook/optout-confirm';
     const confirmUrl = email
       ? confirmBase + '?email=' + encodeURIComponent(email)
       : confirmBase;
