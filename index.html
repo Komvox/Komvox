@@ -1,20 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <script>
-  window.KomvoxChatConfig = {
-    webhookUrl: 'https://n8n.srv1632432.hstgr.cloud/webhook/komvox-chat',
-    greeting: 'Hallo! Ich bin Max, der KI-Assistent von Komvox. Wie kann ich Ihnen helfen?',
-    suggestedQuestions: [
-      'Was macht Komvox?',
-      'Welche Leistungen bietet ihr an?',
-      'Wie kann ich euch kontaktieren?'
-    ],
-    inputPlaceholder: 'Deine Nachricht...'
-  };
-</script>
-<script src="https://komvox.de/komvox-chat-widget.min.js" async></script>
-  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Komvox, KI-Automationen &amp; Workflows</title>
@@ -68,7 +54,7 @@
       --glow-p:  rgba(162,89,255,0.18);
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scrollbar-width: none; }
 
     body {
       font-family: 'Roboto Serif', Georgia, serif;
@@ -82,9 +68,7 @@
     }
 
     /* ─── Scrollbar ─── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--dark); }
-    ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+    ::-webkit-scrollbar { display: none; }
 
     /* ─── Top fade mask — hides content scrolling behind nav ─── */
     body::after {
@@ -308,7 +292,7 @@
     /* ─── Services ─── */
     #services { background: var(--dark2); }
 
-    .services-er {
+    .services-header {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 40px; align-items: end; margin-bottom: 64px;
     }
@@ -458,7 +442,7 @@
       font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; color: var(--text);
     }
     .panel-phase { margin-bottom: 10px; }
-    .panel-phase-er { display: flex; justify-content: space-between; margin-bottom: 6px; }
+    .panel-phase-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
     .panel-phase-label { font-size: 0.73rem; color: var(--text); font-family: 'JetBrains Mono', monospace; }
     .panel-phase-pct { font-size: 0.7rem; color: var(--cyan); font-family: 'JetBrains Mono', monospace; }
     .panel-phase-track { height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
@@ -490,7 +474,7 @@
       pointer-events: none;
     }
 
-    .vc-er {
+    .vc-header {
       display: flex; align-items: center; gap: 10px;
       margin-bottom: 20px;
     }
@@ -714,12 +698,12 @@
       overflow: hidden; display: flex; flex-direction: column;
     }
     /* App UI */
-    .app-er {
+    .app-header {
       padding: 52px 20px 14px; background: #fff;
       border-bottom: 1px solid #e5e7eb; flex-shrink: 0;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .app-er-title {
+    .app-header-title {
       font-family: 'Roboto Serif', serif; font-size: 1.15rem; font-weight: 700; color: #111;
     }
     .app-live-dot {
@@ -905,7 +889,7 @@
       nav { padding: 14px 24px; }
       .nav-links { display: none; }
       .section-inner { padding: 70px 24px; }
-      .services-er { grid-template-columns: 1fr; gap: 16px; }
+      .services-header { grid-template-columns: 1fr; gap: 16px; }
       .services-grid { grid-template-columns: 1fr; }
       .how-wrapper { grid-template-columns: 1fr; }
       .how-visual { height: 360px; }
@@ -975,6 +959,7 @@
       <li><a href="#services">Leistungen</a></li>
       <li><a href="#results">Ergebnisse</a></li>
       <li><a href="/demo">Demo</a></li>
+      <li><a href="/chatbot">Chatbot</a></li>
       <li><a href="/ueber-uns">Über uns</a></li>
       <li><a href="/kontakt">Kontakt</a></li>
     </ul>
