@@ -46,7 +46,7 @@
 
     body {
       font-family: 'Roboto Serif', Georgia, serif;
-      background: var(--dark);
+      background: var(--dark2);
       color: var(--text);
       overflow-x: hidden;
     }
@@ -65,7 +65,7 @@
     body::after {
       content: '';
       position: fixed; top: 0; left: 0; right: 0; height: 130px;
-      background: linear-gradient(to bottom, var(--dark) 0%, var(--dark) 52%, transparent 100%);
+      background: linear-gradient(to bottom, var(--dark2) 0%, var(--dark2) 52%, transparent 100%);
       pointer-events: none; z-index: 99;
     }
 
@@ -94,11 +94,11 @@
 
     .nav-cta {
       padding: 8px 22px; border-radius: 50px;
-      background: linear-gradient(135deg, var(--blue), var(--purple));
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
       color: #fff; font-size: 0.88rem; font-weight: 600;
       text-decoration: none; letter-spacing: 0.5px;
       transition: opacity 0.2s, transform 0.2s;
-      box-shadow: 0 0 20px rgba(79,140,255,0.35);
+      box-shadow: 0 0 20px rgba(0,229,255,0.25);
     }
     .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
 
@@ -154,7 +154,7 @@
     #page-hero::after {
       content: '';
       position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
-      background: linear-gradient(to bottom, transparent, var(--dark));
+      background: linear-gradient(to bottom, transparent, var(--dark2));
       pointer-events: none;
     }
 
