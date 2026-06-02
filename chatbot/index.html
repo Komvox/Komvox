@@ -35,7 +35,7 @@
       }
     });
   </script>
-  <meta name="description" content="KI-Chatbot für Ihre Website – beantwortet Kundenfragen rund um die Uhr. Fertig in 24 Stunden, kein Setup, monatlich kündbar. Ab 49 EUR/Monat." />
+  <meta name="description" content="KI-Chatbot für Ihre Website – beantwortet Kundenfragen rund um die Uhr. Fertig in 24 Stunden, kein Setup, jederzeit kündbar. Ab 39 EUR/Monat." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://komvox.de/chatbot" />
 
@@ -43,7 +43,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="de_DE" />
   <meta property="og:title" content="KI-Chatbot | Komvox – Fertig in 24 Stunden" />
-  <meta property="og:description" content="KI-Chatbot für Ihre Website – beantwortet Kundenfragen rund um die Uhr. Fertig in 24 Stunden, kein Setup, monatlich kündbar. Ab 49 EUR/Monat." />
+  <meta property="og:description" content="KI-Chatbot für Ihre Website – beantwortet Kundenfragen rund um die Uhr. Fertig in 24 Stunden, kein Setup, jederzeit kündbar. Ab 39 EUR/Monat." />
   <meta property="og:url" content="https://komvox.de/chatbot" />
   <meta property="og:site_name" content="Komvox" />
 
@@ -207,6 +207,7 @@
       display: inline-block;
     }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(0,229,255,0.45), 0 8px 30px rgba(0,0,0,0.4); }
+    .btn-large { padding: 18px 48px; font-size: 1.05rem; letter-spacing: 0.8px; }
 
     .btn-outline {
       padding: 13px 36px; border-radius: 50px;
@@ -226,44 +227,20 @@
       text-align: center;
       padding: 140px 24px 100px;
       overflow: hidden;
+      background: #000;
     }
 
-    .hero-orb {
+    #hero::after {
+      content: '';
       position: absolute;
-      border-radius: 50%;
-      filter: blur(120px);
+      bottom: 0; left: 0; right: 0;
+      height: 140px;
+      background: linear-gradient(to bottom, transparent, var(--dark));
       pointer-events: none;
-    }
-    .hero-orb-cyan {
-      width: 500px; height: 500px;
-      background: rgba(0,229,255,0.12);
-      top: -100px; left: -100px;
-    }
-    .hero-orb-purple {
-      width: 400px; height: 400px;
-      background: rgba(162,89,255,0.1);
-      bottom: -80px; right: -80px;
+      z-index: 1;
     }
 
     .hero-content { position: relative; z-index: 2; max-width: 800px; }
-
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 6px 18px; border-radius: 50px;
-      border: 1px solid rgba(0,229,255,0.25);
-      background: rgba(0,229,255,0.06);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--cyan); margin-bottom: 28px;
-    }
-    .hero-badge span {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--cyan); animation: pulse-dot 2s infinite;
-    }
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.8); }
-    }
 
     h1 {
       font-size: clamp(2.4rem, 5.5vw, 4.2rem);
@@ -478,6 +455,16 @@
       text-align: center; width: 100%;
     }
 
+    .pricing-trial-banner {
+      max-width: 900px; margin: 0 auto 32px;
+      display: flex; align-items: center; gap: 10px; justify-content: center;
+      padding: 12px 24px; border-radius: 50px;
+      background: rgba(0,229,255,0.06);
+      border: 1px solid rgba(0,229,255,0.2);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem; color: var(--cyan); letter-spacing: 0.3px;
+    }
+
     /* ─── FAQ ─── */
     #faq { background: var(--dark2); }
 
@@ -544,6 +531,22 @@
     .final-cta-inner h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
     .final-cta-inner p { font-size: 1rem; color: var(--muted); line-height: 1.7; margin-bottom: 40px; }
     .final-cta-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    .final-cta-contact {
+      margin-top: 28px;
+      font-size: 0.9rem; color: var(--muted); line-height: 1.7;
+    }
+    .final-cta-link {
+      color: var(--cyan);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: rgba(0,229,255,0.4);
+      transition: text-decoration-color 0.2s, color 0.2s;
+    }
+    .final-cta-link:hover {
+      color: #fff;
+      text-decoration-color: rgba(255,255,255,0.6);
+    }
 
     /* ─── Footer ─── */
     footer {
@@ -622,22 +625,19 @@
 
   <!-- ─── Hero ─── -->
   <section id="hero">
-    <div class="hero-orb hero-orb-cyan"></div>
-    <div class="hero-orb hero-orb-purple"></div>
     <div class="hero-content">
-      <div class="hero-badge reveal"><span></span>KI-CHATBOT</div>
-      <h1 class="reveal delay-1">Ihr KI-Chatbot.<br /><span class="gradient-text">Fertig in 24 Stunden.</span></h1>
-      <p class="hero-sub reveal delay-2">
-        Beantwortet Kundenfragen rund um die Uhr, direkt auf Ihrer Website. Kein Setup, monatlich kündbar.
+      <h1 class="reveal">Ihr Chatbot.<br /><span class="gradient-text">Fertig in 24 Stunden.</span></h1>
+      <p class="hero-sub reveal delay-1">
+        Beantwortet Kundenfragen rund um die Uhr, direkt auf Ihrer Website. 14 Tage kostenlos testen.
       </p>
-      <div class="hero-ctas reveal delay-3">
-        <a class="btn-primary" href="https://buy.stripe.com/fZu6oIf6qb3I7rB4RvbZe00" target="_blank" rel="noopener">Standard · 49 EUR/Monat</a>
-        <a class="btn-outline" href="https://buy.stripe.com/bJe8wQ8I28VA5jtdo1bZe01" target="_blank" rel="noopener">White Label · 59 EUR/Monat</a>
+      <div class="hero-ctas reveal delay-2">
+        <a class="btn-primary btn-large" href="#pricing">14 Tage gratis testen &rarr;</a>
       </div>
-      <div class="hero-trust reveal delay-4">
+      <div class="hero-trust reveal delay-3">
+        <span class="trust-item">14 Tage gratis</span>
+        <span class="trust-item">Danach ab 39 EUR/Monat</span>
+        <span class="trust-item">Jederzeit kündbar</span>
         <span class="trust-item">DSGVO-konform</span>
-        <span class="trust-item">Deutscher Server</span>
-        <span class="trust-item">Keine Vertragsbindung</span>
       </div>
     </div>
   </section>
@@ -661,10 +661,9 @@
         </div>
       </div>
       <div class="preview-cta reveal">
-        <p class="preview-cta-text">Jetzt starten — fertig in 24 Stunden.</p>
+        <p class="preview-cta-text">Gefällt Ihnen, was Sie sehen?</p>
         <div class="preview-cta-buttons">
-          <a class="btn-primary" href="https://buy.stripe.com/fZu6oIf6qb3I7rB4RvbZe00" target="_blank" rel="noopener">Standard · 49 EUR/Monat</a>
-          <a class="btn-outline" href="https://buy.stripe.com/bJe8wQ8I28VA5jtdo1bZe01" target="_blank" rel="noopener">White Label · 59 EUR/Monat</a>
+          <a class="btn-primary btn-large" href="#pricing">14 Tage gratis testen &rarr;</a>
         </div>
       </div>
     </div>
@@ -684,7 +683,7 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan)"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           </div>
           <h3>Rund um die Uhr verfügbar</h3>
-          <p>Beantwortet Fragen zu Ihrem Unternehmen, Ihren Leistungen und Preisen — auch nachts, am Wochenende und an Feiertagen.</p>
+          <p>Beantwortet Fragen zu Ihrem Unternehmen, Ihren Leistungen und Preisen. Auch nachts, am Wochenende und an Feiertagen.</p>
         </div>
         <div class="feature-card reveal delay-2">
           <div class="feature-icon icon-blue">
@@ -698,7 +697,7 @@
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--purple)"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
           </div>
           <h3>Trainiert auf Ihre Inhalte</h3>
-          <p>Wird mit Ihren Texten und FAQs eingerichtet und antwortet so, wie Sie es möchten — mit dem Wissen aus Ihrem Unternehmen.</p>
+          <p>Wird mit Ihren Texten und FAQs eingerichtet und antwortet so, wie Sie es möchten, mit dem Wissen aus Ihrem Unternehmen.</p>
         </div>
         <div class="feature-card reveal delay-4">
           <div class="feature-icon icon-cyan">
@@ -723,8 +722,8 @@
         <div class="step-item reveal delay-1">
           <div class="step-number">1</div>
           <div class="step-content">
-            <h3>Paket wählen &amp; bezahlen</h3>
-            <p>Wählen Sie Standard oder White Label und schließen Sie die sichere Zahlung über Stripe ab. Kein Risiko, monatlich kündbar.</p>
+            <h3>Paket wählen &amp; gratis starten</h3>
+            <p>Wählen Sie Standard oder White Label und starten Sie Ihre 14-tägige Testphase. Keine Kosten, keine Vertragsbindung.</p>
           </div>
         </div>
         <div class="step-item reveal delay-2">
@@ -750,41 +749,46 @@
     <div class="section-inner">
       <div class="pricing-header reveal">
         <div class="section-tag">Preise</div>
-        <h2 class="section-title">Einfache, transparente Preise</h2>
-        <p class="section-sub">Kein Setup-Preis, keine versteckten Kosten. Monatlich kündbar, jederzeit.</p>
+        <h2 class="section-title">14 Tage gratis. Dann jederzeit kündbar.</h2>
+        <p class="section-sub">Kein Setup-Preis, keine Vertragsbindung. Sie zahlen erst nach der Testphase.</p>
+      </div>
+      <div class="pricing-trial-banner reveal">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Beide Pakete: 14 Tage kostenlos testen &mdash; Kündigung jederzeit möglich
       </div>
       <div class="pricing-grid">
         <!-- Standard -->
         <div class="pricing-card reveal-left">
           <div class="pricing-name">STANDARD</div>
-          <div class="pricing-price">49 <span style="font-size:1.2rem;font-weight:400;color:var(--muted)">EUR</span></div>
-          <div class="pricing-price-sub">pro Monat &middot; monatlich kündbar</div>
+          <div class="pricing-price">39 <span style="font-size:1.2rem;font-weight:400;color:var(--muted)">EUR</span></div>
+          <div class="pricing-price-sub">pro Monat nach der Testphase &middot; jederzeit kündbar</div>
           <ul class="pricing-features">
-            <li>KI-Chatbot auf Ihrer Website</li>
+            <li>Chatbot auf Ihrer Website</li>
             <li>Beantwortet Kundenfragen rund um die Uhr</li>
             <li>Training mit Ihren Inhalten</li>
             <li>Auf jeder Website per Code-Snippet einbindbar</li>
             <li>Onboarding per E-Mail inklusive</li>
+            <li>DSGVO-konform · Deutscher Server</li>
             <li class="muted-feature">"Powered by Komvox" Branding im Chatbot</li>
           </ul>
-          <a class="btn-outline" href="https://buy.stripe.com/fZu6oIf6qb3I7rB4RvbZe00" target="_blank" rel="noopener">Jetzt starten</a>
+          <a class="btn-outline" href="https://buy.stripe.com/cNieVe4rM2xc5jt3NrbZe02" target="_blank" rel="noopener">14 Tage gratis starten</a>
         </div>
 
         <!-- White Label -->
         <div class="pricing-card pricing-card-featured reveal-right">
           <div class="pricing-badge">Empfohlen</div>
           <div class="pricing-name">WHITE LABEL</div>
-          <div class="pricing-price">59 <span style="font-size:1.2rem;font-weight:400;color:var(--muted)">EUR</span></div>
-          <div class="pricing-price-sub">pro Monat &middot; monatlich kündbar</div>
+          <div class="pricing-price">49 <span style="font-size:1.2rem;font-weight:400;color:var(--muted)">EUR</span></div>
+          <div class="pricing-price-sub">pro Monat nach der Testphase &middot; jederzeit kündbar</div>
           <ul class="pricing-features">
             <li>Alles aus dem Standard-Paket</li>
             <li>Kein Komvox-Branding im Chatbot</li>
             <li>Eigenes Logo &amp; Farben möglich</li>
             <li>Professioneller Auftritt für Ihr Unternehmen</li>
             <li>Training mit Ihren Inhalten</li>
-            <li>Onboarding per E-Mail inklusive</li>
+            <li>DSGVO-konform · Deutscher Server</li>
           </ul>
-          <a class="btn-primary" href="https://buy.stripe.com/bJe8wQ8I28VA5jtdo1bZe01" target="_blank" rel="noopener">White Label wählen</a>
+          <a class="btn-primary" href="https://buy.stripe.com/8x25kE9M67Rw4fpbfTbZe03" target="_blank" rel="noopener">14 Tage gratis starten</a>
         </div>
       </div>
     </div>
@@ -801,6 +805,15 @@
       <div class="faq-list">
         <div class="faq-item reveal delay-1">
           <div class="faq-question">
+            <span>Wie funktioniert die 14-tägige Testphase?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">Nach dem Start richten wir Ihren Chatbot innerhalb von 24 Stunden ein. Sie testen ihn 14 Tage lang vollständig kostenlos auf Ihrer Website. Möchten Sie danach nicht weitermachen, kündigen Sie einfach — es entstehen keine Kosten.</div>
+          </div>
+        </div>
+        <div class="faq-item reveal delay-2">
+          <div class="faq-question">
             <span>Wie lange dauert die Einrichtung?</span>
             <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </div>
@@ -808,7 +821,7 @@
             <div class="faq-answer-inner">In der Regel 24 Stunden nach dem Ausfüllen des Onboarding-Formulars. Bei sehr umfangreichen Wünschen kann es bis zu 48 Stunden dauern.</div>
           </div>
         </div>
-        <div class="faq-item reveal delay-2">
+        <div class="faq-item reveal delay-3">
           <div class="faq-question">
             <span>Funktioniert der Chatbot auf jeder Website?</span>
             <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -817,7 +830,7 @@
             <div class="faq-answer-inner">Ja. Sie erhalten ein einfaches Code-Snippet, das Sie in Ihre Website einbinden. Das funktioniert mit WordPress, Webflow, Jimdo, Shopify, IONOS und allen anderen Systemen, die benutzerdefinierte HTML-Codes erlauben.</div>
           </div>
         </div>
-        <div class="faq-item reveal delay-3">
+        <div class="faq-item reveal delay-4">
           <div class="faq-question">
             <span>Was passiert, wenn ich kündige?</span>
             <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -826,7 +839,7 @@
             <div class="faq-answer-inner">Sie können jederzeit mit einer Frist von einer Woche zum Monatsende kündigen. Der Chatbot läuft dann bis zum Ende der bereits bezahlten Periode und wird danach deaktiviert. Kein Aufwand, keine Konsequenzen.</div>
           </div>
         </div>
-        <div class="faq-item reveal delay-4">
+        <div class="faq-item reveal delay-5">
           <div class="faq-question">
             <span>Kann ich den Chatbot anpassen?</span>
             <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -835,7 +848,7 @@
             <div class="faq-answer-inner">Ja. Im Onboarding-Formular geben Sie an, wie sich der Chatbot verhalten soll, was er beantworten darf und welche Inhalte er kennen soll. Im White-Label-Paket können Sie zusätzlich Ihr eigenes Logo und Ihre Farben hinterlegen.</div>
           </div>
         </div>
-        <div class="faq-item reveal delay-5">
+        <div class="faq-item reveal">
           <div class="faq-question">
             <span>Ist der Chatbot DSGVO-konform?</span>
             <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -853,11 +866,14 @@
     <div class="final-cta-inner">
       <div class="reveal">
         <div class="section-tag">Los geht es</div>
-        <h2>Bereit für Ihren KI-Chatbot?</h2>
-        <p>Wählen Sie Ihr Paket und Ihr Chatbot ist in 24 Stunden live. Monatlich kündbar, kein Risiko.</p>
+        <h2>Testen Sie es einfach.</h2>
+        <p>14 Tage kostenlos, Chatbot in 24 Stunden live. Kein Risiko, jederzeit kündbar.</p>
         <div class="final-cta-buttons">
-          <a class="btn-primary" href="https://buy.stripe.com/fZu6oIf6qb3I7rB4RvbZe00" target="_blank" rel="noopener">Standard · 49 EUR/Monat</a>
-          <a class="btn-outline" href="https://buy.stripe.com/bJe8wQ8I28VA5jtdo1bZe01" target="_blank" rel="noopener">White Label · 59 EUR/Monat</a>
+          <a class="btn-primary btn-large" href="#pricing">14 Tage gratis testen &rarr;</a>
+        </div>
+        <p style="margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--muted);letter-spacing:0.5px;">Standard ab 39 EUR/Monat &middot; White Label ab 49 EUR/Monat &middot; DSGVO-konform &middot; Deutscher Server</p>
+        <div class="final-cta-contact">
+          <p>Haben Sie Fragen? <a href="/kontakt" class="final-cta-link">Kontaktieren Sie uns</a> oder buchen Sie direkt einen <a href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener" class="final-cta-link">kurzen Termin</a>.</p>
         </div>
       </div>
     </div>
