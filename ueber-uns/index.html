@@ -124,7 +124,7 @@
       --muted:   #94a3b8;
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; scrollbar-width: none; }
 
     body {
       font-family: 'Roboto Serif', Georgia, serif;
@@ -138,9 +138,7 @@
     }
 
     /* ─── Scrollbar ─── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--dark); }
-    ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+    ::-webkit-scrollbar { display: none; }
 
     /* ─── Top fade mask ─── */
     body::after {
@@ -641,6 +639,7 @@
       <li><a href="/#services">Leistungen</a></li>
       <li><a href="/#results">Ergebnisse</a></li>
       <li><a href="/demo">Demo</a></li>
+      <li><a href="/chatbot">Chatbot</a></li>
       <li><a href="/ueber-uns" class="active">Über uns</a></li>
       <li><a href="/kontakt">Kontakt</a></li>
     </ul>
