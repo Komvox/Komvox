@@ -1,21 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-
-<script>
-  window.KomvoxChatConfig = {
-    webhookUrl: 'https://n8n.srv1632432.hstgr.cloud/webhook/komvox-chat',
-    greeting: 'Hallo! Ich bin der KI-Assistent von Komvox. Wie kann ich Ihnen helfen?',
-    suggestedQuestions: [
-      'Was macht Komvox?',
-      'Welche Leistungen bietet ihr an?',
-      'Wie kann ich auch so einen Chatbot haben?'
-    ],
-    inputPlaceholder: 'Ihe Nachricht...'
-  };
-</script>
-<script src="https://komvox.de/komvox-chat-widget.min.js" async></script>
-  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Komvox, KI-Automationen &amp; Workflows</title>
@@ -142,11 +127,11 @@
 
     .nav-cta {
       padding: 8px 22px; border-radius: 50px;
-      background: linear-gradient(135deg, var(--blue), var(--purple));
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
       color: #fff; font-size: 0.88rem; font-weight: 600;
       text-decoration: none; letter-spacing: 0.5px;
       transition: opacity 0.2s, transform 0.2s;
-      box-shadow: 0 0 20px rgba(79,140,255,0.35);
+      box-shadow: 0 0 20px rgba(0,229,255,0.25);
     }
     .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
 
@@ -394,7 +379,7 @@
 
     .step-num {
       min-width: 40px; height: 40px; border-radius: 10px;
-      background: linear-gradient(135deg, var(--blue), var(--purple));
+      background: linear-gradient(135deg, var(--cyan), var(--purple));
       display: flex; align-items: center; justify-content: center;
       font-weight: 800; font-size: 0.85rem;
       box-shadow: 0 0 20px rgba(79,140,255,0.3);
@@ -978,7 +963,7 @@
       <li><a href="/ueber-uns">Über uns</a></li>
       <li><a href="/kontakt">Kontakt</a></li>
     </ul>
-    <a href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener" class="nav-cta">Termin buchen</a>
+    <a href="/erstgespraech" class="nav-cta">Termin buchen</a>
   </nav>
 
   <!-- ─── Hero ─── -->
@@ -990,7 +975,7 @@
       <p class="hero-sub">
       </p>
       <div class="hero-actions">
-        <a href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener" class="btn-primary">Termin buchen</a>
+        <a href="/erstgespraech" class="btn-primary">Termin buchen</a>
         <a href="/demo" class="btn-outline">Demo</a>
       </div>
       <div class="hero-stats">
@@ -1548,10 +1533,10 @@
         <div class="section-tag">Jetzt starten</div>
         <h2>Bereit für Ihren KI-Turbo?</h2>
         <p>
-          Vereinbaren Sie ein kostenloses 30-Minuten-Gespräch. Wir analysieren Ihre Prozesse und zeigen Ihnen konkret, wo Automation den größten Unterschied macht.
+          Vereinbaren Sie ein kostenloses 20-minütiges Gespräch. Wir analysieren Ihre Prozesse und zeigen Ihnen konkret, wo Automation den größten Unterschied macht.
         </p>
         <div class="cta-form">
-          <a href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener" class="btn-primary">Gespräch buchen</a>
+          <a href="/erstgespraech" class="btn-primary">Gespräch buchen</a>
         </div>
         <div class="cta-trust">
           <span class="trust-item">
