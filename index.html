@@ -6,6 +6,21 @@
   <title>Komvox, KI-Automationen &amp; Workflows</title>
   <script>if(location.pathname!=='/') history.replaceState(null,'','/');</script>
 
+  <!-- Komvox Chat Widget -->
+  <script>
+    window.KomvoxChatConfig = {
+      webhookUrl: 'https://n8n.srv1632432.hstgr.cloud/webhook/komvox-chat',
+      greeting: 'Hallo! Ich bin der KI-Assistent von Komvox. Wie kann ich Ihnen helfen?',
+      suggestedQuestions: [
+        'Was macht Komvox?',
+        'Welche Leistungen bietet ihr an?',
+        'Kann auch so einen KI-Chatbot haben?'
+      ],
+      inputPlaceholder: 'Ihre Nachricht...'
+    };
+  </script>
+  <script src="https://komvox.de/komvox-chat-widget.min.js" async></script>
+
   <!-- Google Analytics 4 -->
   <script>
     window.dataLayer = window.dataLayer || [];
