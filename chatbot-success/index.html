@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Bestellung erfolgreich | Komvox KI-Chatbot</title>
+
+  <!-- Google Analytics 4 -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+      analytics_storage: localStorage.getItem('komvox_cookie_consent') === 'accepted' ? 'granted' : 'denied'
+    });
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-CMCH55YML3"></script>
+  <script>
+    gtag('js', new Date());
+    gtag('config', 'G-CMCH55YML3');
+    gtag('event', 'purchase', { event_category: 'chatbot', event_label: 'chatbot_order' });
+  </script>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@700;800;900&family=Roboto+Serif:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cyan:    #00e5ff;
+      --blue:    #4f8cff;
+      --purple:  #a259ff;
+      --dark:    #080b14;
+      --dark2:   #0d1120;
+      --dark3:   #111827;
+      --text:    #e2e8f0;
+      --muted:   #94a3b8;
+    }
+
+    html { scroll-behavior: smooth; scrollbar-width: none; }
+
+    body {
+      font-family: 'Roboto Serif', Georgia, serif;
+      background: var(--dark);
+      color: var(--text);
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Roboto Serif', Georgia, serif; }
+
+    ::-webkit-scrollbar { display: none; }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 130px;
+      background: linear-gradient(to bottom, #080b14 0%, #080b14 52%, transparent 100%);
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.5;
+    }
+
+    /* ─── Nav ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 48px;
+      background: transparent;
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .nav-logo img { height: 64px; width: 64px; object-fit: contain; vertical-align: middle; }
+    .nav-logo span {
+      font-size: 1.2rem; font-weight: 800; letter-spacing: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--muted); font-size: 0.9rem;
+      letter-spacing: 0.5px; transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--cyan); }
+
+    .nav-cta {
+      padding: 8px 22px; border-radius: 50px;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      color: #fff; font-size: 0.88rem; font-weight: 600;
+      text-decoration: none; letter-spacing: 0.5px;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 0 20px rgba(79,140,255,0.35);
+    }
+    .nav-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+
+    /* ─── Success Content ─── */
+    .success-wrapper {
+      flex: 1;
+      display: flex; align-items: center; justify-content: center;
+      padding: 140px 24px 80px;
+      position: relative; z-index: 1;
+    }
+
+    .success-orb-cyan {
+      position: absolute;
+      width: 400px; height: 400px; border-radius: 50%;
+      background: rgba(0,229,255,0.08);
+      filter: blur(120px);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .success-box {
+      text-align: center; max-width: 560px;
+      position: relative; z-index: 2;
+    }
+
+    .success-icon {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 32px;
+      box-shadow: 0 0 60px rgba(0,229,255,0.3);
+      animation: pop-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    @keyframes pop-in {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .success-tag {
+      display: inline-block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 16px;
+    }
+
+    .success-box h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800; line-height: 1.2; margin-bottom: 20px;
+      animation: fade-up 0.6s 0.2s ease both;
+    }
+
+    .success-box p {
+      font-size: 1.05rem; color: var(--muted); line-height: 1.7;
+      animation: fade-up 0.6s 0.35s ease both;
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .success-next {
+      margin-top: 40px;
+      padding: 24px 32px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      text-align: left;
+      animation: fade-up 0.6s 0.5s ease both;
+    }
+    .success-next-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--cyan); margin-bottom: 14px;
+    }
+    .success-next ol {
+      padding-left: 20px; display: flex; flex-direction: column; gap: 8px;
+    }
+    .success-next ol li {
+      font-size: 0.9rem; color: var(--muted); line-height: 1.6;
+    }
+
+    .success-back {
+      display: inline-block; margin-top: 32px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem; color: var(--muted); text-decoration: none;
+      letter-spacing: 0.5px; transition: color 0.2s;
+      animation: fade-up 0.6s 0.65s ease both;
+    }
+    .success-back:hover { color: var(--cyan); }
+
+    /* ─── Footer ─── */
+    footer {
+      background: #050810;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 48px;
+      position: relative; isolation: isolate; z-index: 1;
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 24px;
+    }
+    .footer-logo { display: flex; align-items: center; gap: 12px; }
+    .footer-logo img { height: 64px; width: 64px; object-fit: contain; }
+    .footer-logo span {
+      font-size: 1rem; font-weight: 700; letter-spacing: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--purple));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .footer-copy { font-size: 0.82rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 0.82rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--cyan); }
+
+    @media (max-width: 900px) {
+      nav { padding: 14px 24px; }
+      .nav-links { display: none; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+
+    @media (max-width: 480px) {
+      nav { padding: 12px 16px; }
+      .nav-logo img { height: 48px; width: 48px; }
+      .nav-cta { padding: 7px 14px; font-size: 0.78rem; }
+      footer { padding: 32px 18px; }
+      .footer-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+      .footer-logo img { height: 48px; width: 48px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── Navigation ─── -->
+  <nav id="navbar">
+    <a class="nav-logo" href="/">
+      <img src="/komvox-logo-no-name.png" alt="Komvox Logo" />
+      <span>KOMVOX</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/#services">Leistungen</a></li>
+      <li><a href="/#results">Ergebnisse</a></li>
+      <li><a href="/demo">Demo</a></li>
+      <li><a href="/chatbot">Chatbot</a></li>
+      <li><a href="/ueber-uns">Über uns</a></li>
+      <li><a href="/kontakt">Kontakt</a></li>
+    </ul>
+    <a href="https://calendly.com/komvox/vorstellung" target="_blank" rel="noopener" class="nav-cta">Termin buchen</a>
+  </nav>
+
+  <!-- ─── Success Content ─── -->
+  <main class="success-wrapper">
+    <div class="success-orb-cyan"></div>
+    <div class="success-box">
+      <div class="success-icon">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#080b14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div class="success-tag">Bestellung eingegangen</div>
+      <h1 id="success-headline">Vielen Dank!</h1>
+      <p id="success-message">Sie erhalten in Kürze eine E-Mail mit Ihrer Rechnung und dem Onboarding-Formular für Ihren Chatbot.</p>
+      <div class="success-next">
+        <div class="success-next-title">Ihre nächsten Schritte</div>
+        <ol>
+          <li>E-Mail mit Rechnung &amp; Onboarding-Link im Postfach prüfen (ggf. Spam-Ordner)</li>
+          <li>Onboarding-Formular ausfüllen (dauert ca. 5 Minuten)</li>
+          <li>Chatbot geht innerhalb von 24 Stunden live</li>
+        </ol>
+      </div>
+      <a class="success-back" href="/chatbot">&larr; Zurück zur Chatbot-Seite</a>
+    </div>
+  </main>
+
+  <script>
+    (function() {
+      try {
+        var raw = sessionStorage.getItem('komvox_chatbot_order');
+        if (!raw) return;
+        var data = JSON.parse(raw);
+        var firstName = (data.name || '').split(' ')[0];
+        if (firstName) {
+          document.getElementById('success-headline').textContent = 'Vielen Dank, ' + firstName + '!';
+          document.getElementById('success-message').textContent =
+            'Sie erhalten in Kürze eine E-Mail mit Ihrer Rechnung und dem Onboarding-Formular für Ihren Chatbot.';
+        }
+        sessionStorage.removeItem('komvox_chatbot_order');
+      } catch(e) {}
+    })();
+  </script>
+
+  <!-- ─── Footer ─── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <img src="/komvox-logo-no-name.png" alt="Komvox" />
+        <span>KOMVOX</span>
+      </div>
+      <div class="footer-copy">© 2026 Komvox. Alle Rechte vorbehalten.</div>
+      <div class="footer-links">
+        <a href="/impressum">Impressum</a>
+        <a href="/datenschutz">Datenschutz</a>
+        <a href="mailto:kontakt@komvox.de">kontakt@komvox.de</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ─── Cookie Consent Banner ─── -->
+  <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Cookie-Einstellungen">
+    <div class="cookie-inner">
+      <div class="cookie-text">
+        <strong>Cookies & Datenschutz</strong>
+        <p>Wir verwenden Cookies, um die Nutzung unserer Website zu analysieren und zu verbessern. Weitere Informationen finden Sie in unserer <a href="/datenschutz">Datenschutzerklärung</a>.</p>
+      </div>
+      <div class="cookie-actions">
+        <button id="cookie-decline" class="cookie-btn-outline">Ablehnen</button>
+        <button id="cookie-accept" class="cookie-btn-primary">Akzeptieren</button>
+      </div>
+    </div>
+  </div>
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 24px; left: 50%; transform: translateX(-50%) translateY(120px);
+      width: calc(100% - 48px); max-width: 780px;
+      background: var(--dark3);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      padding: 20px 28px;
+      z-index: 9999;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+      opacity: 0;
+      pointer-events: none;
+    }
+    #cookie-banner.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .cookie-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .cookie-text { flex: 1; }
+    .cookie-text strong {
+      font-family: 'JetBrains Mono', monospace; font-size: 0.8rem;
+      text-transform: uppercase; letter-spacing: 1px; color: var(--cyan);
+      display: block; margin-bottom: 6px;
+    }
+    .cookie-text p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+    .cookie-text a { color: var(--cyan); text-decoration: none; }
+    .cookie-text a:hover { text-decoration: underline; }
+    .cookie-actions { display: flex; gap: 12px; flex-shrink: 0; }
+    .cookie-btn-outline {
+      padding: 10px 20px; border-radius: 50px;
+      background: transparent; border: 1px solid rgba(255,255,255,0.15);
+      color: var(--muted); font-size: 0.82rem; font-family: 'JetBrains Mono', monospace;
+      cursor: pointer; transition: border-color 0.2s, color 0.2s;
+    }
+    .cookie-btn-outline:hover { border-color: var(--muted); color: var(--text); }
+    .cookie-btn-primary {
+      padding: 10px 22px; border-radius: 50px;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      border: none; color: #000; font-size: 0.82rem;
+      font-family: 'JetBrains Mono', monospace; font-weight: 700;
+      cursor: pointer; transition: opacity 0.2s;
+    }
+    .cookie-btn-primary:hover { opacity: 0.85; }
+    @media (max-width: 600px) {
+      .cookie-inner { flex-direction: column; }
+      .cookie-actions { width: 100%; }
+      .cookie-btn-outline, .cookie-btn-primary { flex: 1; text-align: center; }
+    }
+  </style>
+  <script>
+    (function() {
+      var COOKIE_KEY = 'komvox_cookie_consent';
+      var banner = document.getElementById('cookie-banner');
+      if (!banner) return;
+      if (!localStorage.getItem(COOKIE_KEY)) {
+        setTimeout(function() { banner.classList.add('visible'); }, 800);
+      }
+      document.getElementById('cookie-accept').addEventListener('click', function() {
+        localStorage.setItem(COOKIE_KEY, 'accepted');
+        banner.classList.remove('visible');
+      });
+      document.getElementById('cookie-decline').addEventListener('click', function() {
+        localStorage.setItem(COOKIE_KEY, 'declined');
+        banner.classList.remove('visible');
+      });
+    })();
+  </script>
+
+</body>
+</html>
